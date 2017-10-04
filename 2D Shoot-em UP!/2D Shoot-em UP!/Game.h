@@ -1,6 +1,7 @@
 /*
 ###############################################
 ##@Authors:	Keenan McEntee
+##			Keith Wilson
 ##@DateStart: 04/10/2017
 ##@Summary: A 2D top down shoot-em up game with some strategic elements.
 ###############################################
