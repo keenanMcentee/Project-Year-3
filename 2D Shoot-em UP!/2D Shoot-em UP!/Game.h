@@ -38,6 +38,7 @@ public:
 	void Draw();
 protected:
 	sf::RenderWindow m_window;
+	sf::View view;
 	sf::Mouse mouse;
 	sf::Keyboard keyboard;
 	Map testLevel;
