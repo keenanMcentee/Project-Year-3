@@ -2,7 +2,7 @@
 
 
 
-Game::Game() : m_window(sf::VideoMode(1920, 1080), "2D Shoot-em Up!", sf::Style::Default)
+Game::Game() : m_window(sf::VideoMode(1280,720), "2D Shoot-em Up!", sf::Style::Default)
 {
 	m_window.setFramerateLimit(60);
 }
@@ -28,7 +28,8 @@ void Game::Run()
 /// </summary>
 void Game::Initialise()
 {
-
+	testLevelTexture.loadFromFile("SpriteSheet.png");
+	testLevel.initialise("TestLevel_Tile Layer 1.csv", "TestLevel_Tile Layer 2.csv", "", "", &testLevelTexture);
 }
 /// <summary>
 /// Function that handles updating all objects and elements of the game.
@@ -45,6 +46,7 @@ void Game::Draw()
 	m_window.clear(sf::Color::Black);
 
 	//Draw code here.
+	testLevel.draw(&m_window,sf::Vector2f(640,640), false);
 
 	m_window.display();
 }
