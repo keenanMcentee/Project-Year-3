@@ -25,6 +25,9 @@
 
 #ifndef GAME
 #define GAME
+#include "Box2D\Box2D.h"
+#include <SFGUI\SFGUI.hpp>
+#include <SFGUI\Widgets.hpp>
 #include <SFML\Graphics.hpp>
 #include "Map.h"
 class Game
@@ -34,7 +37,7 @@ public:
 	~Game();
 	void Run();
 	void Initialise();
-	void Update();
+	void Update(sf::Clock &clock);
 	void Draw();
 protected:
 	sf::RenderWindow m_window;
@@ -42,6 +45,11 @@ protected:
 	sf::Keyboard keyboard;
 	Map testLevel;
 	sf::Texture testLevelTexture;
+	sfg::SFGUI sfgui;
+	sfg::Label::Ptr label;
+	sfg::Button::Ptr button;
+	sfg::Box::Ptr box;
+	sfg::Desktop desktop;
 };
 #endif // !GAME
 

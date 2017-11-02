@@ -82,6 +82,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SFML_SDK)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfgui.dll;sfgui-d.dll;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
