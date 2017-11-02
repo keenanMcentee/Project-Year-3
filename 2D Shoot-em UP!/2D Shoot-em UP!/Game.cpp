@@ -39,6 +39,7 @@ void Game::Initialise()
 {
 	testLevelTexture.loadFromFile("SpriteSheet.png");
 	testLevel.initialise("TestLevel_Tile Layer 1.csv", "TestLevel_Tile Layer 2.csv", "", "", &testLevelTexture);
+	//SFGUI
 	// Create the label.
 	auto label = sfg::Label::Create("Hello world!");
 	// Create a simple button and connect the click signal.
@@ -53,6 +54,7 @@ void Game::Initialise()
 	auto window = sfg::Window::Create();
 	window->SetTitle("Hello world!");
 	window->Add(box);
+	window->SetPosition(sf::Vector2f(100, 100));
 	// Create a desktop and add the window to it.
 	desktop.Add(window);
 	// We're not using SFML to render anything in this program, so reset OpenGL
