@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include "Box2D\Box2D.h"
 
 
 Game::Game() : m_window(sf::VideoMode(1280,720), "2D Shoot-em Up!", sf::Style::Default)
