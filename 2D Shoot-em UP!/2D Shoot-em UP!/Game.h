@@ -30,6 +30,7 @@
 #include <SFGUI\Widgets.hpp>
 #include <SFML\Graphics.hpp>
 #include "Map.h"
+
 class Game
 {
 public:
