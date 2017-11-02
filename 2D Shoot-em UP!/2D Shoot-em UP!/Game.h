@@ -27,6 +27,7 @@
 #define GAME
 #include <SFML\Graphics.hpp>
 #include "Map.h"
+
 class Game
 {
 public:
