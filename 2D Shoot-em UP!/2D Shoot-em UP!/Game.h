@@ -43,6 +43,7 @@
 #include <SFGUI\Widgets.hpp>
 #include <SFML\Graphics.hpp>
 #include "Map.h"
+#include "ScreenManager.h"
 
 #ifndef TGUI
 #define TGUI
@@ -64,15 +65,8 @@ protected:
 	sf::RenderWindow m_window;
 	sf::Mouse mouse;
 	sf::Keyboard keyboard;
-	Map testLevel;
-	sf::Texture testLevelTexture;
-	sfg::SFGUI sfgui;
-	sfg::Label::Ptr label;
-	sfg::Button::Ptr button;
-	sfg::Box::Ptr box;
-	sfg::Desktop desktop;
-
-
+	ScreenManager m_screenManager;
+	tgui::Gui gui;
 };
 #endif // !GAME
 

@@ -122,14 +122,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Credits.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Help.cpp" />
     <ClCompile Include="Intro.cpp" />
+    <ClCompile Include="License.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Options.cpp" />
+    <ClCompile Include="Screen.cpp" />
+    <ClCompile Include="ScreenManager.cpp" />
+    <ClCompile Include="Splash.cpp" />
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Credits.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameStates.h" />
+    <ClInclude Include="Help.h" />
+    <ClInclude Include="License.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Options.h" />
+    <ClInclude Include="Screen.h" />
+    <ClInclude Include="ScreenManager.h" />
+    <ClInclude Include="Splash.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="uiHelper.h" />
   </ItemGroup>
