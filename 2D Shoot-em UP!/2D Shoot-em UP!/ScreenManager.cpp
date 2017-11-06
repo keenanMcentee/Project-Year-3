@@ -1,7 +1,7 @@
 #include "ScreenManager.h"
 #include <iostream>
 ScreenManager::ScreenManager(sf::RenderWindow *window) : m_splash(window), m_license(window), m_mainMenu(window), m_options(window),
-m_help(window), m_credits(window)
+m_help(window), m_credits(window), m_play(window)
 {
 	currentState = GameState::Licence;
 }
@@ -39,6 +39,7 @@ void ScreenManager::Update(sf::Clock *clock)
 	case GameState::Pause:
 		break;
 	case GameState::Play:
+		m_play.Update();
 		break;
 	case GameState::Credits:
 		std::cout << "CURRENT SCREEN IS CREDITS" << std::endl;
@@ -73,7 +74,7 @@ void ScreenManager::handleEvent(sf::Event e)
 		//.gui.handleEvent(e);
 		break;
 	case GameState::Play:
-		//.gui.handleEvent(e);
+		m_play.gui.handleEvent(e);
 		break;
 	case GameState::Credits:
 		m_credits.gui.handleEvent(e);
@@ -105,6 +106,7 @@ void ScreenManager::Draw(sf::RenderWindow *window)
 	case GameState::Pause:
 		break;
 	case GameState::Play:
+		m_play.Draw(window);
 		break;
 	case GameState::Credits:
 		break;

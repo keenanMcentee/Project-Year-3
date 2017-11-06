@@ -1,7 +1,13 @@
 #include "Map.h"
-class Play
+#include "Screen.h"
+class Play : public Screen
 {
 public:
-	Play();
+	Play(sf::RenderWindow *window);
+	void Update();
+	void Draw(sf::RenderWindow *window);
+
+	Map demoMap;
+	sf::Texture mapTexture;
 };
 
