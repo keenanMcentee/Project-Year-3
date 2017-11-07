@@ -4,6 +4,9 @@
 Player::Player()
 {
 }
+/// <summary>
+/// 
+/// </summary>
 void Player::Initialise()
 {
 	m_texture.loadFromFile("ASSETS/playerSprite.png");
@@ -14,17 +17,28 @@ void Player::Initialise()
 	m_speed = 2;
 	
 }
-
+/// <summary>
+/// 
+/// </summary>
+/// <param name="keyboard"></param>
 void Player::Update(sf::Keyboard &keyboard)
 {
 	HandleMovement(keyboard);
 	m_sprite.setPosition(m_position);
 }
+/// <summary>
+/// 
+/// </summary>
+/// <param name="window"></param>
 void Player::Draw(sf::RenderWindow *window)
 {
 	lookAtMouse(*window);
 	window->draw(m_sprite);
 }
+/// <summary>
+/// 
+/// </summary>
+/// <param name="keyboard"></param>
 void Player::HandleMovement(sf::Keyboard &keyboard)
 {
 	
@@ -46,6 +60,10 @@ void Player::HandleMovement(sf::Keyboard &keyboard)
 	}
 	
 }
+/// <summary>
+/// 
+/// </summary>
+/// <param name="win"></param>
 void Player::lookAtMouse(sf::RenderWindow &win) {
 	sf::Vector2f curPos = m_sprite.getPosition();
 	sf::Vector2f position = win.mapPixelToCoords(sf::Mouse::getPosition(win));
