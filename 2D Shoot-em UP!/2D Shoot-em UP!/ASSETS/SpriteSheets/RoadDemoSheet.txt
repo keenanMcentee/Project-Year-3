@@ -1,0 +1,8 @@
+Building = 0 0 256 256
+BuildingVertical = 257 0 256 256
+FootPathBottom = 514 0 64 64
+FootPathLeft = 258 257 64 64
+FootPathRight = 514 65 64 64
+FootPathTop = 323 257 64 64
+RoadHorizontal = 0 257 128 128
+RoadVertical = 129 257 128 128

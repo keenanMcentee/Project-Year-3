@@ -70,7 +70,7 @@ void Map::createLayer(std::string layer, sf::Texture *texture)
 			if (m_csvLoadedMap[row][col] != -1)
 			{
 			sf::Vector2f texturepos = assignBlocks(m_csvLoadedMap[row][col]);
-			a.push_back(Tile(texture, sf::IntRect(texturepos.x, texturepos.y, 128, 128), sf::Vector2f(col * 128, row * 128)));
+			a.push_back(Tile(texture, sf::IntRect(texturepos.x, texturepos.y, 64, 64), sf::Vector2f(col * 64, row * 64)));
 		}
 		}
 		m_mapLayerOne.push_back(a);
@@ -91,7 +91,7 @@ void Map::createTrackLayer(std::string layerTwo, sf::Texture *texture)
 			if (m_csvLoadedMap[row][col] != -1)
 			{
 				sf::Vector2f texturepos = assignBlocks(m_csvLoadedMap[row][col]);
-				a.push_back(Tile(texture, sf::IntRect(texturepos.x, texturepos.y, 128, 128), sf::Vector2f(col * 128, row * 128)));
+				a.push_back(Tile(texture, sf::IntRect(texturepos.x, texturepos.y, 64, 64), sf::Vector2f(col * 64, row * 64)));
 			}
 		}
 		m_trackLayer.push_back(a);
@@ -112,7 +112,7 @@ void Map::createObstacleLayer(std::string layerObstacle, sf::Texture *texture)
 			if (m_csvLoadedMap[row][col] != -1)
 			{
 				sf::Vector2f texturepos = assignBlocks(m_csvLoadedMap[row][col]);
-				a.push_back(Tile(texture, sf::IntRect(texturepos.x, texturepos.y, 128, 128), sf::Vector2f(col * 128, row * 128)));
+				a.push_back(Tile(texture, sf::IntRect(texturepos.x, texturepos.y, 64, 64), sf::Vector2f(col * 64, row * 64)));
 			}
 		}
 		m_obstacleLayer.push_back(a);
@@ -134,9 +134,10 @@ void Map::draw(sf::RenderWindow *window, sf::Vector2f playerPos, bool minimap)
 				if (
 					m_mapLayerOne[i][j].m_sprite.getGlobalBounds().intersects(viewRect))
 				{
-					m_mapLayerOne[i][j].draw(window);
+					
 					tilesDrawing++;
 				}
+				m_mapLayerOne[i][j].draw(window);
 			}
 			else
 			{
@@ -202,8 +203,8 @@ sf::Vector2f Map::assignBlocks(int i)
 	}
 	else
 	{
-		int testX = ((i - ((i / 13) * 13)) * 128) + (i - ((i / 13 ) * 13));
-		int testY = (i  / 13) * 128 + (i / 13);
+		int testX = ((i - ((i / 9) * 9)) * 64) + (i - ((i / 9 ) * 9));
+		int testY = (i  / 9) * 64 + (i / 9);
 		texCoord = sf::Vector2f(testX, testY);
 	}
 	return texCoord;
