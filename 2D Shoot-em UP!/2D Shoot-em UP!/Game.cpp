@@ -23,6 +23,10 @@ void Game::Run()
 			//gui.handleEvent(event);
 			m_screenManager.handleEvent(event);
 		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F4))
+		{
+			m_window.close();
+		}
 		Update(clock);
 		Draw();
 

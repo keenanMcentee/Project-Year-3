@@ -11,6 +11,7 @@ public:
 	void GoToScreen(GameState state);
 protected:
 	GameState *currentState;
+	sf::RenderWindow* windowPtr;
 };
 #endif // !SCREEN
 

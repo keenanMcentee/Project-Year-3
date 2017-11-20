@@ -40,11 +40,29 @@ namespace uiHelper
 		button->setPosition(position.x, position.y);
 		button->setSize(width, height);
 		button->setText(btnText);
-		/*button->connect("pressed", [&]()
-		{
-			Screen::GoToScreen(nextState);
-		});*/
 		return button;
+	}
+
+	static tgui::Slider::Ptr makeSlider(sf::Vector2f position, int width, int height, int val)
+	{
+		tgui::Slider::Ptr slider = tgui::Slider::create();
+		slider->setRenderer(theme.getRenderer("Slider"));
+		slider->setPosition(position.x, position.y);
+		slider->setSize(width, height);
+		slider->setMaximum(val);
+		return slider;
+	}
+
+	
+	static tgui::CheckBox::Ptr makeCheckBox(std::string text, sf::Vector2f position, int width, int height, bool value)
+	{
+		tgui::CheckBox::Ptr checkBox = tgui::CheckBox::create();
+		checkBox->setRenderer(theme.getRenderer("CheckBox"));
+		checkBox->setPosition(position.x, position.y);
+		checkBox->setSize(width, height);
+		checkBox->setText(text);
+		checkBox->check();
+		return checkBox;
 	}
 }
 #endif // !UIHELPER

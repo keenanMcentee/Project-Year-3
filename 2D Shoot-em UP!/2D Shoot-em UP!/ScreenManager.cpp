@@ -10,22 +10,20 @@ void ScreenManager::Initialise()
 	m_splash.Initialise(&currentState);
 	m_license.Initialise(&currentState);
 	m_mainMenu.Initialise(&currentState);
+	m_options.Initialise(&currentState);
+
 }
 void ScreenManager::Update(sf::Clock *clock)
 {
-	
 	switch (currentState)
 	{
 	case GameState::Licence:
-		std::cout << "CURRENT SCREEN IS LICENSE"  << std::endl;
 		m_license.Update();
 		break;
 	case GameState::Splash:
-		std::cout << "CURRENT SCREEN IS SPLASH" << std::endl;
 		m_splash.Update();
 		break;
 	case GameState::MainMenu:
-		std::cout << "CURRENT SCREEN IS MAIN MENU" << std::endl;
 		m_mainMenu.Update();
 		break;
 	case GameState::Help:
@@ -33,7 +31,6 @@ void ScreenManager::Update(sf::Clock *clock)
 		m_help.Update();
 		break;
 	case GameState::Options:
-		std::cout << "CURRENT SCREEN IS OPTIONS" << std::endl;
 		m_options.Update();
 		break;
 	case GameState::Pause:
@@ -102,6 +99,7 @@ void ScreenManager::Draw(sf::RenderWindow *window)
 	case GameState::Help:
 		break;
 	case GameState::Options:
+		m_options.Draw(window);
 		break;
 	case GameState::Pause:
 		break;
