@@ -7,6 +7,7 @@
 /// <param name="window"></param>
 MainMenu::MainMenu(sf::RenderWindow *window) : Screen(window)
 {
+	this->m_window = window;
 }
 
 /// <summary>
