@@ -203,8 +203,8 @@ sf::Vector2f Map::assignBlocks(int i)
 	}
 	else
 	{
-		int testX = ((i - ((i / 9) * 9)) * 64) + (i - ((i / 9 ) * 9));
-		int testY = (i  / 9) * 64 + (i / 9);
+		int testX = (i - ((i / 10) * 10)) * 64;
+		int testY = (i  / 10) * 64 + (i / 10);
 		texCoord = sf::Vector2f(testX, testY);
 	}
 	return texCoord;

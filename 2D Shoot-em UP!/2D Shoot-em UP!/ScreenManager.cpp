@@ -33,6 +33,7 @@ void ScreenManager::Initialise()
 /// <param name="clock"></param>
 void ScreenManager::Update(sf::Clock *clock)
 {
+	dt = clock->restart();
 	switch (currentState)
 	{
 	case GameState::Licence:
@@ -54,7 +55,7 @@ void ScreenManager::Update(sf::Clock *clock)
 		m_pause.Update();
 		break;
 	case GameState::Play:
-		m_play.Update();
+		m_play.Update(dt);
 		break;
 	case GameState::Credits:
 		m_credits.Update();
@@ -64,6 +65,7 @@ void ScreenManager::Update(sf::Clock *clock)
 	default:
 		break;
 	}
+	
 }
 
 /// <summary>

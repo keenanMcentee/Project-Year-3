@@ -29,6 +29,8 @@ private:
 	Play m_play;
 	Pause m_pause;
 	GameState currentState;
+	sf::Time lastFrame;
+	sf::Time dt;
 	bool fromPause;
 };
 #endif // !SCREENMANAGER
