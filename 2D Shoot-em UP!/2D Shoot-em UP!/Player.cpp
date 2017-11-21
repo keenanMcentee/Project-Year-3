@@ -10,6 +10,7 @@ Player::Player()
 void Player::Initialise()
 {
 	m_texture.loadFromFile("ASSETS/playerSprite.png");
+	m_bulletTexture.loadFromFile("ASSETS/playerSprite.png");
 	m_sprite.setTexture(m_texture);
 	m_sprite.setOrigin(m_sprite.getLocalBounds().width / 2, m_sprite.getLocalBounds().height / 2);
 	m_sprite.setScale(2.0f,2.0f);
@@ -24,6 +25,10 @@ void Player::Initialise()
 void Player::Update(sf::Keyboard &keyboard)
 {
 	HandleMovement(keyboard);
+	for (auto &b : bullets)
+	{
+		b.update();
+	}
 	m_sprite.setPosition(m_position);
 }
 /// <summary>
@@ -33,6 +38,10 @@ void Player::Update(sf::Keyboard &keyboard)
 void Player::Draw(sf::RenderWindow *window)
 {
 	lookAtMouse(*window);
+	for (auto &b : bullets)
+	{
+		b.draw(window);
+	}
 	window->draw(m_sprite);
 }
 /// <summary>
@@ -59,6 +68,12 @@ void Player::HandleMovement(sf::Keyboard &keyboard)
 		m_position.y += m_speed;
 	}
 	
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !prevLeftClick)
+	{
+		Projectile bullet = Projectile(m_position, m_sprite.getRotation(), m_speed, 100, 250, &m_bulletTexture);
+		bullets.push_back(bullet);
+	}
+	prevLeftClick = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 }
 /// <summary>
 /// 
