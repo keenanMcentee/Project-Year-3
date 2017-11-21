@@ -1,13 +1,13 @@
 #include "Play.h"
 
-
 /// <summary>
 /// Constructor for the play game.
 /// Requires Window for the Screen class which it inherits from.
 /// </summary>
 /// <param name="window"></param>
-Play::Play(sf::RenderWindow *window) : Screen(window)
+Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 {
+	currentState = state;
 	b2Vec2 gravity(0, 0);
 	//box2d->SetGravity(gravity);
 	
@@ -18,12 +18,20 @@ Play::Play(sf::RenderWindow *window) : Screen(window)
 	playerView.setViewport(tgui::FloatRect(0.0, 0.0, 1.0, 1.0));
 	playerView.zoom(4.3f);
 }
-/// <summary>
+
+
 /// 
+/// /// <summary>
+/// updates the player and changes the gamestate to pause if the escape key is pressed
 /// </summary>
 void Play::Update(sf::Time dt)
 {
 	player.Update(dt, keyboard, &playerView);
+	currentState;
+	if (keyboard.isKeyPressed(keyboard.Escape))
+	{
+		GoToScreen(GameState::Pause);
+	}
 
 	pastKeyboard = keyboard;
 }

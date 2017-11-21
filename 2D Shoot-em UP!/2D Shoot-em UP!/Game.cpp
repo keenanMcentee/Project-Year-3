@@ -1,5 +1,9 @@
 #include "Game.h"
 
+/// <summary>
+/// Game Constructor
+/// Sets window size, name, framerate, style and creates the screemanager and passes it the renderwindow
+/// </summary>
 Game::Game() : m_window(sf::VideoMode(1280,720), "2D Shoot-em Up!", sf::Style::Default), m_screenManager(&m_window)
 {
 	m_window.setFramerateLimit(60);
@@ -22,6 +26,10 @@ void Game::Run()
 		while (m_window.pollEvent(event)) {
 			//gui.handleEvent(event);
 			m_screenManager.handleEvent(event);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F4))
+		{
+			m_window.close();
 		}
 		Update(clock);
 		Draw();

@@ -5,10 +5,9 @@
 class Play : public Screen
 {
 public:
-	Play(sf::RenderWindow *window);
+	Play(sf::RenderWindow *window, GameState *state);
 	void Update(sf::Time dt);
 	void Draw(sf::RenderWindow *window);
-
 	Map demoMap;
 	sf::Texture mapTexture;
 	Player player;

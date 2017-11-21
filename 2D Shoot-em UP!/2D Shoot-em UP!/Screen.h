@@ -12,6 +12,9 @@ public:
 	sf::RenderWindow* m_window;
 protected:
 	GameState *currentState;
+	GameState *previousState;
+	sf::RenderWindow* windowPtr;
+	bool* m_fromPause;
 };
 #endif // !SCREEN
 
