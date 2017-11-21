@@ -1,10 +1,20 @@
 #include "ScreenManager.h"
 #include <iostream>
+
+/// <summary>
+/// creates each of the screen objects and passes them the render window
+/// sets the initial gamestate
+/// </summary>
+/// <param name="window"></param>
 ScreenManager::ScreenManager(sf::RenderWindow *window) : m_splash(window), m_license(window), m_mainMenu(window), m_options(window),
 m_help(window), m_credits(window), m_play(window, &currentState), m_pause(window)
 {
 	currentState = GameState::Licence;
 }
+
+/// <summary>
+/// calls the initialise for each of the screens
+/// </summary>
 void ScreenManager::Initialise()
 {
 	fromPause = false;
@@ -14,10 +24,15 @@ void ScreenManager::Initialise()
 	m_options.Initialise(&currentState);
 	m_credits.Initialise(&currentState);
 	m_pause.Initialise(&currentState, &fromPause);
+	m_help.Initialise(&currentState);
 }
+
+/// <summary>
+/// Switch statement that calls the update of a screen depending on which gamestate is active
+/// </summary>
+/// <param name="clock"></param>
 void ScreenManager::Update(sf::Clock *clock)
 {
-	std::cout << std::to_string(fromPause) << std::endl;
 	switch (currentState)
 	{
 	case GameState::Licence:
@@ -30,7 +45,6 @@ void ScreenManager::Update(sf::Clock *clock)
 		m_mainMenu.Update();
 		break;
 	case GameState::Help:
-		std::cout << "CURRENT SCREEN IS HELP" << std::endl;
 		m_help.Update();
 		break;
 	case GameState::Options:
@@ -43,7 +57,6 @@ void ScreenManager::Update(sf::Clock *clock)
 		m_play.Update();
 		break;
 	case GameState::Credits:
-		std::cout << "CURRENT SCREEN IS CREDITS" << std::endl;
 		m_credits.Update();
 		break;
 	case GameState::QuitScreen:
@@ -52,6 +65,12 @@ void ScreenManager::Update(sf::Clock *clock)
 		break;
 	}
 }
+
+/// <summary>
+/// Switch statement that calles the gui event handler for each screen depending on which gamestate is active 
+/// the event handler listens for all TGUI related events: button presses, slider scrolls etc 
+/// </summary>
+/// <param name="e"></param>
 void ScreenManager::handleEvent(sf::Event e)
 {
 	switch (currentState)
@@ -87,6 +106,11 @@ void ScreenManager::handleEvent(sf::Event e)
 		break;
 	}
 }
+
+/// <summary>
+/// Switch statement that calls the draw function of a screen depending on which gamestate is active
+/// </summary>
+/// <param name="window"></param>
 void ScreenManager::Draw(sf::RenderWindow *window)
 {
 	switch (currentState)
@@ -101,6 +125,7 @@ void ScreenManager::Draw(sf::RenderWindow *window)
 		m_mainMenu.Draw(window);
 		break;
 	case GameState::Help:
+		m_help.Draw(window);
 		break;
 	case GameState::Options:
 		m_options.Draw(window);

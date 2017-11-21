@@ -8,9 +8,14 @@
 
 #ifndef UIHELPER
 #define UIHELPER
+
+/// <summary>
+/// class containing a number of static functions to create the TGUI widgets without having to repeat code 
+/// </summary>
 namespace uiHelper
 {
 	static tgui::Theme theme{ "./themes/Black.txt" };
+
 	static tgui::Tabs::Ptr makeTab(int height, sf::Vector2f pos, std::vector<std::string> tabNames, int numOfTabs)
 	{
 		tgui::Tabs::Ptr tabs = tgui::Tabs::create();
@@ -23,6 +28,7 @@ namespace uiHelper
 		}
 		return tabs;
 	}
+
 	static tgui::Label::Ptr makeLabel(std::string labelText, sf::Vector2f position, int size)
 	{
 		auto label = tgui::Label::create();

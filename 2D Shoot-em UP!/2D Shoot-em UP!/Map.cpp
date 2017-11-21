@@ -188,7 +188,7 @@ void Map::draw(sf::RenderWindow *window, sf::Vector2f playerPos, bool minimap)
 		}
 	}
 }
-//void Map::drawMap()
+
 /// <summary>
 /// Handles assigning the texture coordinate to each value in the tilemap.
 /// </summary>

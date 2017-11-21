@@ -14,9 +14,8 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 	currentState = state;
 }
 
-
 /// <summary>
-/// 
+/// updates the player and changes the gamestate to pause if the escape key is pressed
 /// </summary>
 void Play::Update()
 {
@@ -30,7 +29,7 @@ void Play::Update()
 	pastKeyboard = keyboard;
 }
 /// <summary>
-/// 
+/// Draws the player, the map and sets the view height for the player
 /// </summary>
 /// <param name="window"></param>
 void Play::Draw(sf::RenderWindow *window)
