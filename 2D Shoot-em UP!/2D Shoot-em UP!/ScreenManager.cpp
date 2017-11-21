@@ -1,20 +1,23 @@
 #include "ScreenManager.h"
 #include <iostream>
 ScreenManager::ScreenManager(sf::RenderWindow *window) : m_splash(window), m_license(window), m_mainMenu(window), m_options(window),
-m_help(window), m_credits(window), m_play(window)
+m_help(window), m_credits(window), m_play(window, &currentState), m_pause(window)
 {
 	currentState = GameState::Licence;
 }
 void ScreenManager::Initialise()
 {
+	fromPause = false;
 	m_splash.Initialise(&currentState);
 	m_license.Initialise(&currentState);
-	m_mainMenu.Initialise(&currentState);
+	m_mainMenu.Initialise(&currentState, &fromPause);
 	m_options.Initialise(&currentState);
 	m_credits.Initialise(&currentState);
+	m_pause.Initialise(&currentState, &fromPause);
 }
 void ScreenManager::Update(sf::Clock *clock)
 {
+	std::cout << std::to_string(fromPause) << std::endl;
 	switch (currentState)
 	{
 	case GameState::Licence:
@@ -31,9 +34,10 @@ void ScreenManager::Update(sf::Clock *clock)
 		m_help.Update();
 		break;
 	case GameState::Options:
-		m_options.Update();
+		m_options.Update(fromPause);
 		break;
 	case GameState::Pause:
+		m_pause.Update();
 		break;
 	case GameState::Play:
 		m_play.Update();
@@ -68,7 +72,7 @@ void ScreenManager::handleEvent(sf::Event e)
 		m_options.gui.handleEvent(e);
 		break;
 	case GameState::Pause:
-		//.gui.handleEvent(e);
+		m_pause.gui.handleEvent(e);
 		break;
 	case GameState::Play:
 		m_play.gui.handleEvent(e);
@@ -102,6 +106,7 @@ void ScreenManager::Draw(sf::RenderWindow *window)
 		m_options.Draw(window);
 		break;
 	case GameState::Pause:
+		m_pause.Draw(window);
 		break;
 	case GameState::Play:
 		m_play.Draw(window);

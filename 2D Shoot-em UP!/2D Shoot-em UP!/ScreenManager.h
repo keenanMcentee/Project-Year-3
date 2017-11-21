@@ -6,6 +6,7 @@
 #include "Credits.h"
 #include "Help.h"
 #include "Play.h"
+#include "Pause.h"
 #include "TGUI\TGUI.hpp"
 #ifndef SCREENMANAGER
 #define	SCREENMANGER
@@ -26,6 +27,8 @@ private:
 	Help m_help;
 	Credits m_credits;
 	Play m_play;
+	Pause m_pause;
 	GameState currentState;
+	bool fromPause;
 };
 #endif // !SCREENMANAGER

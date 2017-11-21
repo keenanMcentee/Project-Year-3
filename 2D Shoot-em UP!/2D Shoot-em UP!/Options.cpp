@@ -3,6 +3,7 @@
 Options::Options(sf::RenderWindow *window) : Screen(window)
 {
 	fullScreen = true;
+	fromPause = false;
 }
 void Options::Initialise(GameState *state)
 {
@@ -20,9 +21,10 @@ void Options::Initialise(GameState *state)
 
 	gui.add(uiHelper::makeLabel("Mute", sf::Vector2f(750, 300), 32), "Options_volumeValue");
 }
-void Options::Update()
+void Options::Update(bool fromPause)
 {
 	sliderVolumeHandler();
+	backBtnHandler(fromPause);
 	//chkFullScreenHandler();
 }
 void Options::Draw(sf::RenderWindow *window)
@@ -48,5 +50,17 @@ void Options::chkFullScreenHandler()
 		{
 			fullScreen = false;
 			windowPtr->create(sf::VideoMode(1280, 720), "2D Shoot-em Up!", sf::Style::Default);
+	}
+}
+void Options::backBtnHandler(bool fromPause)
+{
+	tgui::Button::Ptr backBtn = gui.get<tgui::Button>("Options_backBtn");
+	if (fromPause)
+	{
+		backBtn->connect("pressed", [&]() {GoToScreen(GameState::Pause); });
+	}
+	else
+	{
+		backBtn->connect("pressed", [&]() {GoToScreen(GameState::MainMenu); });
 	}
 }

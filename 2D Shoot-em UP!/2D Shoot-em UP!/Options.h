@@ -6,11 +6,13 @@ public:
 public:
 	Options(sf::RenderWindow *window);
 	void Initialise(GameState *state);
-	void Update();
+	void Update(bool fromPause);
 	void Draw(sf::RenderWindow *window);
 	void sliderVolumeHandler();
 	void chkFullScreenHandler();
+	void backBtnHandler(bool fromPause);
 	bool fullScreen;
+	bool fromPause;
 private:
 
 };

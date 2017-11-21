@@ -4,6 +4,7 @@ Screen::Screen(sf::RenderWindow *window)
 {
 	gui.setTarget(*window);
 	windowPtr = window;
+	
 }
 
 void Screen::GoToScreen(GameState state)
