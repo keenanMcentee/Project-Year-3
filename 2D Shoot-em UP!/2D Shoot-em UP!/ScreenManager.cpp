@@ -11,7 +11,7 @@ void ScreenManager::Initialise()
 	m_license.Initialise(&currentState);
 	m_mainMenu.Initialise(&currentState);
 	m_options.Initialise(&currentState);
-
+	m_credits.Initialise(&currentState);
 }
 void ScreenManager::Update(sf::Clock *clock)
 {
@@ -107,6 +107,7 @@ void ScreenManager::Draw(sf::RenderWindow *window)
 		m_play.Draw(window);
 		break;
 	case GameState::Credits:
+		m_credits.Draw(window);
 		break;
 	case GameState::QuitScreen:
 		break;

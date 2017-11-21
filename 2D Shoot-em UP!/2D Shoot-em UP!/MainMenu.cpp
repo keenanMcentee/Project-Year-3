@@ -10,15 +10,19 @@ void MainMenu::Initialise(GameState *state)
 
 	currentState = state;
 
-	auto button = uiHelper::makeButton("Play", sf::Vector2f(500, 100), 300, 100);
+	auto button = uiHelper::makeButton("Play", sf::Vector2f(200, 200), 300, 100);
 	button->connect("pressed", [&]() {GoToScreen(GameState::Play); });
 	gui.add(button, "Menu_playBtn");
 
-	button = uiHelper::makeButton("Options", sf::Vector2f(500, 300), 300, 100);
+	button = uiHelper::makeButton("Options", sf::Vector2f(200, 600), 300, 100);
 	button->connect("pressed", [&]() {GoToScreen(GameState::Options); });
 	gui.add(button, "Menu_optionsBtn");
 
-	button = uiHelper::makeButton("Quit", sf::Vector2f(500, 500), 300, 100);
+	button = uiHelper::makeButton("Credits", sf::Vector2f(900, 200), 300, 100);
+	button->connect("pressed", [&]() {GoToScreen(GameState::Credits); });
+	gui.add(button, "Menu_creditsBtn");
+
+	button = uiHelper::makeButton("Quit", sf::Vector2f(900, 600), 300, 100);
 	button->connect("pressed", [&]() {GoToScreen(GameState::QuitScreen); });
 	gui.add(button, "Menu_quitBtn");
 

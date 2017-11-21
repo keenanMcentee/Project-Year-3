@@ -6,18 +6,17 @@ Options::Options(sf::RenderWindow *window) : Screen(window)
 }
 void Options::Initialise(GameState *state)
 {
-	gui.add(uiHelper::makeLabel("OPTIONS SCREEN", sf::Vector2f(100, 100), 32));
+	gui.add(uiHelper::makeLabel("OPTIONS", sf::Vector2f(500, 100), 50));
 	gui.add(uiHelper::makeLabel("Volume", sf::Vector2f(350, 285), 32), "Options_volumeLabel");
 	
 	currentState = state;
 
-	auto button = uiHelper::makeButton("Back", sf::Vector2f(500, 100), 300, 100);
+	auto button = uiHelper::makeButton("Back", sf::Vector2f(900, 600), 300, 100);
 	button->connect("pressed", [&]() {GoToScreen(GameState::MainMenu); });
 	gui.add(button, "Options_backBtn");
 
 	gui.add(uiHelper::makeSlider(sf::Vector2f(500, 300), 200, 18, 100), "Options_volumeSlider");
 	gui.add(uiHelper::makeCheckBox("Mute", sf::Vector2f(500, 500), 50, 50, false), "Options_fullScreen");
-
 
 	gui.add(uiHelper::makeLabel("Mute", sf::Vector2f(750, 300), 32), "Options_volumeValue");
 }
