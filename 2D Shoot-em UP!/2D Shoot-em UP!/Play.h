@@ -1,11 +1,12 @@
 #include "Map.h"
 #include "Screen.h"
 #include "Player.h"
+#include <Box2D\Box2D.h>
 class Play : public Screen
 {
 public:
 	Play(sf::RenderWindow *window);
-	void Update();
+	void Update(sf::Time dt);
 	void Draw(sf::RenderWindow *window);
 
 	Map demoMap;
@@ -14,5 +15,9 @@ public:
 	sf::View view;
 	sf::Keyboard keyboard;
 	sf::Keyboard pastKeyboard;
+
+	b2World* box2d;
+
+	sf::View playerView;
 };
 

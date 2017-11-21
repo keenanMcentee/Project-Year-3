@@ -27,5 +27,7 @@ private:
 	Credits m_credits;
 	Play m_play;
 	GameState currentState;
+	sf::Time lastFrame;
+	sf::Time dt;
 };
 #endif // !SCREENMANAGER

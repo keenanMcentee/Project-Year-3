@@ -25,21 +25,18 @@
     <Filter Include="Header Files\Helper">
       <UniqueIdentifier>{6bc1160d-2668-4808-aa1a-38fa1474dd49}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game Elements">
+      <UniqueIdentifier>{00dd3e1d-01a1-4956-b522-136fae219f2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game Elements">
+      <UniqueIdentifier>{71b318ed-94a9-43ba-af4c-360fd4f373ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Intro.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ScreenManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="License.cpp">
@@ -66,30 +63,27 @@
     <ClCompile Include="Play.cpp">
       <Filter>Source Files\Screens</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="vector2.cpp">
       <Filter>Source Files\Helper</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Game Elements</Filter>
+    </ClCompile>
     <ClCompile Include="Projectile.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\Game Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenManager.cpp">
+      <Filter>Source Files\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files\Game Elements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="uiHelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ScreenManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameStates.h">
@@ -119,14 +113,29 @@
     <ClInclude Include="Play.h">
       <Filter>Header Files\Screens</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="vector2.h">
       <Filter>Header Files\Helper</Filter>
     </ClInclude>
+    <ClInclude Include="uiHelper.h">
+      <Filter>Header Files\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files\Game Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Game Elements</Filter>
+    </ClInclude>
     <ClInclude Include="Projectile.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenManager.h">
+      <Filter>Header Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\Game Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="bodyHelper.h">
+      <Filter>Header Files\Helper</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

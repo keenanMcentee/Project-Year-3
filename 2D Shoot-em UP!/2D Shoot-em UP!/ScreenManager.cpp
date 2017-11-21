@@ -13,7 +13,7 @@ void ScreenManager::Initialise()
 }
 void ScreenManager::Update(sf::Clock *clock)
 {
-	
+	dt = clock->restart();
 	switch (currentState)
 	{
 	case GameState::Licence:
@@ -39,7 +39,7 @@ void ScreenManager::Update(sf::Clock *clock)
 	case GameState::Pause:
 		break;
 	case GameState::Play:
-		m_play.Update();
+		m_play.Update(dt);
 		break;
 	case GameState::Credits:
 		std::cout << "CURRENT SCREEN IS CREDITS" << std::endl;
@@ -50,6 +50,7 @@ void ScreenManager::Update(sf::Clock *clock)
 	default:
 		break;
 	}
+	
 }
 void ScreenManager::handleEvent(sf::Event e)
 {

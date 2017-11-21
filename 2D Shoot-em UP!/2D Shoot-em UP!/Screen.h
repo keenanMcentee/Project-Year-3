@@ -9,6 +9,7 @@ public:
 	tgui::Gui gui;
 	Screen(sf::RenderWindow *window);
 	void GoToScreen(GameState state);
+	sf::RenderWindow* m_window;
 protected:
 	GameState *currentState;
 };

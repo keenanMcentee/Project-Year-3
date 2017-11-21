@@ -141,6 +141,7 @@
     <ClCompile Include="vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bodyHelper.h" />
     <ClInclude Include="Credits.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameStates.h" />
