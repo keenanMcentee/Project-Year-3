@@ -7,6 +7,7 @@
 /// <param name="window"></param>
 Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 {
+	currentState = state;
 	b2Vec2 gravity(0, 0);
 	//box2d->SetGravity(gravity);
 	
@@ -18,13 +19,15 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 	playerView.zoom(4.3f);
 }
 
-/// <summary>
+
+/// 
+/// /// <summary>
 /// updates the player and changes the gamestate to pause if the escape key is pressed
 /// </summary>
 void Play::Update(sf::Time dt)
 {
 	player.Update(dt, keyboard, &playerView);
-
+	currentState;
 	if (keyboard.isKeyPressed(keyboard.Escape))
 	{
 		GoToScreen(GameState::Pause);

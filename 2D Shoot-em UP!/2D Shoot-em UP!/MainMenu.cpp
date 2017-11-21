@@ -23,7 +23,11 @@ void MainMenu::Initialise(GameState *state, bool* fromPause)
 	currentState = state;
 
 	auto button = uiHelper::makeButton("Play", sf::Vector2f(100, 220), 300, 100);
-	button->connect("pressed", [&]() {GoToScreen(GameState::Play); });
+	button->connect("pressed", [&]() {
+		
+		GoToScreen(GameState::Play);
+	
+	});
 	gui.add(button, "Menu_playBtn");
 
 	button = uiHelper::makeButton("Options", sf::Vector2f(100, 580), 300, 100);
