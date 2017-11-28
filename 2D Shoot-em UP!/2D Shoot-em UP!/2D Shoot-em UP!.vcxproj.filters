@@ -84,6 +84,9 @@
     <ClCompile Include="Pause.cpp">
       <Filter>Source Files\Screens</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Game Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -142,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="Pause.h">
       <Filter>Header Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Game Elements</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
