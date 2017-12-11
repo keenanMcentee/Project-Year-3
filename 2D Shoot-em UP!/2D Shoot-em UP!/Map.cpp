@@ -203,7 +203,7 @@ sf::Vector2f Map::assignBlocks(int i)
 	}
 	else
 	{
-		int testX = (i - ((i / 10) * 10)) * 64;
+		int testX = (i - ((i / 9) * 10)) * 64;
 		int testY = (i  / 10) * 64 + (i / 10);
 		texCoord = sf::Vector2f(testX, testY);
 	}

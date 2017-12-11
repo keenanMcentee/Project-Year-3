@@ -12,7 +12,7 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 	//box2d->SetGravity(gravity);
 	
 	mapTexture.loadFromFile("ASSETS/SpriteSheets/DungeonTileSet.png");
-	demoMap.initialise("Level1_Tile Layer 1.csv", "Level1_Tile Layer 2.csv", "", "", &mapTexture);
+	demoMap.initialise("Demo_Tile Layer 1.csv", "Demo_Tile Layer 2.csv", "", "", &mapTexture);
 	player.Initialise(box2d);
 	playerView.reset(tgui::FloatRect(0.0, 0.0, 200.0, 250.0));
 	playerView.setViewport(tgui::FloatRect(0.0, 0.0, 1.0, 1.0));
