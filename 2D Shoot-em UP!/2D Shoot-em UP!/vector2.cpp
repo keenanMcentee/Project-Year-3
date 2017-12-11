@@ -139,6 +139,6 @@ float VECTOR2::mag()
 const std::string VECTOR2::to_str()
 {
 	char tmpbuf[256];
-	sprintf(tmpbuf, "[%f, %f] \n", x, y);
+	sprintf_s(tmpbuf, "[%f, %f] \n", x, y);
 	return tmpbuf;
 }
