@@ -129,7 +129,7 @@ void Map::draw(sf::RenderWindow *window, sf::Vector2f playerPos, bool minimap)
 		{
 			if (!minimap)
 			{
-				sf::FloatRect viewRect = sf::FloatRect(playerPos.x - 800, playerPos.y - 800, 1600, 1600);
+				tgui::FloatRect viewRect = tgui::FloatRect(playerPos.x - 800, playerPos.y - 800, 1600, 1600);
 
 				if (
 					m_mapLayerOne[i][j].m_sprite.getGlobalBounds().intersects(viewRect))
@@ -151,7 +151,7 @@ void Map::draw(sf::RenderWindow *window, sf::Vector2f playerPos, bool minimap)
 		{
 			if (!minimap)
 			{
-				sf::FloatRect viewRect = sf::FloatRect(playerPos.x - 650, playerPos.y - 650, 1300, 1300);
+				tgui::FloatRect viewRect = tgui::FloatRect(playerPos.x - 650, playerPos.y - 650, 1300, 1300);
 
 				if (
 					m_trackLayer[i][j].m_sprite.getGlobalBounds().intersects(viewRect))
@@ -172,7 +172,7 @@ void Map::draw(sf::RenderWindow *window, sf::Vector2f playerPos, bool minimap)
 		{
 			if (!minimap)
 			{
-				sf::FloatRect viewRect = sf::FloatRect(playerPos.x - 650, playerPos.y - 650, 1300, 1300);
+				tgui::FloatRect viewRect = tgui::FloatRect(playerPos.x - 650, playerPos.y - 650, 1300, 1300);
 
 				if (
 					m_obstacleLayer[i][j].m_sprite.getGlobalBounds().intersects(viewRect))

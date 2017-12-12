@@ -127,3 +127,9 @@ void Player::lookAtMouse(sf::RenderWindow &win) {
 
 	m_sprite.setRotation(rotation);
 }
+
+tgui::FloatRect Player::getRect()
+{
+	sf::FloatRect boundingBox = m_sprite.getGlobalBounds();
+	return tgui::FloatRect(boundingBox.left, boundingBox.top, boundingBox.width, boundingBox.height);
+}

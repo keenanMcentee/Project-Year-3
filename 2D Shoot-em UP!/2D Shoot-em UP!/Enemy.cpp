@@ -83,3 +83,8 @@ void Enemy::Draw(sf::RenderWindow *window)
 	window->draw(m_sprite);
 }
 
+tgui::FloatRect Enemy::getRect()
+{	
+	sf::FloatRect boundingBox = m_sprite.getGlobalBounds();
+	return tgui::FloatRect(boundingBox.left, boundingBox.top, boundingBox.width, boundingBox.height);
+}

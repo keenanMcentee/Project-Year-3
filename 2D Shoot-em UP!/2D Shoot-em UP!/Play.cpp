@@ -27,6 +27,7 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 /// </summary>
 void Play::Update(sf::Time dt)
 {
+	HandleCollision();
 	player.Update(dt, keyboard, &playerView);
 	enemy.Update(dt, player.m_sprite.getPosition());
 	currentState;
@@ -34,6 +35,7 @@ void Play::Update(sf::Time dt)
 	{
 		GoToScreen(GameState::Pause);
 	}
+
 
 	pastKeyboard = keyboard;
 }
@@ -51,4 +53,12 @@ void Play::Draw(sf::RenderWindow *window)
 	player.Draw(window);
 	enemy.Draw(window);
 	window->setView(window->getDefaultView());
+}
+
+void Play::HandleCollision()
+{
+	if (player.getRect().intersects(enemy.getRect()))
+	{
+			GoToScreen(GameState::MainMenu);
+	}
 }

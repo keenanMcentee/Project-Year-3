@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <TGUI\TGUI.hpp>
 class Map
 {
 public:

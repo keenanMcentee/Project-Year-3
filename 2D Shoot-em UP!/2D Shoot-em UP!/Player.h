@@ -1,14 +1,13 @@
 #include <SFML\Graphics.hpp>
 #include <Thor\Animations.hpp>
 #include <math.h>
+#include "uiHelper.h"
 #ifndef PROJECTILE
 #define PROJECTILE
 
 #include "Projectile.h"
 
 #endif // !PROJECTILE
-
-
 
 #include <Box2D\Box2D.h>
 #include "bodyHelper.h"
@@ -36,5 +35,7 @@ public:
 	thor::FrameAnimation gunFlashAnimation;
 	float m_fireRate;
 	float m_timeSinceLastShot;
+	tgui::FloatRect getRect();
+
 };
 

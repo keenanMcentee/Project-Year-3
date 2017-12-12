@@ -1,6 +1,7 @@
 #include <SFML\Graphics.hpp>
 #include <Thor\Animations.hpp>
 #include <math.h>
+#include "uiHelper.h"
 
 #ifndef PROJECTILE
 #define PROJECTILE
@@ -15,7 +16,6 @@ class Enemy
 public:
 	Enemy();
 	~Enemy();
-	b2Body* m_body;
 	sf::Texture m_texture;
 	sf::Texture m_bulletTexture;
 	sf::Texture m_flashAnimation;
@@ -34,5 +34,6 @@ public:
 	thor::FrameAnimation gunFlashAnimation;
 	float m_fireRate;
 	float m_timeSinceLastShot;
+	tgui::FloatRect getRect();
 };
 
