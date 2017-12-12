@@ -13,16 +13,16 @@ Map::~Map()
 /// </summary>
 void Map::initialise(std::string layerOneFileName, std::string layerTwoFileName, std::string layerThreeFileName, std::string layerFourFileName, sf::Texture *texture)
 {
-	m_mapLayerOne.clear();
+	m_groundLayer.clear();
 	m_obstacleLayer.clear();
-	m_trackLayer.clear();
+	m_interactionLayer.clear();
 	m_csvLoadedMap.clear();
 	if (layerOneFileName != "")
 		createLayer(layerOneFileName, texture);
 	if (layerTwoFileName != "")
-		createLayer(layerTwoFileName, texture);
+		createObstacleLayer(layerTwoFileName, texture);
 	if (layerThreeFileName != "")
-		createTrackLayer(layerThreeFileName, texture);
+		createInteractiveLayer(layerThreeFileName, texture);
 	if (layerFourFileName != "")
 		createObstacleLayer(layerFourFileName, texture);
 }
@@ -73,37 +73,16 @@ void Map::createLayer(std::string layer, sf::Texture *texture)
 			a.push_back(Tile(texture, sf::IntRect(texturepos.x, texturepos.y, 64, 64), sf::Vector2f(col * 64, row * 64)));
 		}
 		}
-		m_mapLayerOne.push_back(a);
+		m_groundLayer.push_back(a);
 	}
 	m_csvLoadedMap.clear();
 }
 /// <summary>
 /// Handles creating the layer of roads from the map.
 /// </summary>
-void Map::createTrackLayer(std::string layerTwo, sf::Texture *texture)
+void Map::createObstacleLayer(std::string layerTwo, sf::Texture *texture)
 {
 	loadFromFile(layerTwo);
-	for (int row = 0; row < m_csvLoadedMap.size(); row++)
-	{
-		std::vector<Tile> a;
-		for (int col = 0; col < m_csvLoadedMap[row].size(); col++)
-		{
-			if (m_csvLoadedMap[row][col] != -1)
-			{
-				sf::Vector2f texturepos = assignBlocks(m_csvLoadedMap[row][col]);
-				a.push_back(Tile(texture, sf::IntRect(texturepos.x, texturepos.y, 64, 64), sf::Vector2f(col * 64, row * 64)));
-			}
-		}
-		m_trackLayer.push_back(a);
-	}
-	m_csvLoadedMap.clear();
-}
-/// <summary>
-/// Handles creating the obstacle layer for our map.
-/// </summary>
-void Map::createObstacleLayer(std::string layerObstacle, sf::Texture *texture)
-{
-	loadFromFile(layerObstacle);
 	for (int row = 0; row < m_csvLoadedMap.size(); row++)
 	{
 		std::vector<Tile> a;
@@ -119,50 +98,50 @@ void Map::createObstacleLayer(std::string layerObstacle, sf::Texture *texture)
 	}
 	m_csvLoadedMap.clear();
 }
+/// <summary>
+/// Handles creating the obstacle layer for our map.
+/// </summary>
+void Map::createInteractiveLayer(std::string layerObstacle, sf::Texture *texture)
+{
+	loadFromFile(layerObstacle);
+	for (int row = 0; row < m_csvLoadedMap.size(); row++)
+	{
+		std::vector<Tile> a;
+		for (int col = 0; col < m_csvLoadedMap[row].size(); col++)
+		{
+			if (m_csvLoadedMap[row][col] != -1)
+			{
+				sf::Vector2f texturepos = assignBlocks(m_csvLoadedMap[row][col]);
+				a.push_back(Tile(texture, sf::IntRect(texturepos.x, texturepos.y, 64, 64), sf::Vector2f(col * 64, row * 64)));
+			}
+		}
+		m_interactionLayer.push_back(a);
+	}
+	m_csvLoadedMap.clear();
+}
 
 void Map::draw(sf::RenderWindow *window, sf::Vector2f playerPos, bool minimap)
 {
 	int tilesDrawing = 0;
-	for (int i = 0; i < m_mapLayerOne.size(); i++)
+	for (int i = 0; i < m_groundLayer.size(); i++)
 	{
-		for (int j = 0; j < m_mapLayerOne[i].size(); j++)
+		for (int j = 0; j < m_groundLayer[i].size(); j++)
 		{
 			if (!minimap)
 			{
-				sf::FloatRect viewRect = sf::FloatRect(playerPos.x - 800, playerPos.y - 800, 1600, 1600);
+				tgui::FloatRect viewRect = tgui::FloatRect(playerPos.x - 800, playerPos.y - 800, 1600, 1600);
 
 				if (
-					m_mapLayerOne[i][j].m_sprite.getGlobalBounds().intersects(viewRect))
+					m_groundLayer[i][j].m_sprite.getGlobalBounds().intersects(viewRect))
 				{
 					
 					tilesDrawing++;
 				}
-				m_mapLayerOne[i][j].draw(window);
+				m_groundLayer[i][j].draw(window);
 			}
 			else
 			{
-				m_mapLayerOne[i][j].draw(window);
-			}
-		}
-	}
-	for (int i = 0; i < m_trackLayer.size(); i++)
-	{
-		for (int j = 0; j < m_trackLayer[i].size(); j++)
-		{
-			if (!minimap)
-			{
-				sf::FloatRect viewRect = sf::FloatRect(playerPos.x - 650, playerPos.y - 650, 1300, 1300);
-
-				if (
-					m_trackLayer[i][j].m_sprite.getGlobalBounds().intersects(viewRect))
-				{
-					m_trackLayer[i][j].draw(window);
-					tilesDrawing++;
-				}
-			}
-			else
-			{
-				m_trackLayer[i][j].draw(window);
+				m_groundLayer[i][j].draw(window);
 			}
 		}
 	}
@@ -172,7 +151,7 @@ void Map::draw(sf::RenderWindow *window, sf::Vector2f playerPos, bool minimap)
 		{
 			if (!minimap)
 			{
-				sf::FloatRect viewRect = sf::FloatRect(playerPos.x - 650, playerPos.y - 650, 1300, 1300);
+				tgui::FloatRect viewRect = tgui::FloatRect(playerPos.x - 650, playerPos.y - 650, 1300, 1300);
 
 				if (
 					m_obstacleLayer[i][j].m_sprite.getGlobalBounds().intersects(viewRect))
@@ -184,6 +163,27 @@ void Map::draw(sf::RenderWindow *window, sf::Vector2f playerPos, bool minimap)
 			else
 			{
 				m_obstacleLayer[i][j].draw(window);
+			}
+		}
+	}
+	for (int i = 0; i < m_interactionLayer.size(); i++)
+	{
+		for (int j = 0; j < m_interactionLayer[i].size(); j++)
+		{
+			if (!minimap)
+			{
+				tgui::FloatRect viewRect = tgui::FloatRect(playerPos.x - 650, playerPos.y - 650, 1300, 1300);
+
+				if (
+					m_interactionLayer[i][j].m_sprite.getGlobalBounds().intersects(viewRect))
+				{
+					m_interactionLayer[i][j].draw(window);
+					tilesDrawing++;
+				}
+			}
+			else
+			{
+				m_interactionLayer[i][j].draw(window);
 			}
 		}
 	}
@@ -204,7 +204,7 @@ sf::Vector2f Map::assignBlocks(int i)
 	else
 	{
 		int testX = (i - ((i / 9) * 10)) * 64;
-		int testY = (i  / 10) * 64 + (i / 10);
+		int testY = (i  / 10) * 64;
 		texCoord = sf::Vector2f(testX, testY);
 	}
 	return texCoord;

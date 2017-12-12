@@ -1,7 +1,11 @@
 #include "Map.h"
 #include "Screen.h"
 #include "Player.h"
-#include <Box2D\Box2D.h>
+#include "Merchant.h"
+#include <math.h>
+#include <SFGUI\SFGUI.hpp>
+#include <SFGUI\Widgets.hpp>
+#include <SFML\Graphics.hpp>
 class Play : public Screen
 {
 public:
@@ -14,9 +18,14 @@ public:
 	sf::View view;
 	sf::Keyboard keyboard;
 	sf::Keyboard pastKeyboard;
-
-	b2World* box2d;
-
+	Merchant merchant;
 	sf::View playerView;
+	float distBetween(sf::Vector2f playerPos, sf::Vector2f OtherPos);
+	sfg::SFGUI sfgui;
+	sfg::Desktop shop;
+	bool shopVisible;
+	void handleEvent(sf::Event e);
+	void closeShop();
+
 };
 

@@ -1,13 +1,12 @@
 #include <SFML\Graphics.hpp>
+#include <SFML\Audio.hpp>
 #include <Thor\Animations.hpp>
 #include <math.h>
 #include "Projectile.h"
-#include <Box2D\Box2D.h>
-#include "bodyHelper.h"
+#include "uiHelper.h"
 class Player
 {
 public:
-	b2Body* m_body;
 	sf::Texture m_texture;
 	sf::Texture m_bulletTexture;
 	sf::Texture m_flashAnimation;
@@ -15,8 +14,9 @@ public:
 	sf::Sprite m_sprite;
 	sf::Sprite m_gunFlash;
 	sf::Vector2f m_position;
+	sf::Vector2f m_previousPos;
 	Player();
-	void Initialise(b2World* world);
+	void Initialise();
 	void Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view);
 	void Draw(sf::RenderWindow *window);
 	void HandleMovement(sf::Keyboard &keyboard, sf::View *view);
@@ -28,5 +28,8 @@ public:
 	thor::FrameAnimation gunFlashAnimation;
 	float m_fireRate;
 	float m_timeSinceLastShot;
+	void CheckCollision(tgui::FloatRect &tile);
+
+	sf::SoundBuffer buffer;
 };
 

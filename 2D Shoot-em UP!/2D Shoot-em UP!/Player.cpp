@@ -7,7 +7,7 @@ Player::Player()
 /// <summary>
 /// 
 /// </summary>
-void Player::Initialise(b2World* world)
+void Player::Initialise()
 {
 	
 	m_texture.loadFromFile("ASSETS/playerSprite.png");
@@ -29,7 +29,6 @@ void Player::Initialise(b2World* world)
 	m_speed = 2;
 	m_fireRate = 0.1f;
 
-	//m_body = bodyHelper::makeBody(world, m_sprite.getPosition(), sf::Vector2f(m_sprite.getLocalBounds().width, m_sprite.getLocalBounds().height), b2BodyType::b2_dynamicBody);
 }
 /// <summary>
 /// 
@@ -37,6 +36,8 @@ void Player::Initialise(b2World* world)
 /// <param name="keyboard"></param>
 void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
 {
+	m_previousPos = m_position;
+	
 	animator.update(dt);
 	animator.animate(m_gunFlash);
 	
@@ -49,7 +50,6 @@ void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
 
 	m_timeSinceLastShot += dt.asSeconds();
 
-	
 }
 /// <summary>
 /// 
@@ -97,6 +97,14 @@ void Player::HandleMovement(sf::Keyboard &keyboard, sf::View *view)
 		m_position.y += m_speed;
 		view->move(sf::Vector2f(0, m_speed));
 	}
+	if (keyboard.isKeyPressed(keyboard.LShift))
+	{
+		m_speed = 10;
+	}
+	else
+	{
+		m_speed = 2;
+	}
 	
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_timeSinceLastShot > m_fireRate)
 	{
@@ -126,4 +134,13 @@ void Player::lookAtMouse(sf::RenderWindow &win) {
 	rotation = ((atan2(dy, dx)) * 180 / pi) + 180;
 
 	m_sprite.setRotation(rotation);
+}
+
+void Player::CheckCollision(tgui::FloatRect &tile)
+{
+	if (tile.intersects(m_sprite.getGlobalBounds()))
+	{
+		m_position = m_previousPos;
+		
+	}
 }

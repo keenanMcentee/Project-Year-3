@@ -136,6 +136,7 @@
     <ClCompile Include="License.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="Pause.cpp" />
     <ClCompile Include="Play.cpp" />
@@ -148,7 +149,6 @@
     <ClCompile Include="vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bodyHelper.h" />
     <ClInclude Include="Credits.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
@@ -157,6 +157,7 @@
     <ClInclude Include="License.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Merchant.h" />
     <ClInclude Include="Options.h" />
     <ClInclude Include="Pause.h" />
     <ClInclude Include="Play.h" />

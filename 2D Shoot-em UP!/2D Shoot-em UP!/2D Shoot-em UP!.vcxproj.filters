@@ -87,6 +87,9 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\Game Elements</Filter>
     </ClCompile>
+    <ClCompile Include="Merchant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -140,14 +143,14 @@
     <ClInclude Include="Tile.h">
       <Filter>Header Files\Game Elements</Filter>
     </ClInclude>
-    <ClInclude Include="bodyHelper.h">
-      <Filter>Header Files\Helper</Filter>
-    </ClInclude>
     <ClInclude Include="Pause.h">
       <Filter>Header Files\Screens</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Header Files\Game Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Merchant.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

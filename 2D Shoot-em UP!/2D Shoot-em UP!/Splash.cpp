@@ -20,7 +20,7 @@ void Splash::Initialise(GameState *state)
 
 	currentState = state;
 
-	auto button = uiHelper::makeButton("Go To Menu", sf::Vector2f(500, 300), 300, 100);
+	auto button = uiHelper::makeButton("Go To Menu", sf::Vector2f(300, 300), 200, 100);
 	button->connect("pressed", [&]() {GoToScreen(GameState::MainMenu); });
 	gui.add(button, "Splash_nextButton");
 }

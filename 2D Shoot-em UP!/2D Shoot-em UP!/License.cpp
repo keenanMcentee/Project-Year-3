@@ -21,7 +21,7 @@ void License::Initialise(GameState *state)
 
 	currentState = state;
 
-	auto button = uiHelper::makeButton("Go To Splash", sf::Vector2f(500, 300), 300, 100);
+	auto button = uiHelper::makeButton("Go To Splash", sf::Vector2f(300, 300), 200, 100);
 	button->connect("pressed", [&]() {GoToScreen(GameState::Splash); });
 	gui.add(button, "License_SplashBtn");
 }

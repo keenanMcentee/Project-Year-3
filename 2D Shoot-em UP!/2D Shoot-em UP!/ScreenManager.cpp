@@ -97,6 +97,7 @@ void ScreenManager::handleEvent(sf::Event e)
 		break;
 	case GameState::Play:
 		m_play.gui.handleEvent(e);
+		m_play.handleEvent(e);
 		break;
 	case GameState::Credits:
 		m_credits.gui.handleEvent(e);

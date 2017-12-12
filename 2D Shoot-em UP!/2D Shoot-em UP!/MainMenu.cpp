@@ -22,7 +22,7 @@ void MainMenu::Initialise(GameState *state, bool* fromPause)
 
 	currentState = state;
 
-	auto button = uiHelper::makeButton("Play", sf::Vector2f(100, 220), 300, 100);
+	auto button = uiHelper::makeButton("Play", sf::Vector2f(50, 220), 200, 100);
 	button->connect("pressed", [&]() {
 		
 		GoToScreen(GameState::Play);
@@ -30,22 +30,22 @@ void MainMenu::Initialise(GameState *state, bool* fromPause)
 	});
 	gui.add(button, "Menu_playBtn");
 
-	button = uiHelper::makeButton("Options", sf::Vector2f(100, 580), 300, 100);
+	button = uiHelper::makeButton("Options", sf::Vector2f(50, 580), 200, 100);
 	button->connect("pressed", [&]() {
 		GoToScreen(GameState::Options);
 		*m_fromPause = false;
 	});
 	gui.add(button, "Menu_optionsBtn");
 	
-	button = uiHelper::makeButton("Credits", sf::Vector2f(900, 220), 300, 100);
+	button = uiHelper::makeButton("Credits", sf::Vector2f(500, 220), 200, 100);
 	button->connect("pressed", [&]() {GoToScreen(GameState::Credits); });
 	gui.add(button, "Menu_creditsBtn");
 
-	button = uiHelper::makeButton("Help", sf::Vector2f(500, 400), 300, 100);
+	button = uiHelper::makeButton("Help", sf::Vector2f(300, 400), 200, 100);
 	button->connect("pressed", [&]() {GoToScreen(GameState::Help); });
 	gui.add(button, "Menu_helpBtn");
 
-	button = uiHelper::makeButton("Quit", sf::Vector2f(900, 580), 300, 100);
+	button = uiHelper::makeButton("Quit", sf::Vector2f(500, 580), 200, 100);
 	button->connect("pressed", [&]() {windowPtr->close(); });
 	gui.add(button, "Menu_quitBtn");
 
