@@ -25,6 +25,7 @@ void ScreenManager::Initialise()
 	m_credits.Initialise(&currentState);
 	m_pause.Initialise(&currentState, &fromPause);
 	m_help.Initialise(&currentState);
+
 }
 
 /// <summary>

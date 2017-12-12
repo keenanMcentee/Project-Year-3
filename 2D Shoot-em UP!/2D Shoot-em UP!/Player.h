@@ -1,7 +1,15 @@
 #include <SFML\Graphics.hpp>
 #include <Thor\Animations.hpp>
 #include <math.h>
+#ifndef PROJECTILE
+#define PROJECTILE
+
 #include "Projectile.h"
+
+#endif // !PROJECTILE
+
+
+
 #include <Box2D\Box2D.h>
 #include "bodyHelper.h"
 class Player

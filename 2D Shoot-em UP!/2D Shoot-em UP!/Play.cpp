@@ -14,6 +14,7 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 	mapTexture.loadFromFile("ASSETS/SpriteSheets/DungeonTileSet.png");
 	demoMap.initialise("Demo_Tile Layer 1.csv", "Demo_Tile Layer 2.csv", "", "", &mapTexture);
 	player.Initialise(box2d);
+	enemy.Initialise();
 	playerView.reset(tgui::FloatRect(0.0, 0.0, 200.0, 250.0));
 	playerView.setViewport(tgui::FloatRect(0.0, 0.0, 1.0, 1.0));
 	playerView.zoom(4.3f);
@@ -27,6 +28,7 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 void Play::Update(sf::Time dt)
 {
 	player.Update(dt, keyboard, &playerView);
+	enemy.Update(dt, player.m_sprite.getPosition());
 	currentState;
 	if (keyboard.isKeyPressed(keyboard.Escape))
 	{
@@ -46,9 +48,7 @@ void Play::Draw(sf::RenderWindow *window)
 	window->setView(playerView);
 	demoMap.draw(window, sf::Vector2f(0, 0), true);
 	
-	
-
 	player.Draw(window);
-
+	enemy.Draw(window);
 	window->setView(window->getDefaultView());
 }
