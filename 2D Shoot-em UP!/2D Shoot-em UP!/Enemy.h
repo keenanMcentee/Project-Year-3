@@ -23,7 +23,7 @@ public:
 	sf::Sprite m_sprite;
 	sf::Sprite m_gunFlash;
 	sf::Vector2f m_position;
-
+	sf::String m_direction;
 	void Initialise();
 	void Update(sf::Time dt, sf::Vector2f playerPos);
 	void Draw(sf::RenderWindow *window);
