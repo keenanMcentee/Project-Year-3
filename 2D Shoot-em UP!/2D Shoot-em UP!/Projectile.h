@@ -1,5 +1,9 @@
 #include <SFML\Graphics.hpp>
 #include "uiHelper.h"
+
+#ifndef PROJECTILE
+#define PROJECTILE
+
 class Projectile
 {
 public:
@@ -18,3 +22,5 @@ private:
 	sf::Sprite m_sprite;
 };
 
+
+#endif // !PROJECTILE

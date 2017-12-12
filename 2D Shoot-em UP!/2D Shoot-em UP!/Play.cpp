@@ -51,6 +51,8 @@ void Play::Update(sf::Time dt)
 	float time = dt.asSeconds();
 	shop.Update(time);
 	merchant.update(dt);
+	player.Update(dt, keyboard, &playerView, &enemy);
+	enemy.Update(dt, player.m_sprite.getPosition());
 	for each  (std::vector<Tile>  v in demoMap.m_obstacleLayer)
 	{
 		for each  (Tile t in v)
@@ -60,8 +62,8 @@ void Play::Update(sf::Time dt)
 		}
 	}
 	HandleCollision();
-	player.Update(dt, keyboard, &playerView, &enemy);
-	enemy.Update(dt, player.m_sprite.getPosition());
+	
+	
 	currentState;
 	if (keyboard.isKeyPressed(keyboard.Escape))
 	{
@@ -92,8 +94,6 @@ void Play::Draw(sf::RenderWindow *window)
 	playerView.setCenter(player.m_position);
 	window->setView(playerView);
 	demoMap.draw(window, sf::Vector2f(0, 0), true);
-	
-	window->setView(window->getDefaultView());
 
 	player.Draw(window);
 	enemy.Draw(window);
@@ -116,8 +116,9 @@ void Play::HandleCollision()
 {
 	if (player.getRect().intersects(enemy.getRect()))
 	{
-			GoToScreen(GameState::MainMenu);
+		GoToScreen(GameState::MainMenu);
 	}
+}
 void Play::handleEvent(sf::Event e)
 {
 	shop.HandleEvent(e);

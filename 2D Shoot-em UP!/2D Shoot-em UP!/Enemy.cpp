@@ -44,19 +44,19 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 		m_direction = "Right";
 	}
 
-	else if (m_position.x > playerPos.x)
+	if (m_position.x > playerPos.x)
 	{
 		m_position.x -= m_speed;
 		m_direction = "Left";
 	}
 
-	else if (m_position.y < playerPos.y)
+	if (m_position.y < playerPos.y)
 	{
 		m_position.y += m_speed;
 		m_direction = "Down";
 	}
 
-	else if (m_position.y > playerPos.y)
+	if (m_position.y > playerPos.y)
 	{
 		m_position.y -= m_speed;
 		m_direction = "Up";

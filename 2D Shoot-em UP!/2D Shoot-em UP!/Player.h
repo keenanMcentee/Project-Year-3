@@ -4,17 +4,10 @@
 #include <math.h>
 #include "uiHelper.h"
 
-#ifndef PROJECTILE
-#define PROJECTILE
 #include "Projectile.h"
-#endif // !PROJECTILE
+#include "uiHelper.h"
 
-#include <Box2D\Box2D.h>
-#include "bodyHelper.h"
-#ifndef ENEMY
-#define ENEMY
 #include "Enemy.h"
-#endif // !ENEMY
 
 class Player
 {
@@ -28,7 +21,7 @@ public:
 	sf::Vector2f m_position;
 	sf::Vector2f m_previousPos;
 	Player();
-	void Initialise(b2World* world);
+	void Initialise();
 	void Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view, Enemy *enemy);
 	void Draw(sf::RenderWindow *window);
 	void HandleMovement(sf::Keyboard &keyboard, sf::View *view);

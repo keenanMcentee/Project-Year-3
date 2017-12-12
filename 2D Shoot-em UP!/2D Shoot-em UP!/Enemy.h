@@ -2,15 +2,10 @@
 #include <Thor\Animations.hpp>
 #include <math.h>
 #include "uiHelper.h"
-
-#ifndef PROJECTILE
-#define PROJECTILE
 #include "Projectile.h"
 
-#endif // !PROJECTILE
-
-
-#include "bodyHelper.h"
+#ifndef ENEMY
+#define ENEMY
 class Enemy
 {
 public:
@@ -38,4 +33,6 @@ public:
 
 	bool alive;
 };
+#endif
+
 

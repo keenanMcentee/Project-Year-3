@@ -24,7 +24,7 @@ void Player::Initialise()
 
 	m_sprite.setTexture(m_texture);
 	m_sprite.setOrigin(m_sprite.getLocalBounds().width / 2, m_sprite.getLocalBounds().height / 2);
-	m_position = sf::Vector2f(256, 256);
+	m_position = sf::Vector2f(600, 256);
 	m_sprite.scale(0.5f, 0.5f);
 	m_speed = 2;
 	m_fireRate = 0.1f;
@@ -36,6 +36,8 @@ void Player::Initialise()
 /// <param name="keyboard"></param>
 void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view, Enemy *enemy)
 {
+	std::cout << std::to_string(m_sprite.getPosition().x) << std::endl;
+	std::cout << std::to_string(m_position.x) << std::endl;
 	m_previousPos = m_position;
 	
 	animator.update(dt);
@@ -58,7 +60,7 @@ void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view, Enemy *
 /// <param name="window"></param>
 void Player::Draw(sf::RenderWindow *window)
 {
-	
+	std::cout << std::to_string(m_sprite.getPosition().x) << std::endl;
 	m_gunFlash.setPosition(m_position + sf::Vector2f(cos(rotation * 3.14 / 180) * 23, sin(rotation * 3.14 / 180) * 23));
 	m_gunFlash.setRotation(rotation);
 	lookAtMouse(*window);
@@ -149,7 +151,6 @@ void Player::bulletEnemyCollision(Projectile b, Enemy *enemy)
 	{
 		enemy->alive = false;
 	}
-}
 }
 
 void Player::CheckCollision(tgui::FloatRect &tile)
