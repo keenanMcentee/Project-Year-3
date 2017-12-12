@@ -28,7 +28,7 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 void Play::Update(sf::Time dt)
 {
 	HandleCollision();
-	player.Update(dt, keyboard, &playerView);
+	player.Update(dt, keyboard, &playerView, &enemy);
 	enemy.Update(dt, player.m_sprite.getPosition());
 	currentState;
 	if (keyboard.isKeyPressed(keyboard.Escape))

@@ -35,7 +35,7 @@ void Player::Initialise(b2World* world)
 /// 
 /// </summary>
 /// <param name="keyboard"></param>
-void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
+void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view, Enemy *enemy)
 {
 	animator.update(dt);
 	animator.animate(m_gunFlash);
@@ -44,6 +44,7 @@ void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
 	for (auto &b : bullets)
 	{
 		b.update();
+		bulletEnemyCollision(b, enemy);
 	}
 	m_sprite.setPosition(m_position);
 
@@ -132,4 +133,12 @@ tgui::FloatRect Player::getRect()
 {
 	sf::FloatRect boundingBox = m_sprite.getGlobalBounds();
 	return tgui::FloatRect(boundingBox.left, boundingBox.top, boundingBox.width, boundingBox.height);
+}
+
+void Player::bulletEnemyCollision(Projectile b, Enemy *enemy)
+{
+	if (b.getRect().intersects(enemy->getRect()))
+	{
+		enemy->alive = false;
+	}
 }

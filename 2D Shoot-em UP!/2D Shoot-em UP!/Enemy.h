@@ -35,5 +35,7 @@ public:
 	float m_fireRate;
 	float m_timeSinceLastShot;
 	tgui::FloatRect getRect();
+
+	bool alive;
 };
 

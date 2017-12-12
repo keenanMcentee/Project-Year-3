@@ -22,16 +22,22 @@ void Enemy::Initialise()
 	m_sprite.scale(3, 3);
 	m_sprite.setPosition(m_position);
 	m_speed = 1;
+
+	alive = true;
 }
 
 void Enemy::Update(sf::Time dt, sf::Vector2f playerPos)
 {
-	HandleMovement(playerPos);
-	m_sprite.setPosition(m_position);
+	if (alive)
+	{
+		HandleMovement(playerPos);
+		m_sprite.setPosition(m_position);
+	}
 }
 
 void Enemy::HandleMovement(sf::Vector2f playerPos)
 {
+	
 	if (m_position.x < playerPos.x)
 	{
 		m_position.x += m_speed;
@@ -75,16 +81,23 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 	{
 		m_sprite.setRotation(270);
 	}
-
 }
 
 void Enemy::Draw(sf::RenderWindow *window)
 {
-	window->draw(m_sprite);
+	if (alive)
+		window->draw(m_sprite);
 }
 
 tgui::FloatRect Enemy::getRect()
 {	
-	sf::FloatRect boundingBox = m_sprite.getGlobalBounds();
-	return tgui::FloatRect(boundingBox.left, boundingBox.top, boundingBox.width, boundingBox.height);
+	if (alive)
+	{
+		sf::FloatRect boundingBox = m_sprite.getGlobalBounds();
+		return tgui::FloatRect(boundingBox.left, boundingBox.top, boundingBox.width, boundingBox.height);
+	}
+	else
+	{
+		return tgui::FloatRect(0,0,0,0);
+	}
 }
