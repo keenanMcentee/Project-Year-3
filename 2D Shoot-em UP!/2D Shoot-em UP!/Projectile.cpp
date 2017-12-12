@@ -36,3 +36,9 @@ bool Projectile::isAlive()
 {
 	return m_alive;
 }
+
+tgui::FloatRect Projectile::getRect()
+{
+	sf::FloatRect boundingBox = m_sprite.getGlobalBounds();
+	return tgui::FloatRect(boundingBox.left, boundingBox.top, boundingBox.width, boundingBox.height);
+}

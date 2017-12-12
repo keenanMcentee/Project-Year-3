@@ -34,7 +34,7 @@ void Player::Initialise()
 /// 
 /// </summary>
 /// <param name="keyboard"></param>
-void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
+void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view, Enemy *enemy)
 {
 	m_previousPos = m_position;
 	
@@ -45,6 +45,7 @@ void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
 	for (auto &b : bullets)
 	{
 		b.update();
+		bulletEnemyCollision(b, enemy);
 	}
 	m_sprite.setPosition(m_position);
 
@@ -134,6 +135,21 @@ void Player::lookAtMouse(sf::RenderWindow &win) {
 	rotation = ((atan2(dy, dx)) * 180 / pi) + 180;
 
 	m_sprite.setRotation(rotation);
+}
+
+tgui::FloatRect Player::getRect()
+{
+	sf::FloatRect boundingBox = m_sprite.getGlobalBounds();
+	return tgui::FloatRect(boundingBox.left, boundingBox.top, boundingBox.width, boundingBox.height);
+}
+
+void Player::bulletEnemyCollision(Projectile b, Enemy *enemy)
+{
+	if (b.getRect().intersects(enemy->getRect()))
+	{
+		enemy->alive = false;
+	}
+}
 }
 
 void Player::CheckCollision(tgui::FloatRect &tile)

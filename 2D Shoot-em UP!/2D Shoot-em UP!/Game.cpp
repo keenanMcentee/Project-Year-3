@@ -33,7 +33,6 @@ void Game::Run()
 		}
 		Update(clock);
 		Draw();
-
 	}
 }
 /// <summary>

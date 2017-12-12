@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Merchant.h"
 #include <math.h>
+#include "Enemy.h"
 #include <SFGUI\SFGUI.hpp>
 #include <SFGUI\Widgets.hpp>
 #include <SFML\Graphics.hpp>
@@ -12,9 +13,11 @@ public:
 	Play(sf::RenderWindow *window, GameState *state);
 	void Update(sf::Time dt);
 	void Draw(sf::RenderWindow *window);
+	void HandleCollision();
 	Map demoMap;
 	sf::Texture mapTexture;
 	Player player;
+	Enemy enemy;
 	sf::View view;
 	sf::Keyboard keyboard;
 	sf::Keyboard pastKeyboard;

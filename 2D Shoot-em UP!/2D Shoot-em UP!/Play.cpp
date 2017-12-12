@@ -12,6 +12,7 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 	mapTexture.loadFromFile("ASSETS/SpriteSheets/DungeonTileSet.png");
 	demoMap.initialise("Demo_Tile Layer 1.csv", "Demo_Tile Layer 2.csv", "", "", &mapTexture);
 	player.Initialise();
+	enemy.Initialise();
 	playerView.reset(tgui::FloatRect(0.0, 0.0, 200.0, 250.0));
 	playerView.setViewport(tgui::FloatRect(0.0, 0.0, 1.0, 1.0));
 	playerView.zoom(4.3f);
@@ -49,7 +50,6 @@ void Play::Update(sf::Time dt)
 {
 	float time = dt.asSeconds();
 	shop.Update(time);
-	player.Update(dt, keyboard, &playerView);
 	merchant.update(dt);
 	for each  (std::vector<Tile>  v in demoMap.m_obstacleLayer)
 	{
@@ -59,6 +59,9 @@ void Play::Update(sf::Time dt)
 			player.CheckCollision(tileRect);
 		}
 	}
+	HandleCollision();
+	player.Update(dt, keyboard, &playerView, &enemy);
+	enemy.Update(dt, player.m_sprite.getPosition());
 	currentState;
 	if (keyboard.isKeyPressed(keyboard.Escape))
 	{
@@ -90,9 +93,11 @@ void Play::Draw(sf::RenderWindow *window)
 	window->setView(playerView);
 	demoMap.draw(window, sf::Vector2f(0, 0), true);
 	
-	
+	window->setView(window->getDefaultView());
 
 	player.Draw(window);
+	enemy.Draw(window);
+	
 	merchant.draw(window);
 	if (shopVisible)
 	{
@@ -107,6 +112,12 @@ float Play::distBetween(sf::Vector2f pos1, sf::Vector2f pos2)
 	return std::sqrt(std::pow(pos2.x - pos1.x, 2) + std::pow(pos2.y - pos1.y, 2));
 }
 
+void Play::HandleCollision()
+{
+	if (player.getRect().intersects(enemy.getRect()))
+	{
+			GoToScreen(GameState::MainMenu);
+	}
 void Play::handleEvent(sf::Event e)
 {
 	shop.HandleEvent(e);

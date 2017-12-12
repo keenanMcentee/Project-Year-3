@@ -2,8 +2,20 @@
 #include <SFML\Audio.hpp>
 #include <Thor\Animations.hpp>
 #include <math.h>
-#include "Projectile.h"
 #include "uiHelper.h"
+
+#ifndef PROJECTILE
+#define PROJECTILE
+#include "Projectile.h"
+#endif // !PROJECTILE
+
+#include <Box2D\Box2D.h>
+#include "bodyHelper.h"
+#ifndef ENEMY
+#define ENEMY
+#include "Enemy.h"
+#endif // !ENEMY
+
 class Player
 {
 public:
@@ -16,10 +28,11 @@ public:
 	sf::Vector2f m_position;
 	sf::Vector2f m_previousPos;
 	Player();
-	void Initialise();
-	void Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view);
+	void Initialise(b2World* world);
+	void Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view, Enemy *enemy);
 	void Draw(sf::RenderWindow *window);
 	void HandleMovement(sf::Keyboard &keyboard, sf::View *view);
+	void bulletEnemyCollision(Projectile b, Enemy *enemy);
 	float m_speed;
 	void lookAtMouse(sf::RenderWindow &win);
 	float rotation;
@@ -31,5 +44,7 @@ public:
 	void CheckCollision(tgui::FloatRect &tile);
 
 	sf::SoundBuffer buffer;
+	tgui::FloatRect getRect();
+
 };
 
