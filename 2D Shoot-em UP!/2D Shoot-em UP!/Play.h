@@ -30,5 +30,6 @@ public:
 	void handleEvent(sf::Event e);
 	void closeShop();
 
+
 };
 
