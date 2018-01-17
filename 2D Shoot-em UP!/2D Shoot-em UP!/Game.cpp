@@ -4,7 +4,7 @@
 /// Game Constructor
 /// Sets window size, name, framerate, style and creates the screemanager and passes it the renderwindow
 /// </summary>
-Game::Game() : m_window(sf::VideoMode(720,720), "2D Shoot-em Up!", sf::Style::Default), m_screenManager(&m_window)
+Game::Game() : m_window(sf::VideoMode(1200,1200), "2D Shoot-em Up!", sf::Style::Default), m_screenManager(&m_window)
 {
 	m_window.setFramerateLimit(60);
 	//gui.setTarget(m_window);

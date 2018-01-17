@@ -12,7 +12,7 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 	mapTexture.loadFromFile("ASSETS/SpriteSheets/DungeonTileSet.png");
 	demoMap.initialise("Demo_Tile Layer 1.csv", "Demo_Tile Layer 2.csv", "", "", &mapTexture);
 	player.Initialise();
-	enemy.Initialise();
+	//enemy.Initialise();
 	playerView.reset(tgui::FloatRect(0.0, 0.0, 200.0, 250.0));
 	playerView.setViewport(tgui::FloatRect(0.0, 0.0, 1.0, 1.0));
 	playerView.zoom(4.3f);
@@ -22,23 +22,20 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 	auto label = sfg::Label::Create("Shop!");
 	auto screen = this;
 	// Create a simple button and connect the click signal.
-	auto button = sfg::Button::Create("Greet SFGUI!");
-	//std::function<void()> closeTheShop = []() { closeShop(); };
-	button->GetSignal(sfg::Widget::OnLeftClick).Connect([screen]() { screen->closeShop(); });
+	auto btnQuit = sfg::Button::Create("QUIT!");
+	btnQuit->GetSignal(sfg::Widget::OnLeftClick).Connect([screen]() { screen->closeShop(); });
 
 	auto box = sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 500);
 	
 	box->Pack(label);
-	box->Pack(button, false);
-	
+	box->Pack(btnQuit, false);
 	
 	auto shopWindow = sfg::Window::Create();
-	
 	
 	shopWindow->SetPosition(sf::Vector2f(250, 250));
 	//Requisition is Size...?
 	
-	shopWindow->SetRequisition(sf::Vector2f(400, 200));
+	shopWindow->SetRequisition(sf::Vector2f(800, 800));
 	shopWindow->SetTitle("Shop!");
 	shopWindow->Add(box);
 
