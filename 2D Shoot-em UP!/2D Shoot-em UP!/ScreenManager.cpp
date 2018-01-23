@@ -9,7 +9,7 @@
 ScreenManager::ScreenManager(sf::RenderWindow *window) : m_splash(window), m_license(window), m_mainMenu(window), m_options(window),
 m_help(window), m_credits(window), m_play(window, &currentState), m_pause(window)
 {
-	currentState = GameState::Licence;
+	currentState = GameState::Play;
 }
 
 /// <summary>
@@ -66,7 +66,6 @@ void ScreenManager::Update(sf::Clock *clock)
 	default:
 		break;
 	}
-	
 }
 
 /// <summary>

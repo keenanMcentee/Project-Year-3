@@ -18,21 +18,27 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 	playerView.zoom(4.3f);
 	merchant.initialise();
 
-	// Create the label.
-	auto label = sfg::Label::Create("Shop!");
+	 //Create the label.
 	auto screen = this;
 	// Create a simple button and connect the click signal.
 	auto btnQuit = sfg::Button::Create("QUIT!");
-	btnQuit->GetSignal(sfg::Widget::OnLeftClick).Connect([screen]() { screen->closeShop(); });
+	auto btnAssaultRifle = sfg::Button::Create("Assault Rifle");
+	auto btnSMG = sfg::Button::Create("Sub Machine Gun");
+	auto btnMachineGun = sfg::Button::Create("Machine Gun");
 
-	auto box = sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 500);
+	//btnQuit->GetSignal(sfg::Widget::OnLeftClick).Connect([screen]() { screen->closeShop(); });
+
+	auto box = sfg::Box::Create();
 	
-	box->Pack(label);
+	box->Pack(btnAssaultRifle, false);
+	box->Pack(btnSMG, false);
+	box->Pack(btnMachineGun, false);
 	box->Pack(btnQuit, false);
-	
+
+	box->Pack(sfg::Separator::Create());
+	//
 	auto shopWindow = sfg::Window::Create();
-	
-	shopWindow->SetPosition(sf::Vector2f(250, 250));
+	shopWindow->SetPosition(sf::Vector2f(250, 200));
 	//Requisition is Size...?
 	
 	shopWindow->SetRequisition(sf::Vector2f(800, 800));
