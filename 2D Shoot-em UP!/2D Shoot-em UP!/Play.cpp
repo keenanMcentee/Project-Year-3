@@ -17,29 +17,6 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 	playerView.setViewport(tgui::FloatRect(0.0, 0.0, 1.0, 1.0));
 	playerView.zoom(4.3f);
 	merchant.initialise();
-
-	// Create the label.
-	auto label = sfg::Label::Create("Shop!");
-
-	// Create a simple button and connect the click signal.
-	auto button = sfg::Button::Create("Greet SFGUI!");
-	//button->GetSignal(sfg::Widget::OnLeftClick).Connect( );
-
-	auto box = sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 5.0f);
-	box->Pack(label);
-	box->Pack(button, false);
-
-	auto shopWindow = sfg::Window::Create();
-	shopWindow->SetTitle("Shop!");
-	shopWindow->Add(box);
-
-	
-	shop.Add(shopWindow);
-	
-}
-void Play::closeShop()
-{
-	shopVisible = false;
 }
 
 /// 
@@ -49,7 +26,6 @@ void Play::closeShop()
 void Play::Update(sf::Time dt)
 {
 	float time = dt.asSeconds();
-	shop.Update(time);
 	merchant.update(dt);
 	player.Update(dt, keyboard, &playerView, &enemy);
 	enemy.Update(dt, player.m_sprite.getPosition());
@@ -73,7 +49,7 @@ void Play::Update(sf::Time dt)
 	{
 		if (distBetween(player.m_position, merchant.m_sprite.getPosition()) < 120)
 		{
-			shopVisible = true;
+		
 		}
 		else
 		{
@@ -99,10 +75,6 @@ void Play::Draw(sf::RenderWindow *window)
 	enemy.Draw(window);
 	
 	merchant.draw(window);
-	if (shopVisible)
-	{
-		sfgui.Display(*window);
-	}
 	window->setView(window->getDefaultView());
 }
 
@@ -121,5 +93,5 @@ void Play::HandleCollision()
 }
 void Play::handleEvent(sf::Event e)
 {
-	shop.HandleEvent(e);
+	
 }
