@@ -28,4 +28,3 @@ public:
 	float distBetween(sf::Vector2f playerPos, sf::Vector2f OtherPos);
 	void handleEvent(sf::Event e);
 };
-

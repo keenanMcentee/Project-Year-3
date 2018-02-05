@@ -9,7 +9,7 @@
 ScreenManager::ScreenManager(sf::RenderWindow *window) : m_splash(window), m_license(window), m_mainMenu(window), m_options(window),
 m_help(window), m_credits(window), m_play(window, &m_currentState), m_pause(window), m_postWaveMenu(window), m_upgrades(window)
 {
-	m_currentState = GameState::PostWaveMenu;
+	m_currentState = GameState::Upgrades;
 }
 
 /// <summary>
@@ -26,7 +26,7 @@ void ScreenManager::Initialise()
 	m_pause.Initialise(&m_currentState, &fromPause);
 	m_help.Initialise(&m_currentState);
 	m_postWaveMenu.Initialise(&m_currentState);
-	m_upgrades.Initialise(&m_currentState);
+	m_upgrades.Initialise(&m_currentState, &m_play.player);
 }
 
 /// <summary>

@@ -1,3 +1,7 @@
+#ifndef PLAYER
+#define PLAYER
+
+
 #include <SFML\Graphics.hpp>
 #include <SFML\Audio.hpp>
 #include <Thor\Animations.hpp>
@@ -40,4 +44,4 @@ public:
 	tgui::FloatRect getRect();
 
 };
-
+#endif // !PLAYER
