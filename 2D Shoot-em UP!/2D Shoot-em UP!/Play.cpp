@@ -16,6 +16,7 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 	blankTexture.loadFromFile("./ASSETS/blankTexture.png");
 	backgroundSprite.setTexture(blankTexture);
 	backgroundShader.loadFromFile("./ASSETS/shaders/fragmentShaders/ground_one.frag", sf::Shader::Fragment);
+
 }
 
 /// 
@@ -38,8 +39,6 @@ void Play::Update(sf::Time dt)
 		GoToScreen(GameState::Pause);
 	}
 	
-
-
 	pastKeyboard = keyboard;
 }
 /// <summary>

@@ -7,9 +7,9 @@
 /// </summary>
 /// <param name="window"></param>
 ScreenManager::ScreenManager(sf::RenderWindow *window) : m_splash(window), m_license(window), m_mainMenu(window), m_options(window),
-m_help(window), m_credits(window), m_play(window, &currentState), m_pause(window)
+m_help(window), m_credits(window), m_play(window, &m_currentState), m_pause(window), m_postWaveMenu(window)
 {
-	currentState = GameState::Licence;
+	m_currentState = GameState::PostWaveMenu;
 }
 
 /// <summary>
@@ -18,14 +18,14 @@ m_help(window), m_credits(window), m_play(window, &currentState), m_pause(window
 void ScreenManager::Initialise()
 {
 	fromPause = false;
-	m_splash.Initialise(&currentState);
-	m_license.Initialise(&currentState);
-	m_mainMenu.Initialise(&currentState, &fromPause);
-	m_options.Initialise(&currentState);
-	m_credits.Initialise(&currentState);
-	m_pause.Initialise(&currentState, &fromPause);
-	m_help.Initialise(&currentState);
-
+	m_splash.Initialise(&m_currentState);
+	m_license.Initialise(&m_currentState);
+	m_mainMenu.Initialise(&m_currentState, &fromPause);
+	m_options.Initialise(&m_currentState);
+	m_credits.Initialise(&m_currentState);
+	m_pause.Initialise(&m_currentState, &fromPause);
+	m_help.Initialise(&m_currentState);
+	m_postWaveMenu.Initialise(&m_currentState);
 }
 
 /// <summary>
@@ -35,7 +35,7 @@ void ScreenManager::Initialise()
 void ScreenManager::Update(sf::Clock *clock)
 {
 	dt = clock->restart();
-	switch (currentState)
+	switch (m_currentState)
 	{
 	case GameState::Licence:
 		m_license.Update();
@@ -76,7 +76,7 @@ void ScreenManager::Update(sf::Clock *clock)
 /// <param name="e"></param>
 void ScreenManager::handleEvent(sf::Event e)
 {
-	switch (currentState)
+	switch (m_currentState)
 	{
 	case GameState::Licence:
 		m_license.gui.handleEvent(e);
@@ -100,6 +100,9 @@ void ScreenManager::handleEvent(sf::Event e)
 		m_play.gui.handleEvent(e);
 		m_play.handleEvent(e);
 		break;
+	case GameState::PostWaveMenu:
+		m_postWaveMenu.gui.handleEvent(e);
+		break;
 	case GameState::Credits:
 		m_credits.gui.handleEvent(e);
 		break;
@@ -117,7 +120,7 @@ void ScreenManager::handleEvent(sf::Event e)
 /// <param name="window"></param>
 void ScreenManager::Draw(sf::RenderWindow *window)
 {
-	switch (currentState)
+	switch (m_currentState)
 	{
 	case GameState::Licence:
 		m_license.Draw(window);
@@ -139,6 +142,9 @@ void ScreenManager::Draw(sf::RenderWindow *window)
 		break;
 	case GameState::Play:
 		m_play.Draw(window);
+		break;
+	case GameState::PostWaveMenu:
+		m_postWaveMenu.Draw(window);
 		break;
 	case GameState::Credits:
 		m_credits.Draw(window);

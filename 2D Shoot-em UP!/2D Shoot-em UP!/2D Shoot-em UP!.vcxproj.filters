@@ -90,6 +90,9 @@
     <ClCompile Include="Merchant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PostWaveMenu.cpp">
+      <Filter>Source Files\Screens</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -151,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="Merchant.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PostWaveMenu.h">
+      <Filter>Header Files\Screens</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

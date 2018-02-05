@@ -7,6 +7,7 @@
 #include "Help.h"
 #include "Play.h"
 #include "Pause.h"
+#include "PostWaveMenu.h"
 #include "TGUI\TGUI.hpp"
 #ifndef SCREENMANAGER
 #define	SCREENMANGER
@@ -28,7 +29,9 @@ private:
 	Credits m_credits;
 	Play m_play;
 	Pause m_pause;
-	GameState currentState;
+	PostWaveMenu m_postWaveMenu;
+	GameState m_currentState;
+
 	sf::Time lastFrame;
 	sf::Time dt;
 	bool fromPause;

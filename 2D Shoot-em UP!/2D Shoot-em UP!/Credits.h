@@ -3,7 +3,6 @@
 class Credits : public Screen
 {
 public:
-public:
 	Credits(sf::RenderWindow *window);
 	void Initialise(GameState *state);
 	void Update();

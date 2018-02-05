@@ -3,7 +3,6 @@
 class Help : public Screen
 {
 public:
-public:
 	Help(sf::RenderWindow *window);
 	void Initialise(GameState *state);
 	void Update();

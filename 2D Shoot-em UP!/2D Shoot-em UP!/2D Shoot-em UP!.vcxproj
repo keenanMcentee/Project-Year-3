@@ -141,6 +141,7 @@
     <ClCompile Include="Pause.cpp" />
     <ClCompile Include="Play.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PostWaveMenu.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Pause.h" />
     <ClInclude Include="Play.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PostWaveMenu.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenManager.h" />

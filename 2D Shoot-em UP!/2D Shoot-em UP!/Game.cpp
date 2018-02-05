@@ -41,7 +41,6 @@ void Game::Run()
 void Game::Initialise()
 {
 	m_screenManager.Initialise();
-	
 }
 /// <summary>
 /// Function that handles updating all objects and elements of the game.
