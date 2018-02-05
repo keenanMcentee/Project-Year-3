@@ -7,7 +7,7 @@
 /// </summary>
 /// <param name="window"></param>
 ScreenManager::ScreenManager(sf::RenderWindow *window) : m_splash(window), m_license(window), m_mainMenu(window), m_options(window),
-m_help(window), m_credits(window), m_play(window, &m_currentState), m_pause(window), m_postWaveMenu(window)
+m_help(window), m_credits(window), m_play(window, &m_currentState), m_pause(window), m_postWaveMenu(window), m_upgrades(window)
 {
 	m_currentState = GameState::PostWaveMenu;
 }
@@ -26,6 +26,7 @@ void ScreenManager::Initialise()
 	m_pause.Initialise(&m_currentState, &fromPause);
 	m_help.Initialise(&m_currentState);
 	m_postWaveMenu.Initialise(&m_currentState);
+	m_upgrades.Initialise(&m_currentState);
 }
 
 /// <summary>
@@ -103,6 +104,9 @@ void ScreenManager::handleEvent(sf::Event e)
 	case GameState::PostWaveMenu:
 		m_postWaveMenu.gui.handleEvent(e);
 		break;
+	case GameState::Upgrades:
+		m_upgrades.gui.handleEvent(e);
+		break;
 	case GameState::Credits:
 		m_credits.gui.handleEvent(e);
 		break;
@@ -145,6 +149,9 @@ void ScreenManager::Draw(sf::RenderWindow *window)
 		break;
 	case GameState::PostWaveMenu:
 		m_postWaveMenu.Draw(window);
+		break;
+	case GameState::Upgrades:
+		m_upgrades.Draw(window);
 		break;
 	case GameState::Credits:
 		m_credits.Draw(window);

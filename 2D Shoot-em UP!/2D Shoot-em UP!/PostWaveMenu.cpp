@@ -1,11 +1,8 @@
 #include "PostWaveMenu.h"
 
-
-
 PostWaveMenu::PostWaveMenu(sf::RenderWindow *window) : Screen(window)
 {
 }
-
 
 void PostWaveMenu::Initialise(GameState *state)
 {
@@ -19,9 +16,10 @@ void PostWaveMenu::Initialise(GameState *state)
 	});
 	gui.add(btnContinue);
 	auto btnUpgrades = uiHelper::makeButton("Upgrades", sf::Vector2f(250, 350), 200, 100);
-	/*button->connect("pressed", [&]() {
-		GoToScreen(GameState::Play);*/
-	//});
+	btnUpgrades->connect("pressed", [&]() {
+		GoToScreen(GameState::Upgrades);
+	});
+
 	gui.add(btnUpgrades);
 	auto btnMainMenu = uiHelper::makeButton("Main Menu", sf::Vector2f(250, 500), 200, 100);
 	btnMainMenu->connect("pressed", [&]() {

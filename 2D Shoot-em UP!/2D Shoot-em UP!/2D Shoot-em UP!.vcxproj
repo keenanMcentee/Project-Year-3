@@ -147,6 +147,7 @@
     <ClCompile Include="ScreenManager.cpp" />
     <ClCompile Include="Splash.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="Upgrades.cpp" />
     <ClCompile Include="vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +171,7 @@
     <ClInclude Include="Splash.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="uiHelper.h" />
+    <ClInclude Include="Upgrades.h" />
     <ClInclude Include="vector2.h" />
   </ItemGroup>
   <ItemGroup>

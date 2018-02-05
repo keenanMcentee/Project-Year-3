@@ -10,6 +10,7 @@ enum class GameState
 	Pause,
 	Play,
 	PostWaveMenu,
+	Upgrades,
 	Credits,
 	QuitScreen
 };

@@ -8,6 +8,7 @@
 #include "Play.h"
 #include "Pause.h"
 #include "PostWaveMenu.h"
+#include "Upgrades.h"
 #include "TGUI\TGUI.hpp"
 #ifndef SCREENMANAGER
 #define	SCREENMANGER
@@ -30,6 +31,7 @@ private:
 	Play m_play;
 	Pause m_pause;
 	PostWaveMenu m_postWaveMenu;
+	Upgrades m_upgrades;
 	GameState m_currentState;
 
 	sf::Time lastFrame;
