@@ -6,8 +6,6 @@
 #pragma comment(lib,"sfml-network-d.lib") 
 #pragma comment(lib,"thor-d.lib")
 #pragma comment(lib,"sfeMovie-d.lib")
-#pragma comment(lib,"sfgui-d.lib")
-#pragma comment(lib,"sfgui-s-d.lib")
 #pragma comment(lib,"tgui-d.lib")
 #pragma comment(lib,"tgui-s-d.lib")
 #else 
@@ -18,8 +16,6 @@
 #pragma comment(lib,"sfml-network.lib") 
 #pragma comment(lib,"thor-d.lib") 
 #pragma comment(lib,"sfeMovie.lib")
-#pragma comment(lib,"sfgui.lib")
-#pragma comment(lib,"sfgui-s.lib")
 #pragma comment(lib,"tgui.lib")
 #pragma comment(lib,"tgui-s.lib")
 #endif 

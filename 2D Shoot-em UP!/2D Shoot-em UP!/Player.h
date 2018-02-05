@@ -22,7 +22,7 @@ public:
 	sf::Vector2f m_previousPos;
 	Player();
 	void Initialise();
-	void Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view, Enemy *enemy);
+	void Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view);
 	void Draw(sf::RenderWindow *window);
 	void HandleMovement(sf::Keyboard &keyboard, sf::View *view);
 	void bulletEnemyCollision(Projectile b, Enemy *enemy);

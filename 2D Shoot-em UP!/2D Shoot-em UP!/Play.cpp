@@ -8,15 +8,14 @@
 Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 {
 	currentState = state;
-	
-	mapTexture.loadFromFile("ASSETS/SpriteSheets/DungeonTileSet.png");
-	demoMap.initialise("Demo_Tile Layer 1.csv", "Demo_Tile Layer 2.csv", "", "", &mapTexture);
 	player.Initialise();
-	enemy.Initialise();
 	playerView.reset(tgui::FloatRect(0.0, 0.0, 200.0, 250.0));
 	playerView.setViewport(tgui::FloatRect(0.0, 0.0, 1.0, 1.0));
 	playerView.zoom(4.3f);
-	merchant.initialise();
+
+	blankTexture.loadFromFile("./ASSETS/blankTexture.png");
+	backgroundSprite.setTexture(blankTexture);
+	backgroundShader.loadFromFile("./ASSETS/shaders/fragmentShaders/ground_one.frag", sf::Shader::Fragment);
 }
 
 /// 
@@ -26,17 +25,10 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 void Play::Update(sf::Time dt)
 {
 	float time = dt.asSeconds();
-	merchant.update(dt);
-	player.Update(dt, keyboard, &playerView, &enemy);
-	enemy.Update(dt, player.m_sprite.getPosition());
-	for each  (std::vector<Tile>  v in demoMap.m_obstacleLayer)
-	{
-		for each  (Tile t in v)
-		{
-			tgui::FloatRect tileRect = t.m_sprite.getGlobalBounds();
-			player.CheckCollision(tileRect);
-		}
-	}
+	timeSinceStart += dt.asSeconds();
+	backgroundShader.setUniform("time", timeSinceStart);
+	backgroundShader.setUniform("resolution", sf::Glsl::Vec2(windowPtr->getSize().x, windowPtr->getSize().y));
+	player.Update(dt, keyboard, &playerView);
 	HandleCollision();
 	
 	
@@ -45,17 +37,7 @@ void Play::Update(sf::Time dt)
 	{
 		GoToScreen(GameState::Pause);
 	}
-	if (keyboard.isKeyPressed(keyboard.Space) || keyboard.isKeyPressed(keyboard.E) || keyboard.isKeyPressed(keyboard.F))
-	{
-		if (distBetween(player.m_position, merchant.m_sprite.getPosition()) < 120)
-		{
-		
-		}
-		else
-		{
-			std::cout << std::endl;
-		}
-	}
+	
 
 
 	pastKeyboard = keyboard;
@@ -67,14 +49,17 @@ void Play::Update(sf::Time dt)
 /// <param name="window"></param>
 void Play::Draw(sf::RenderWindow *window)
 {
-	playerView.setCenter(player.m_position);
-	window->setView(playerView);
-	demoMap.draw(window, sf::Vector2f(0, 0), true);
-
+	window->draw(backgroundSprite, &backgroundShader);
 	player.Draw(window);
-	enemy.Draw(window);
+	playerView.setCenter(player.m_position);
 	
-	merchant.draw(window);
+	window->setView(playerView);
+	//demoMap.draw(window, sf::Vector2f(0, 0), true);
+
+	
+	//enemy.Draw(window);
+	
+	//merchant.draw(window);
 	window->setView(window->getDefaultView());
 }
 
@@ -86,10 +71,10 @@ float Play::distBetween(sf::Vector2f pos1, sf::Vector2f pos2)
 
 void Play::HandleCollision()
 {
-	if (player.getRect().intersects(enemy.getRect()))
+	/*if (player.getRect().intersects(enemy.getRect()))
 	{
 		GoToScreen(GameState::MainMenu);
-	}
+	}*/
 }
 void Play::handleEvent(sf::Event e)
 {

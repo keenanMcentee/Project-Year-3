@@ -10,7 +10,7 @@ Player::Player()
 void Player::Initialise()
 {
 	
-	m_texture.loadFromFile("ASSETS/playerSprite.png");
+	m_texture.loadFromFile("ASSETS/player/The_XTB-1.png");
 	m_bulletTexture.loadFromFile("ASSETS/bullet.png");
 	m_flashAnimation.loadFromFile("ASSETS/gunFire/gunFireAnimation.png");
 	m_gunFlash.setTexture(m_flashAnimation);
@@ -24,7 +24,7 @@ void Player::Initialise()
 
 	m_sprite.setTexture(m_texture);
 	m_sprite.setOrigin(m_sprite.getLocalBounds().width / 2, m_sprite.getLocalBounds().height / 2);
-	m_position = sf::Vector2f(600, 256);
+	m_position = sf::Vector2f(300, 300);
 	m_sprite.scale(0.5f, 0.5f);
 	m_speed = 2;
 	m_fireRate = 0.1f;
@@ -34,7 +34,7 @@ void Player::Initialise()
 /// 
 /// </summary>
 /// <param name="keyboard"></param>
-void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view, Enemy *enemy)
+void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
 {
 	std::cout << std::to_string(m_sprite.getPosition().x) << std::endl;
 	std::cout << std::to_string(m_position.x) << std::endl;
@@ -47,7 +47,6 @@ void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view, Enemy *
 	for (auto &b : bullets)
 	{
 		b.update();
-		bulletEnemyCollision(b, enemy);
 	}
 	m_sprite.setPosition(m_position);
 
@@ -61,7 +60,7 @@ void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view, Enemy *
 void Player::Draw(sf::RenderWindow *window)
 {
 	std::cout << std::to_string(m_sprite.getPosition().x) << std::endl;
-	m_gunFlash.setPosition(m_position + sf::Vector2f(cos(rotation * 3.14 / 180) * 23, sin(rotation * 3.14 / 180) * 23));
+	m_gunFlash.setPosition(m_position + sf::Vector2f(cos(rotation * 3.14 / 180) * 9, sin(rotation * 3.14 / 180) * 12));
 	m_gunFlash.setRotation(rotation);
 	lookAtMouse(*window);
 	for (auto &b : bullets)
