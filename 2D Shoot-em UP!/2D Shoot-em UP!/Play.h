@@ -15,7 +15,7 @@ public:
 	//Map demoMap;
 	//sf::Texture mapTexture;
 	Player player;
-	//Enemy enemy;
+	Enemy enemy;
 	sf::View view;
 	sf::Keyboard keyboard;
 	sf::Keyboard pastKeyboard;
