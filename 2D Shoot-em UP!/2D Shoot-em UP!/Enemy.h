@@ -19,7 +19,7 @@ public:
 	sf::Sprite m_gunFlash;
 	sf::Vector2f m_position;
 	sf::String m_direction;
-	void Initialise();
+	void Initialise(int type);
 	void Update(sf::Time dt, sf::Vector2f playerPos);
 	void Draw(sf::RenderWindow *window);
 	void HandleMovement(sf::Vector2f playerPos);
@@ -30,8 +30,12 @@ public:
 	float m_fireRate;
 	float m_timeSinceLastShot;
 	tgui::FloatRect getRect();
-
+	float rotator;
 	bool alive;
+	int m_type;
+
+	const int CURVY_BOY = 0;
+	const int SASSY_BOY = 1;
 };
 #endif
 

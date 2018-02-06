@@ -36,8 +36,7 @@ void Player::Initialise()
 /// <param name="keyboard"></param>
 void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
 {
-	std::cout << std::to_string(m_sprite.getPosition().x) << std::endl;
-	std::cout << std::to_string(m_position.x) << std::endl;
+
 	m_previousPos = m_position;
 	
 	animator.update(dt);
@@ -59,7 +58,6 @@ void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
 /// <param name="window"></param>
 void Player::Draw(sf::RenderWindow *window)
 {
-	std::cout << std::to_string(m_sprite.getPosition().x) << std::endl;
 	m_gunFlash.setPosition(m_position + sf::Vector2f(cos(rotation * 3.14 / 180) * 9, sin(rotation * 3.14 / 180) * 12));
 	m_gunFlash.setRotation(rotation);
 	lookAtMouse(*window);
