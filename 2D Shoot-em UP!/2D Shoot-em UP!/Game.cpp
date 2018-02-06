@@ -6,7 +6,7 @@
 /// </summary>
 Game::Game() : m_window(sf::VideoMode(720,720), "2D Shoot-em Up!", sf::Style::Default), m_screenManager(&m_window)
 {
-	m_window.setFramerateLimit(60);
+	m_window.setFramerateLimit(120);
 	//gui.setTarget(m_window);
 }
 
@@ -41,6 +41,9 @@ void Game::Run()
 void Game::Initialise()
 {
 	m_screenManager.Initialise();
+	m_window.setMouseCursorVisible(false);
+	mouseTexture.loadFromFile("./ASSETS/mouse.png");
+	mouseSprite.setTexture(mouseTexture);
 }
 /// <summary>
 /// Function that handles updating all objects and elements of the game.
@@ -54,11 +57,15 @@ void Game::Update(sf::Clock &clock)
 /// </summary>
 void Game::Draw()
 {
+	
 	m_window.clear(sf::Color::Black);
+	
 	sf::View view = m_window.getDefaultView();
-	view.zoom(0.5);
 	m_window.setView(view);
+	mouseSprite.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(m_window)));
+	
 	m_screenManager.Draw(&m_window);
 	//gui.draw();
+	m_window.draw(mouseSprite);
 	m_window.display();
 }

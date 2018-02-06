@@ -63,6 +63,8 @@ protected:
 	sf::Keyboard keyboard;
 	ScreenManager m_screenManager;
 	tgui::Gui gui;
+	sf::Texture mouseTexture;
+	sf::Sprite mouseSprite;
 };
 #endif // !GAME
 
