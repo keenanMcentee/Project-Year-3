@@ -38,6 +38,8 @@ public:
 	const int Large_SinWave_Type = 0;
 	const int Small_SinWave_Type = 1;
 	const int Go_To_Center_Type = 2;
+	const int Go_Left_To_Right_Type = 3;
+	const int Go_Right_To_Left_Type = 4;
 };
 
 #endif
