@@ -9,6 +9,7 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 {
 	currentState = state;
 	player.Initialise();
+	enemy.Initialise(0);
 	playerView.reset(tgui::FloatRect(0.0, 0.0, 200.0, 250.0));
 	playerView.setViewport(tgui::FloatRect(0.0, 0.0, 1.0, 1.0));
 	playerView.zoom(4.3f);
@@ -30,15 +31,15 @@ void Play::Update(sf::Time dt)
 	backgroundShader.setUniform("time", timeSinceStart);
 	backgroundShader.setUniform("resolution", sf::Glsl::Vec2(windowPtr->getSize().x, windowPtr->getSize().y));
 	player.Update(dt, keyboard, &playerView);
-	HandleCollision();
-	
-	
+	//HandleCollision();
+	enemy.Update(dt, player.m_position);
+
 	currentState;
 	if (keyboard.isKeyPressed(keyboard.Escape))
 	{
 		GoToScreen(GameState::Pause);
 	}
-	
+
 	pastKeyboard = keyboard;
 }
 /// <summary>
@@ -50,14 +51,15 @@ void Play::Draw(sf::RenderWindow *window)
 {
 	window->draw(backgroundSprite, &backgroundShader);
 	player.Draw(window);
+	enemy.Draw(window);
 	playerView.setCenter(player.m_position);
-	
-	window->setView(playerView);
+
+	//window->setView(playerView);
 	//demoMap.draw(window, sf::Vector2f(0, 0), true);
 
-	
-	//enemy.Draw(window);
-	
+
+
+
 	//merchant.draw(window);
 	window->setView(window->getDefaultView());
 }
@@ -70,12 +72,12 @@ float Play::distBetween(sf::Vector2f pos1, sf::Vector2f pos2)
 
 void Play::HandleCollision()
 {
-	/*if (player.getRect().intersects(enemy.getRect()))
+	if (player.getRect().intersects(enemy.getRect()))
 	{
 		GoToScreen(GameState::MainMenu);
-	}*/
+	}
 }
 void Play::handleEvent(sf::Event e)
 {
-	
+
 }
