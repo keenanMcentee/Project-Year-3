@@ -19,9 +19,9 @@ public:
 	sf::Sprite m_gunFlash;
 	sf::Vector2f m_position;
 	sf::String m_direction;
-	void Initialise(int type);
+	void Initialise(int type, sf::RenderWindow *window, sf::Vector2f spawnPos);
 	void Update(sf::Time dt, sf::Vector2f playerPos);
-	void Draw(sf::RenderWindow *window);
+	void Draw();
 	void HandleMovement(sf::Vector2f playerPos);
 	float m_speed;
 	float rotation;
@@ -33,9 +33,11 @@ public:
 	float rotator;
 	bool alive;
 	int m_type;
+	sf::RenderWindow* m_window;
 
-	const int CURVY_BOY = 0;
-	const int SASSY_BOY = 1;
+	const int Large_SinWave_Type = 0;
+	const int Small_SinWave_Type = 1;
+	const int Go_To_Center_Type = 2;
 };
 
 #endif
