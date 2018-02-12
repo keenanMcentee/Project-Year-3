@@ -71,6 +71,13 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 		}
 	}
 	
+	else if (m_type == Go_Right_To_Left_Type)
+	{
+		if (m_position.x > 100)
+		{
+			m_position.x -= 2;
+		}
+	}
 
 	m_sprite.setRotation(rotator);
 }
