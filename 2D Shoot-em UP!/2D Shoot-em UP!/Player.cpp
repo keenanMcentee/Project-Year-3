@@ -36,8 +36,8 @@ void Player::Initialise()
 /// <param name="keyboard"></param>
 void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
 {
-	std::cout << std::to_string(m_sprite.getPosition().x) << std::endl;
-	std::cout << std::to_string(m_position.x) << std::endl;
+	//std::cout << std::to_string(m_sprite.getPosition().x) << std::endl;
+	//std::cout << std::to_string(m_position.x) << std::endl;
 	m_previousPos = m_position;
 	
 	animator.update(dt);

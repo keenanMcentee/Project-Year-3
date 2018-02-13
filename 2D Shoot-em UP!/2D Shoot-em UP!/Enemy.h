@@ -23,7 +23,7 @@ public:
 	void Update(sf::Time dt, sf::Vector2f playerPos);
 	void Draw();
 	void HandleMovement(sf::Vector2f playerPos);
-	float m_speed;
+	sf::Vector2f m_speed;
 	float rotation;
 	std::vector<Projectile> bullets;
 	thor::FrameAnimation gunFlashAnimation;
@@ -40,6 +40,7 @@ public:
 	const int Go_To_Center_Type = 2;
 	const int Go_Left_To_Right_Type = 3;
 	const int Go_Right_To_Left_Type = 4;
+	const int Digonal_Moving_Type = 5;
 };
 
 #endif

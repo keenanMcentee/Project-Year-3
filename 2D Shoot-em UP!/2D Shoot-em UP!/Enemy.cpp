@@ -26,7 +26,7 @@ void Enemy::Initialise(int type, sf::RenderWindow *window, sf::Vector2f spawnPos
 
 	rotator = 0;
 	
-	m_speed = 0.5;
+	m_speed = sf::Vector2f(2,2);
 
 	alive = true;
 }
@@ -48,37 +48,60 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 	//Height of curve		width of curve		position on screen.
 	if (m_type == Large_SinWave_Type)
 	{
-		m_position.x += m_speed;
+		m_position.x += m_speed.x;
 		m_position.y = 100 * sin(m_position.x / 100) + 400;
 	}
 	else if (m_type == Small_SinWave_Type)
 	{
-		m_position.x += m_speed;
+		m_position.x += m_speed.x;
 		m_position.y = 100 * sin(m_position.x / 10) + 300;
 	}
 	else if (m_type == Go_To_Center_Type)
 	{
 		if (m_position.y < m_window->getSize().y / 2)
 		{
-			m_position.y += 2;
+			m_position.y += m_speed.y;
 		}
 	}
 	else if (m_type == Go_Left_To_Right_Type)
 	{
 		if (m_position.x < m_window->getSize().x + 100)
 		{
-			m_position.x += 2;
+			m_position.x += m_speed.x;
 		}
 	}
-	
 	else if (m_type == Go_Right_To_Left_Type)
 	{
 		if (m_position.x > 100)
 		{
-			m_position.x -= 2;
+			m_position.x -= m_speed.x;
 		}
 	}
+	// should work but doesnt
+	else if (m_type == Digonal_Moving_Type)
+	{
+		//m_position += m_speed;
+			
+		/*if (m_position.x <= 0)
+		{
+			m_speed.x = 2;
+		}
 
+		if (m_position.x + m_sprite.getTextureRect().width >= m_window->getSize().x)
+		{
+			m_speed.x = -2;
+		}
+
+		if (m_position.y <= 200)
+		{
+			m_speed.y = 2;
+		}
+
+		if (m_position.y >= 500)
+		{
+			m_speed.y = -2;
+		}*/
+	}
 	m_sprite.setRotation(rotator);
 }
 
