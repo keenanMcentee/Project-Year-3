@@ -9,7 +9,7 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 {
 	currentState = state;
 	player.Initialise();
-	enemy.Initialise(5, window, sf::Vector2f(200, 200));
+	enemy.Initialise(6, window, sf::Vector2f(200, 200), false);
 	playerView.reset(tgui::FloatRect(0.0, 0.0, 200.0, 250.0));
 	playerView.setViewport(tgui::FloatRect(0.0, 0.0, 1.0, 1.0));
 	playerView.zoom(4.3f);

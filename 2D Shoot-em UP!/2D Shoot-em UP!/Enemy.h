@@ -19,7 +19,7 @@ public:
 	sf::Sprite m_gunFlash;
 	sf::Vector2f m_position;
 	sf::String m_direction;
-	void Initialise(int type, sf::RenderWindow *window, sf::Vector2f spawnPos);
+	void Initialise(int type, sf::RenderWindow *window, sf::Vector2f spawnPos, bool circleType);
 	void Update(sf::Time dt, sf::Vector2f playerPos);
 	void Draw();
 	void HandleMovement(sf::Vector2f playerPos);
@@ -32,6 +32,7 @@ public:
 	tgui::FloatRect getRect();
 	float rotator;
 	bool alive;
+	bool m_ramType;
 	int m_type;
 	sf::RenderWindow* m_window;
 
@@ -41,6 +42,7 @@ public:
 	const int Go_Left_To_Right_Type = 3;
 	const int Go_Right_To_Left_Type = 4;
 	const int Digonal_Moving_Type = 5;
+	const int Tracker_Type = 6;
 };
 
 #endif

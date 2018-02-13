@@ -27,4 +27,9 @@ public:
 	float timeSinceStart;
 	float distBetween(sf::Vector2f playerPos, sf::Vector2f OtherPos);
 	void handleEvent(sf::Event e);
+	std::vector<Enemy> smallSinWaveEnemies;
+	std::vector<Enemy> largeSinWaveEnemies;
+	std::vector<Enemy> goToCenterEnemies;
+	std::vector<Enemy> leftToRightEnemies;
+	std::vector<Enemy> rightToLeftEnemies;
 };

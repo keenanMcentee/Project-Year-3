@@ -8,18 +8,26 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Initialise(int type, sf::RenderWindow *window, sf::Vector2f spawnPos)
+void Enemy::Initialise(int type, sf::RenderWindow *window, sf::Vector2f spawnPos, bool circleType)
 {
-	m_texture.loadFromFile("ASSETS/enemyBallThingie.png");
+	m_ramType = circleType;
 
+	if (m_ramType)
+	{
+		m_texture.loadFromFile("ASSETS/enemyBallThingie.png");
+		m_sprite.setTexture(m_texture);
+		m_sprite.setScale(0.02f, 0.02f);
+	}
+	else
+	{
+		m_texture.loadFromFile("ASSETS/BulletShootingShip.png");
+		m_sprite.setTexture(m_texture);
+		m_sprite.setScale(0.03f, 0.03f);
+	}
 	m_window = window;
 
 	m_position = sf::Vector2f(spawnPos.x, spawnPos.y);
-
-	m_sprite.setTexture(m_texture);
 	m_sprite.setOrigin(m_sprite.getLocalBounds().width / 2, m_sprite.getLocalBounds().height / 2);
-	m_sprite.setScale(0.01f, 0.01f);
-	m_sprite.scale(3, 3);
 	m_sprite.setPosition(m_position);
 
 	m_type = type;
@@ -102,7 +110,23 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 			m_speed.y = -2;
 		}*/
 	}
-	m_sprite.setRotation(rotator);
+	else if (m_type == Tracker_Type)
+	{
+		if (m_position.x < playerPos.x)
+		{
+			m_position.x += m_speed.x;
+		}
+
+		else if (m_position.x > playerPos.x)
+		{
+			m_position.x -= m_speed.x;
+		}
+
+	}
+	if (m_ramType)
+	{
+		m_sprite.setRotation(rotator);
+	}
 }
 
 void Enemy::Draw()
