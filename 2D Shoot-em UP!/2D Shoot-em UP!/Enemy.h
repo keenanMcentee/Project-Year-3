@@ -19,7 +19,7 @@ public:
 	sf::Sprite m_gunFlash;
 	sf::Vector2f m_position;
 	sf::String m_direction;
-	void Initialise(int type, sf::RenderWindow *window, sf::Vector2f spawnPos, bool circleType);
+	void Initialise(int type, sf::RenderWindow *window, sf::Vector2f spawnPos, sf::Vector2f speed, bool circleType);
 	void Update(sf::Time dt, sf::Vector2f playerPos);
 	void Draw();
 	void HandleMovement(sf::Vector2f playerPos);
@@ -36,13 +36,13 @@ public:
 	int m_type;
 	sf::RenderWindow* m_window;
 
-	const int Large_SinWave_Type = 0;
+	int Large_SinWave_Type = 0;
 	const int Small_SinWave_Type = 1;
 	const int Go_To_Center_Type = 2;
 	const int Go_Left_To_Right_Type = 3;
 	const int Go_Right_To_Left_Type = 4;
-	const int Digonal_Moving_Type = 5;
-	const int Tracker_Type = 6;
+	const int Tracker_Type = 5;
+	const int Digonal_Moving_Type = 6;
 };
 
 #endif

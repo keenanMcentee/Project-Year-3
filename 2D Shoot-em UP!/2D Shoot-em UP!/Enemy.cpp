@@ -6,9 +6,10 @@ Enemy::Enemy()
 
 Enemy::~Enemy()
 {
+	m_texture.~Texture();
 }
 
-void Enemy::Initialise(int type, sf::RenderWindow *window, sf::Vector2f spawnPos, bool circleType)
+void Enemy::Initialise(int type, sf::RenderWindow *window, sf::Vector2f spawnPos, sf::Vector2f speed, bool circleType)
 {
 	m_ramType = circleType;
 
@@ -18,7 +19,7 @@ void Enemy::Initialise(int type, sf::RenderWindow *window, sf::Vector2f spawnPos
 		m_sprite.setTexture(m_texture);
 		m_sprite.setScale(0.02f, 0.02f);
 	}
-	else
+	else if (!m_ramType)
 	{
 		m_texture.loadFromFile("ASSETS/BulletShootingShip.png");
 		m_sprite.setTexture(m_texture);
@@ -34,7 +35,7 @@ void Enemy::Initialise(int type, sf::RenderWindow *window, sf::Vector2f spawnPos
 
 	rotator = 0;
 	
-	m_speed = sf::Vector2f(2,2);
+	m_speed = speed;
 
 	alive = true;
 }
@@ -54,15 +55,28 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 	std::cout << m_position.x << std::endl;
 	std::cout << m_position.y << std::endl;
 	//Height of curve		width of curve		position on screen.
-	if (m_type == Large_SinWave_Type)
+	switch (m_type)
 	{
-		m_position.x += m_speed.x;
+	case 0: //Large_SinWave_Type
+		m_position.x -= m_speed.x;
 		m_position.y = 100 * sin(m_position.x / 100) + 400;
+		break;
+
+		default:
+			break;
+	
+		
+		
 	}
-	else if (m_type == Small_SinWave_Type)
+	if (m_type == Small_SinWave_Type)
 	{
 		m_position.x += m_speed.x;
 		m_position.y = 100 * sin(m_position.x / 10) + 300;
+
+		if (m_position.x > m_window->getSize().x)
+		{
+			alive = false;
+		}
 	}
 	else if (m_type == Go_To_Center_Type)
 	{
@@ -77,6 +91,12 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 		{
 			m_position.x += m_speed.x;
 		}
+
+		if (m_position.x > m_window->getSize().x)
+		{
+			alive = false;
+		}
+
 	}
 	else if (m_type == Go_Right_To_Left_Type)
 	{
@@ -84,23 +104,28 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 		{
 			m_position.x -= m_speed.x;
 		}
+
+		if (m_position.x + m_texture.getSize().x < 0)
+		{
+			alive = false;
+		}
 	}
 	// should work but doesnt
 	else if (m_type == Digonal_Moving_Type)
 	{
-		//m_position += m_speed;
-			
-		/*if (m_position.x <= 0)
+		m_position += m_speed;
+		
+		if (m_position.x <= 200)
 		{
 			m_speed.x = 2;
 		}
 
-		if (m_position.x + m_sprite.getTextureRect().width >= m_window->getSize().x)
+		if (m_position.x + m_sprite.getGlobalBounds().width >= m_window->getSize().x)
 		{
 			m_speed.x = -2;
 		}
 
-		if (m_position.y <= 200)
+		if (m_position.y <= 0)
 		{
 			m_speed.y = 2;
 		}
@@ -108,7 +133,7 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 		if (m_position.y >= 500)
 		{
 			m_speed.y = -2;
-		}*/
+		}
 	}
 	else if (m_type == Tracker_Type)
 	{

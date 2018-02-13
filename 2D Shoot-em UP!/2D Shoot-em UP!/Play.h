@@ -15,7 +15,6 @@ public:
 	//Map demoMap;
 	//sf::Texture mapTexture;
 	Player player;
-	Enemy enemy;
 	sf::View view;
 	sf::Keyboard keyboard;
 	sf::Keyboard pastKeyboard;
@@ -27,9 +26,10 @@ public:
 	float timeSinceStart;
 	float distBetween(sf::Vector2f playerPos, sf::Vector2f OtherPos);
 	void handleEvent(sf::Event e);
-	std::vector<Enemy> smallSinWaveEnemies;
-	std::vector<Enemy> largeSinWaveEnemies;
-	std::vector<Enemy> goToCenterEnemies;
-	std::vector<Enemy> leftToRightEnemies;
-	std::vector<Enemy> rightToLeftEnemies;
+	std::vector<Enemy*> enemyArray;
+	std::vector<Enemy*> largeSinWaveEnemies;
+	std::vector<Enemy*> goToCenterEnemies;
+	std::vector<Enemy*> leftToRightEnemies;
+	std::vector<Enemy*> rightToLeftEnemies;
+	Enemy trackerEnemyType;
 };
