@@ -6,7 +6,7 @@ public:
 public:
 	Options(sf::RenderWindow *window);
 	void Initialise(GameState *state);
-	void Update(bool fromPause);
+	void Update(bool fromPause, sf::Time dt);
 	void Draw(sf::RenderWindow *window);
 	void sliderVolumeHandler();
 	void chkFullScreenHandler();

@@ -136,7 +136,6 @@
     <ClCompile Include="License.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Merchant.cpp" />
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="Pause.cpp" />
     <ClCompile Include="Play.cpp" />

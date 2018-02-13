@@ -30,5 +30,6 @@ void PostWaveMenu::Initialise(GameState *state)
 
 void PostWaveMenu::Draw(sf::RenderWindow *window)
 {
+	window->draw(backgroundSprite, &menuShader);
 	gui.draw();
 }

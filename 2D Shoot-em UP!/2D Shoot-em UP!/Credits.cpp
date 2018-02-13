@@ -27,9 +27,12 @@ void Credits::Initialise(GameState *state)
 	button->connect("pressed", [&]() {GoToScreen(GameState::MainMenu); });
 	gui.add(button, "Credits_backBtn");
 }
-void Credits::Update()
+void Credits::Update(sf::Time dt)
 {
-
+	float time = dt.asSeconds();
+	timeSinceStart += dt.asSeconds();
+	menuShader.setUniform("time", timeSinceStart);
+	menuShader.setUniform("resolution", sf::Glsl::Vec2(windowPtr->getSize().x, windowPtr->getSize().y));
 }
 
 /// <summary>
@@ -38,5 +41,6 @@ void Credits::Update()
 /// <param name="window"></param>
 void Credits::Draw(sf::RenderWindow *window)
 {
+	window->draw(backgroundSprite, &menuShader);
 	gui.draw();
 }

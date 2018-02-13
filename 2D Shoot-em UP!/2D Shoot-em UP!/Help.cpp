@@ -24,9 +24,12 @@ void Help::Initialise(GameState *state)
 	button->connect("pressed", [&]() {GoToScreen(GameState::MainMenu); });
 	gui.add(button, "Menu_playBtn");
 }
-void Help::Update()
+void Help::Update(sf::Time dt)
 {
-
+	float time = dt.asSeconds();
+	timeSinceStart += dt.asSeconds();
+	menuShader.setUniform("time", timeSinceStart);
+	menuShader.setUniform("resolution", sf::Glsl::Vec2(windowPtr->getSize().x, windowPtr->getSize().y));
 }
 
 /// <summary>
@@ -35,5 +38,6 @@ void Help::Update()
 /// <param name="window"></param>
 void Help::Draw(sf::RenderWindow *window)
 {
+	window->draw(backgroundSprite, &menuShader);
 	gui.draw();
 }

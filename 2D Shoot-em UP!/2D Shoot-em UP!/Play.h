@@ -21,10 +21,6 @@ public:
 	sf::Keyboard pastKeyboard;
 	//Merchant merchant;
 	sf::View playerView;
-	sf::Texture blankTexture;
-	sf::Sprite backgroundSprite;
-	sf::Shader backgroundShader;
-	float timeSinceStart;
 	float distBetween(sf::Vector2f playerPos, sf::Vector2f OtherPos);
 	void handleEvent(sf::Event e);
 };

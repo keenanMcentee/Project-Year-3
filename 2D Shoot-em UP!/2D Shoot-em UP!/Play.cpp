@@ -14,9 +14,7 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 	playerView.setViewport(tgui::FloatRect(0.0, 0.0, 1.0, 1.0));
 	playerView.zoom(4.3f);
 
-	blankTexture.loadFromFile("./ASSETS/blankTexture.png");
-	backgroundSprite.setTexture(blankTexture);
-	backgroundShader.loadFromFile("./ASSETS/shaders/fragmentShaders/ground_one.frag", sf::Shader::Fragment);
+	
 
 }
 
@@ -30,6 +28,7 @@ void Play::Update(sf::Time dt)
 	timeSinceStart += dt.asSeconds();
 	backgroundShader.setUniform("time", timeSinceStart);
 	backgroundShader.setUniform("resolution", sf::Glsl::Vec2(windowPtr->getSize().x, windowPtr->getSize().y));
+
 	player.Update(dt, keyboard, &playerView);
 	//HandleCollision();
 	enemy.Update(dt, player.m_position);

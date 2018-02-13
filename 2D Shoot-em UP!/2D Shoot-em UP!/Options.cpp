@@ -37,10 +37,14 @@ void Options::Initialise(GameState *state)
 /// updates the Label for the volume slider and the function assigned to the back button
 /// </summary>
 /// <param name="fromPause"></param>
-void Options::Update(bool fromPause)
+void Options::Update(bool fromPause, sf::Time dt)
 {
 	sliderVolumeHandler();
 	backBtnHandler(fromPause);
+	float time = dt.asSeconds();
+	timeSinceStart += dt.asSeconds();
+	menuShader.setUniform("time", timeSinceStart);
+	menuShader.setUniform("resolution", sf::Glsl::Vec2(windowPtr->getSize().x, windowPtr->getSize().y));
 	//chkFullScreenHandler();
 }
 
@@ -50,6 +54,7 @@ void Options::Update(bool fromPause)
 /// <param name="window"></param>
 void Options::Draw(sf::RenderWindow *window)
 {
+	window->draw(backgroundSprite, &menuShader);
 	gui.draw();
 }
 

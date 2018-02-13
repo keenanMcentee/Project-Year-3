@@ -42,16 +42,16 @@ void ScreenManager::Update(sf::Clock *clock)
 		m_license.Update();
 		break;
 	case GameState::Splash:
-		m_splash.Update();
+		m_splash.Update(dt);
 		break;
 	case GameState::MainMenu:
-		m_mainMenu.Update();
+		m_mainMenu.Update(dt);
 		break;
 	case GameState::Help:
-		m_help.Update();
+		m_help.Update(dt);
 		break;
 	case GameState::Options:
-		m_options.Update(fromPause);
+		m_options.Update(fromPause, dt);
 		break;
 	case GameState::Pause:
 		m_pause.Update();
@@ -60,7 +60,7 @@ void ScreenManager::Update(sf::Clock *clock)
 		m_play.Update(dt);
 		break;
 	case GameState::Credits:
-		m_credits.Update();
+		m_credits.Update(dt);
 		break;
 	case GameState::QuitScreen:
 		break;

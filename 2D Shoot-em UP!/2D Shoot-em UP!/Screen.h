@@ -15,6 +15,15 @@ protected:
 	GameState *previousState;
 	sf::RenderWindow* windowPtr;
 	bool* m_fromPause;
+	sf::Vector2f getScreenSize();
+	sf::Texture blankTexture;
+	sf::Sprite backgroundSprite;
+	sf::Shader backgroundShader;
+	sf::Shader menuShader;
+	float timeSinceStart;
+private:
+	sf::Vector2f screenSize;
+
 };
 #endif // !SCREEN
 
