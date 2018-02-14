@@ -10,7 +10,23 @@ Player::Player()
 void Player::Initialise()
 {
 	
-	m_texture.loadFromFile("ASSETS/player/The_XTB-1.png");
+	for (int i = 0; i < playerStats.body_max_level + 1; i++)
+	{
+		for (int j = 0; j < playerStats.r_wing_max_level + 1; j++)
+		{
+			for (int k = 0; k < playerStats.l_wing_max_level + 1; k++)
+			{
+				sf::Texture* temp = new sf::Texture();
+				std::string textureName = "" + std::to_string(i) +"-"+ std::to_string(j) +"-"+ std::to_string(k);
+				temp->loadFromFile("ASSETS/player/"+ textureName + ".png");
+				std::pair<std::string, sf::Texture*> *tempPair = new std::pair<std::string,sf::Texture*>();
+				tempPair->first = textureName;
+				tempPair->second = temp;
+				playerStats.ships.push_back(tempPair);
+			}
+		}
+	}
+	setTexture();
 	m_bulletTexture.loadFromFile("ASSETS/bullet.png");
 	m_flashAnimation.loadFromFile("ASSETS/gunFire/gunFireAnimation.png");
 	m_gunFlash.setTexture(m_flashAnimation);
@@ -22,10 +38,10 @@ void Player::Initialise()
 	}
 	animator.addAnimation("gunFlash", gunFlashAnimation, sf::seconds(0.1f));
 
-	m_sprite.setTexture(m_texture);
-	m_sprite.setOrigin(m_sprite.getLocalBounds().width / 2, m_sprite.getLocalBounds().height / 2);
+	playerStats.m_sprite.setOrigin(playerStats.m_sprite.getLocalBounds().width / 2, playerStats.m_sprite.getLocalBounds().height / 2);
+	playerStats.m_sprite.setScale(0.5,0.5);
+
 	m_position = sf::Vector2f(300, 300);
-	m_sprite.scale(0.5f, 0.5f);
 	m_speed = 2;
 	m_fireRate = 0.1f;
 
@@ -47,7 +63,7 @@ void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
 	{
 		b.update();
 	}
-	m_sprite.setPosition(m_position);
+	playerStats.m_sprite.setPosition(m_position);
 
 	m_timeSinceLastShot += dt.asSeconds();
 
@@ -65,11 +81,12 @@ void Player::Draw(sf::RenderWindow *window)
 	{
 		b.draw(window);
 	}
-	window->draw(m_sprite);
+	window->draw(playerStats.m_sprite);
 	if (animator.isPlayingAnimation())
 		window->draw(m_gunFlash);
 	
 }
+
 /// <summary>
 /// 
 /// </summary>
@@ -101,6 +118,11 @@ void Player::HandleMovement(sf::Keyboard &keyboard, sf::View *view)
 	{
 		m_speed = 10;
 	}
+	if (keyboard.isKeyPressed(keyboard.X))
+	{
+		playerStats.l_wing_level++;
+		setTexture();
+	}
 	else
 	{
 		m_speed = 2;
@@ -109,7 +131,7 @@ void Player::HandleMovement(sf::Keyboard &keyboard, sf::View *view)
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_timeSinceLastShot > m_fireRate)
 	{
 		m_timeSinceLastShot = 0;
-		Projectile bullet = Projectile(m_position, m_sprite.getRotation(), 100, 100, 400, &m_bulletTexture);
+		Projectile bullet = Projectile(m_position, playerStats.m_sprite.getRotation(), 100, 100, 400, &m_bulletTexture);
 		bullets.push_back(bullet);
 		animator.playAnimation("gunFlash", false);
 	}
@@ -120,7 +142,7 @@ void Player::HandleMovement(sf::Keyboard &keyboard, sf::View *view)
 /// </summary>
 /// <param name="win"></param>
 void Player::lookAtMouse(sf::RenderWindow &win) {
-	sf::Vector2f curPos = m_sprite.getPosition();
+	sf::Vector2f curPos = playerStats.m_sprite.getPosition();
 	sf::Vector2f position = win.mapPixelToCoords(sf::Mouse::getPosition(win));
 
 	// now we have both the sprite position and the cursor
@@ -131,14 +153,14 @@ void Player::lookAtMouse(sf::RenderWindow &win) {
 	float dx = curPos.x - position.x;
 	float dy = curPos.y - position.y;
 
-	rotation = ((atan2(dy, dx)) * 180 / pi) + 180;
+	rotation = ((atan2(dy, dx)) * 180 / PI) + 180;
 
-	m_sprite.setRotation(rotation);
+	playerStats.m_sprite.setRotation(rotation);
 }
 
 tgui::FloatRect Player::getRect()
 {
-	sf::FloatRect boundingBox = m_sprite.getGlobalBounds();
+	sf::FloatRect boundingBox = playerStats.m_sprite.getGlobalBounds();
 	return tgui::FloatRect(boundingBox.left, boundingBox.top, boundingBox.width, boundingBox.height);
 }
 
@@ -152,9 +174,25 @@ void Player::bulletEnemyCollision(Projectile b, Enemy *enemy)
 
 void Player::CheckCollision(tgui::FloatRect &tile)
 {
-	if (tile.intersects(m_sprite.getGlobalBounds()))
+	if (tile.intersects(playerStats.m_sprite.getGlobalBounds()))
 	{
 		m_position = m_previousPos;
 		
+	}
+}
+float Player::ToRadians(float x)
+{
+	float pi = 3.14159265;
+	return (x * pi / 180);
+}
+void Player::setTexture()
+{
+	for (int i = 0; i < playerStats.ships.size(); i++)
+	{
+		std::string shipName = "" + std::to_string(playerStats.body_level) +"-"+ std::to_string(playerStats.r_wing_level) +"-"+ std::to_string(playerStats.l_wing_level);
+		if (playerStats.ships[i]->first == shipName)
+		{
+			playerStats.m_sprite.setTexture(*playerStats.ships[i]->second);
+		}
 	}
 }

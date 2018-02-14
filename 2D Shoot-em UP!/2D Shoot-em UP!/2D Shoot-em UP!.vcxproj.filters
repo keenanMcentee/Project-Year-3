@@ -161,6 +161,9 @@
     <ClInclude Include="Upgrades.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="playerStats.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ASSETS\shaders\fragmentShaders\ground_one.frag">

@@ -34,7 +34,6 @@
 #ifndef GAME
 #define GAME
 #include <Thor\Animations.hpp>
-#include "Box2D\Box2D.h"
 #include <SFGUI\SFGUI.hpp>
 #include <SFGUI\Widgets.hpp>
 #include <SFML\Graphics.hpp>

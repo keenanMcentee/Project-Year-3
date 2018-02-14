@@ -52,8 +52,8 @@ void Enemy::Update(sf::Time dt, sf::Vector2f playerPos)
 
 void Enemy::HandleMovement(sf::Vector2f playerPos)
 {
-	std::cout << m_position.x << std::endl;
-	std::cout << m_position.y << std::endl;
+	/*std::cout << m_position.x << std::endl;
+	std::cout << m_position.y << std::endl;*/
 	//Height of curve		width of curve		position on screen.
 	switch (m_type)
 	{

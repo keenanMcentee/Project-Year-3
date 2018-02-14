@@ -13,9 +13,12 @@
 
 #include "Enemy.h"
 
+#include "playerStats.h"
+#include <math.h>
 class Player
 {
 public:
+	PlayerStats playerStats;
 	sf::Texture m_texture;
 	sf::Texture m_bulletTexture;
 	sf::Texture m_flashAnimation;
@@ -30,6 +33,7 @@ public:
 	void Draw(sf::RenderWindow *window);
 	void HandleMovement(sf::Keyboard &keyboard, sf::View *view);
 	void bulletEnemyCollision(Projectile b, Enemy *enemy);
+	void setPartLocations();
 	float m_speed;
 	void lookAtMouse(sf::RenderWindow &win);
 	float rotation;
@@ -43,5 +47,7 @@ public:
 	sf::SoundBuffer buffer;
 	tgui::FloatRect getRect();
 
+	float ToRadians(float x);
+	void setTexture();
 };
 #endif // !PLAYER

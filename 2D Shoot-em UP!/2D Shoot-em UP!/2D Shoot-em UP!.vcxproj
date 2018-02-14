@@ -163,6 +163,7 @@
     <ClInclude Include="Pause.h" />
     <ClInclude Include="Play.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="playerStats.h" />
     <ClInclude Include="PostWaveMenu.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Screen.h" />
