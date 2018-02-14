@@ -19,6 +19,7 @@ void Player::Initialise()
 				sf::Texture* temp = new sf::Texture();
 				std::string textureName = "" + std::to_string(i) +"-"+ std::to_string(j) +"-"+ std::to_string(k);
 				temp->loadFromFile("ASSETS/player/"+ textureName + ".png");
+				temp->setSmooth(true);
 				std::pair<std::string, sf::Texture*> *tempPair = new std::pair<std::string,sf::Texture*>();
 				tempPair->first = textureName;
 				tempPair->second = temp;
@@ -118,11 +119,11 @@ void Player::HandleMovement(sf::Keyboard &keyboard, sf::View *view)
 	{
 		m_speed = 10;
 	}
-	if (keyboard.isKeyPressed(keyboard.X))
+	/*if (keyboard.isKeyPressed(keyboard.X))
 	{
 		playerStats.l_wing_level++;
 		setTexture();
-	}
+	}*/
 	else
 	{
 		m_speed = 2;

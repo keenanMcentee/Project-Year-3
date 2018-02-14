@@ -29,7 +29,7 @@ void Pause::Initialise(GameState *state, bool *fromPause)
 
 	button = uiHelper::makeButton("Options", sf::Vector2f(300, 400), 200, 100);
 	button->connect("pressed", [&]() {
-		GoToScreen(GameState::Options);
+		GoToScreen(GameState::Upgrades);
 		*m_fromPause = true;
 	});
 	gui.add(button, "Menu_optionsBtn");

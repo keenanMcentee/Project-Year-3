@@ -1,4 +1,6 @@
 #include <SFML\Graphics.hpp>
+#ifndef PLAYER_STATS
+#define PLAYER_STATS
 struct PlayerStats
 {
 	int l_wing_level = 0;
@@ -12,8 +14,11 @@ struct PlayerStats
 	const int body_max_level = 0;
 	const int l_cannon_max_level = 0;
 	const int r_cannon_max_level = 0;
-	
+
 	int cash = 0;
 	std::vector < std::pair<std::string, sf::Texture*>*> ships;
 	sf::Sprite m_sprite;
 };
+
+#endif // !PLAYER_STATS
+

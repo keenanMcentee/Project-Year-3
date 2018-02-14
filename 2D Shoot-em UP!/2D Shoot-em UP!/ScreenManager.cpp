@@ -26,7 +26,7 @@ void ScreenManager::Initialise()
 	m_pause.Initialise(&m_currentState, &fromPause);
 	m_help.Initialise(&m_currentState);
 	m_postWaveMenu.Initialise(&m_currentState);
-	m_upgrades.Initialise(&m_currentState, &m_play.player);
+	m_upgrades.Initialise(&m_currentState, &m_play.player.playerStats);
 }
 
 /// <summary>
@@ -151,7 +151,7 @@ void ScreenManager::Draw(sf::RenderWindow *window)
 		m_postWaveMenu.Draw(window);
 		break;
 	case GameState::Upgrades:
-		m_upgrades.Draw(window);
+		m_upgrades.Draw(window, dt);
 		break;
 	case GameState::Credits:
 		m_credits.Draw(window);
