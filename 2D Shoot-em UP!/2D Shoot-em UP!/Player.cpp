@@ -29,15 +29,6 @@ void Player::Initialise()
 	}
 	setTexture();
 	m_bulletTexture.loadFromFile("ASSETS/bullet.png");
-	m_flashAnimation.loadFromFile("ASSETS/gunFire/gunFireAnimation.png");
-	m_gunFlash.setTexture(m_flashAnimation);
-	std::vector<sf::IntRect> rectangles;
-	for (int i = 0; i < 7; i++)
-	{
-		sf::IntRect rect((m_flashAnimation.getSize().x / 7) * i, 0, m_flashAnimation.getSize().x / 7, m_flashAnimation.getSize().y);
-		gunFlashAnimation.addFrame(0.1f, rect);
-	}
-	animator.addAnimation("gunFlash", gunFlashAnimation, sf::seconds(0.1f));
 
 	playerStats.m_sprite.setOrigin(playerStats.m_sprite.getLocalBounds().width / 2, playerStats.m_sprite.getLocalBounds().height / 2);
 	playerStats.m_sprite.setScale(0.5,0.5);
@@ -83,8 +74,6 @@ void Player::Draw(sf::RenderWindow *window)
 		b.draw(window);
 	}
 	window->draw(playerStats.m_sprite);
-	if (animator.isPlayingAnimation())
-		window->draw(m_gunFlash);
 	
 }
 
@@ -134,7 +123,6 @@ void Player::HandleMovement(sf::Keyboard &keyboard, sf::View *view)
 		m_timeSinceLastShot = 0;
 		Projectile bullet = Projectile(m_position, playerStats.m_sprite.getRotation(), 100, 100, 400, &m_bulletTexture);
 		bullets.push_back(bullet);
-		animator.playAnimation("gunFlash", false);
 	}
 	prevLeftClick = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 }
