@@ -2,7 +2,7 @@
 #include "vector2.h"
 
 
-Projectile::Projectile(sf::Vector2f position, float _rotation, float _speed, float _damage, float _distance, sf::Texture *texture)
+Projectile::Projectile(sf::Vector2f position, float _rotation, float _speed, float _damage, float _distance, sf::Texture *texture, sf::RenderWindow *window)
 {
 	m_position = position;
 	m_startPos = m_position;
@@ -12,24 +12,35 @@ Projectile::Projectile(sf::Vector2f position, float _rotation, float _speed, flo
 	m_alive = true;
 	m_sprite.setRotation(_rotation);
 	m_sprite.setTexture(*texture);
+	m_window = window;
+}
+
+Projectile::~Projectile()
+{
+	
 }
 
 void Projectile::update()
 {
 	m_position += m_velocity;
 
-	if (std::sqrt(std::powf(m_position.x - m_startPos.x, 2) + std::powf(m_position.y - m_startPos.y, 2)) > m_maxDist)
+	/*if (std::sqrt(std::powf(m_position.x - m_startPos.x, 2) + std::powf(m_position.y - m_startPos.y, 2)) > m_maxDist)
 	{
 		m_alive = false;
-	}
+	}*/
+
+	/*if (m_position.x > m_window->getSize().x || m_position.x < 0 || m_position.y > m_window->getSize().y || m_position.y < 0)
+	{
+		m_alive  = false;
+	}*/
 
 	m_sprite.setPosition(m_position);
 }
 
-void Projectile::draw(sf::RenderWindow *window)
+void Projectile::draw()
 {
 	if (m_alive)
-		window->draw(m_sprite);
+		m_window->draw(m_sprite);
 }
 
 bool Projectile::isAlive()

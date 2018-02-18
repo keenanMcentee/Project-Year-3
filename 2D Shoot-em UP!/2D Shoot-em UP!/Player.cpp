@@ -7,9 +7,8 @@ Player::Player()
 /// <summary>
 /// 
 /// </summary>
-void Player::Initialise()
+void Player::Initialise(sf::RenderWindow *window)
 {
-	
 	for (int i = 0; i < playerStats.body_max_level + 1; i++)
 	{
 		for (int j = 0; j < playerStats.r_wing_max_level + 1; j++)
@@ -28,15 +27,17 @@ void Player::Initialise()
 		}
 	}
 	setTexture();
-	m_bulletTexture.loadFromFile("ASSETS/bullet.png");
+	m_bulletTexture.loadFromFile("ASSETS/laserSprite.png");
 
 	playerStats.m_sprite.setOrigin(playerStats.m_sprite.getLocalBounds().width / 2, playerStats.m_sprite.getLocalBounds().height / 2);
 	playerStats.m_sprite.setScale(0.5,0.5);
 
 	m_position = sf::Vector2f(300, 300);
 	m_speed = 2;
-	m_fireRate = 0.1f;
-
+	m_fireRate = 0.2f;
+	m_health = 100;
+	m_damage = 25;
+	m_window = window;
 }
 /// <summary>
 /// 
@@ -44,7 +45,6 @@ void Player::Initialise()
 /// <param name="keyboard"></param>
 void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
 {
-
 	m_previousPos = m_position;
 	
 	animator.update(dt);
@@ -53,7 +53,7 @@ void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
 	HandleMovement(keyboard, view);
 	for (auto &b : bullets)
 	{
-		b.update();
+		b->update();
 	}
 	playerStats.m_sprite.setPosition(m_position);
 
@@ -64,17 +64,16 @@ void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
 /// 
 /// </summary>
 /// <param name="window"></param>
-void Player::Draw(sf::RenderWindow *window)
+void Player::Draw()
 {
 	m_gunFlash.setPosition(m_position + sf::Vector2f(cos(rotation * 3.14 / 180) * 9, sin(rotation * 3.14 / 180) * 12));
 	m_gunFlash.setRotation(rotation);
-	lookAtMouse(*window);
+	lookAtMouse(*m_window);
 	for (auto &b : bullets)
 	{
-		b.draw(window);
+		b->draw();
 	}
-	window->draw(playerStats.m_sprite);
-	
+	m_window->draw(playerStats.m_sprite);
 }
 
 /// <summary>
@@ -121,7 +120,7 @@ void Player::HandleMovement(sf::Keyboard &keyboard, sf::View *view)
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_timeSinceLastShot > m_fireRate)
 	{
 		m_timeSinceLastShot = 0;
-		Projectile bullet = Projectile(m_position, playerStats.m_sprite.getRotation(), 100, 100, 400, &m_bulletTexture);
+		Projectile *bullet = new Projectile(m_position, playerStats.m_sprite.getRotation(), 100, 50, 400, &m_bulletTexture, m_window);
 		bullets.push_back(bullet);
 	}
 	prevLeftClick = sf::Mouse::isButtonPressed(sf::Mouse::Left);
@@ -166,7 +165,6 @@ void Player::CheckCollision(tgui::FloatRect &tile)
 	if (tile.intersects(playerStats.m_sprite.getGlobalBounds()))
 	{
 		m_position = m_previousPos;
-		
 	}
 }
 float Player::ToRadians(float x)

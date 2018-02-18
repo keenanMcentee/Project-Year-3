@@ -22,32 +22,42 @@ public:
 	sf::Texture m_texture;
 	sf::Texture m_bulletTexture;
 	sf::Texture m_flashAnimation;
+
 	thor::Animator<sf::Sprite, std::string> animator;
+	thor::FrameAnimation gunFlashAnimation;
+
 	sf::Sprite m_sprite;
 	sf::Sprite m_gunFlash;
 	sf::Vector2f m_position;
 	sf::Vector2f m_previousPos;
+
 	Player();
-	void Initialise();
+
+	sf::RenderWindow *m_window;
+
+	void Initialise(sf::RenderWindow *window);
 	void Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view);
-	void Draw(sf::RenderWindow *window);
+	void Draw();
 	void HandleMovement(sf::Keyboard &keyboard, sf::View *view);
 	void bulletEnemyCollision(Projectile b, Enemy *enemy);
-	void setPartLocations();
-	float m_speed;
 	void lookAtMouse(sf::RenderWindow &win);
+	void CheckCollision(tgui::FloatRect &tile);
+	void setTexture();
+
+	float m_speed;
 	float rotation;
-	bool prevLeftClick;
-	std::vector<Projectile> bullets;
-	thor::FrameAnimation gunFlashAnimation;
 	float m_fireRate;
 	float m_timeSinceLastShot;
-	void CheckCollision(tgui::FloatRect &tile);
+	float ToRadians(float x);
 
+	int m_health;
+	int m_damage;
+	int m_credits = 0;
+
+	bool prevLeftClick;
+	std::vector<Projectile*> bullets;
+	
 	sf::SoundBuffer buffer;
 	tgui::FloatRect getRect();
-
-	float ToRadians(float x);
-	void setTexture();
 };
 #endif // !PLAYER
