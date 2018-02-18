@@ -37,9 +37,12 @@ public:
 
 	float distBetween(sf::Vector2f playerPos, sf::Vector2f OtherPos);
 
-	int waveNumber;
 	int enemyCount;
+	int deadEnemies;
 	int enemyOffset;
+	int bossSpawnCount;
+
+	bool bossWave;
 
 	void handleEvent(sf::Event e);
 

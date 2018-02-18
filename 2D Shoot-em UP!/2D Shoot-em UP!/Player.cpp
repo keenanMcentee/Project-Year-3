@@ -26,6 +26,7 @@ void Player::Initialise(sf::RenderWindow *window)
 			}
 		}
 	}
+
 	setTexture();
 	m_bulletTexture.loadFromFile("ASSETS/laserSprite.png");
 
@@ -36,7 +37,7 @@ void Player::Initialise(sf::RenderWindow *window)
 	m_speed = 2;
 	m_fireRate = 0.2f;
 	m_health = 100;
-	m_damage = 25;
+	m_damage = 35;
 	m_window = window;
 }
 /// <summary>
@@ -82,7 +83,6 @@ void Player::Draw()
 /// <param name="keyboard"></param>
 void Player::HandleMovement(sf::Keyboard &keyboard, sf::View *view)
 {
-	
 	if (keyboard.isKeyPressed(keyboard.A))
 	{
 		m_position.x -= m_speed;

@@ -12,7 +12,8 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 	player.Initialise(window);
 	
 	enemyCount = 0;
-	waveNumber = 1;
+	deadEnemies = 0;
+	bossSpawnCount = 100;
 
 	playerView.reset(tgui::FloatRect(0.0, 0.0, 200.0, 250.0));
 	playerView.setViewport(tgui::FloatRect(0.0, 0.0, 1.0, 1.0));
@@ -37,7 +38,6 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 /// </summary>
 void Play::Update(sf::Time dt)
 {
-	std::cout << player.bullets.size() << std::endl;
 	float time = dt.asSeconds();
 	timeSinceStart += dt.asSeconds();
 	backgroundShader.setUniform("time", timeSinceStart);
@@ -46,6 +46,14 @@ void Play::Update(sf::Time dt)
 	player.Update(dt, keyboard, &playerView);
 	updateEnemies(dt);
 	HandleCollision();
+
+	std::cout << deadEnemies << std::endl;
+	std::cout << bossWave << std::endl;
+
+	if (deadEnemies >= bossSpawnCount)
+	{
+		bossWave = true;
+	}
 
 	for (int i = 0; i < player.bullets.size(); i++)
 	{
@@ -59,34 +67,49 @@ void Play::Update(sf::Time dt)
 		}
 	}
 
-	if (enemyCount < 1)
+	if (!bossWave)
 	{
-		generateWave(7);
+		if (enemyCount <= 15)
+		{
+			int randEnemy1 = rand() % 6;
+			int randEnemy2 = rand() % 6;
+			if (randEnemy2 = randEnemy1)
+			{
+				int randEnemy2 = rand() % 5;
+			}
+			generateWave(randEnemy1);
+			generateWave(randEnemy2);
+		}
+	}
+	
+	if (bossWave)
+	{
+		std::cout << "bossWave" << std::endl;
+		
+		for (int i = 0; i < enemyArray.size(); i++)
+		{
+			if (enemyArray[i]->m_type != enemyArray[i]->BOSS_TYPE)
+			{
+				enemyArray[i]->m_health = 0;
+			}
+		}
+		if (enemyCount < 1)
+		{
+			generateWave(7);
+		}
 	}
 
-	/*if (enemyCount <= 15)
-	{
-		int randEnemy1 = rand() % 6;
-		int randEnemy2 = rand() % 6;
-		if (randEnemy2 = randEnemy1)
-		{
-			int randEnemy2 = rand() % 5;
-		}
-
-		generateWave(randEnemy1);
-		generateWave(randEnemy2);
-	}*/
-
 	currentState;
+
 	if (keyboard.isKeyPressed(keyboard.Escape))
 	{
 		GoToScreen(GameState::Pause);
 	}
 
-	/*if (player.m_health <= 0)
+	if (player.m_health <= 0)
 	{
 		GoToScreen(GameState::MainMenu);
-	}*/
+	}
 
 	pastKeyboard = keyboard;
 }
@@ -126,14 +149,14 @@ void Play::HandleCollision()
 	{
 		if (player.getRect().intersects(enemyArray[i]->getRect()) && enemyArray[i]->alive == true)
 		{
-			if (!enemyArray[i]->m_type == 7)
+			if (enemyArray[i]->m_type != enemyArray[i]->BOSS_TYPE)
 			{
-				enemyArray[i]->alive = false;
 				player.m_health -= enemyArray[i]->m_damage;
+				enemyArray[i]->m_health = 0;
 			}
-			else
+			else if (enemyArray[i]->m_type == enemyArray[i]->BOSS_TYPE)
 			{
-				player.m_health = 0;
+				player.m_position.y += player.m_speed;
 			}
 		}
 
@@ -153,10 +176,45 @@ void Play::HandleCollision()
 		{
 			if (player.bullets[k]->getRect().intersects(enemyArray[i]->getRect()))
 			{
-				enemyArray[i]->m_health -= player.m_damage;
-				if (enemyArray[i]->m_health <= 0)
+				if (enemyArray[i]->m_type != enemyArray[i]->BOSS_TYPE)
 				{
-					player.m_credits += enemyArray[i]->m_creditsValue;
+					enemyArray[i]->m_health -= player.m_damage;
+
+					if (enemyArray[i]->m_health <= 0)
+					{
+						player.m_credits += enemyArray[i]->m_creditsValue;
+						deadEnemies++;
+					}
+				}
+
+				if (enemyArray[i]->m_type == enemyArray[i]->BOSS_TYPE && enemyArray[i]->m_position.y >= 150)
+				{
+					std::cout << "turret one " << enemyArray[i]->m_turretOneHealth << std::endl;
+					std::cout << "turret two " << enemyArray[i]->m_turretTwoHealth << std::endl;
+					std::cout << "turret three " << enemyArray[i]->m_turretThreeHealth << std::endl;
+
+					if (enemyArray[i]->m_turretOneHealth > 0)
+					{
+						enemyArray[i]->m_turretOneHealth -= player.m_damage;
+					}
+
+					if (enemyArray[i]->m_turretTwoHealth > 0 && enemyArray[i]->m_turretOneHealth <= 0)
+					{
+						enemyArray[i]->m_turretTwoHealth -= player.m_damage;
+					}
+
+					if (enemyArray[i]->m_turretThreeHealth > 0 && enemyArray[i]->m_turretOneHealth <= 0 && enemyArray[i]->m_turretTwoHealth <= 0)
+					{
+						enemyArray[i]->m_turretThreeHealth -= player.m_damage;
+					}
+
+					if (enemyArray[i]->m_turretThreeHealth <= 0 && enemyArray[i]->m_turretOneHealth <= 0 && enemyArray[i]->m_turretTwoHealth <= 0)
+					{
+						enemyArray[i]->alive = false;
+						bossWave = false;
+						deadEnemies = 0;
+						bossSpawnCount += 50;
+					}
 				}
 				player.bullets[k]->~Projectile();
 				player.bullets[k] = nullptr;
@@ -184,7 +242,6 @@ void Play::updateEnemies(sf::Time dt)
 	}
 }
 
-
 void Play::generateWave(int randEnemy)
 {
 	enemyOffset = 50;
@@ -194,7 +251,7 @@ void Play::generateWave(int randEnemy)
 		for (int i = 0; i < 5; i++)
 		{
 			Enemy *enemy = new Enemy();
-			enemy->Initialise(0, true, m_window, sf::Vector2f(m_window->getSize().x + (enemyOffset * i), 300 + (enemyOffset * i)), sf::Vector2f(2, 2), m_ramEnemySprite, 50, 15, 50);
+			enemy->Initialise(0, true, m_window, sf::Vector2f(m_window->getSize().x + (enemyOffset * i), 300 + (enemyOffset * i)), 0.5, m_ramEnemySprite, 50, 15, 50);
 			enemyArray.push_back(enemy);
 			enemyCount++;
 		}
@@ -205,7 +262,7 @@ void Play::generateWave(int randEnemy)
 		for (int i = 0; i < 5; i++)
 		{
 			Enemy *enemy = new Enemy();
-			enemy->Initialise(1, true, m_window, sf::Vector2f(-50 - (enemyOffset * i), 300 + (enemyOffset * i)), sf::Vector2f(2, 2), m_ramEnemySprite, 50, 15, 50);
+			enemy->Initialise(1, true, m_window, sf::Vector2f(-50 - (enemyOffset * i), 300 + (enemyOffset * i)), 0.5, m_ramEnemySprite, 50, 15, 50);
 			enemyArray.push_back(enemy);
 			enemyCount++;
 		}
@@ -217,7 +274,7 @@ void Play::generateWave(int randEnemy)
 		for (int i = 0; i < 10; i++)
 		{
 			Enemy* enemy = new Enemy();
-			enemy->Initialise(2, false, m_window, sf::Vector2f(-50 - (enemyOffset * i), 50), sf::Vector2f(2, 2), m_shipEnemySprite, 30, 5, 50);
+			enemy->Initialise(2, false, m_window, sf::Vector2f(-50 - (enemyOffset * i), 50), 0.5, m_shipEnemySprite, 30, 5, 50);
 			enemyArray.push_back(enemy);
 			enemyCount++;
 		}
@@ -228,7 +285,7 @@ void Play::generateWave(int randEnemy)
 		for (int i = 0; i < 10; i++)
 		{
 			Enemy* enemy = new Enemy();
-			enemy->Initialise(3, false, m_window, sf::Vector2f(m_window->getSize().x + (enemyOffset * i), 175), sf::Vector2f(2, 2), m_shipEnemySprite, 30, 5, 50);
+			enemy->Initialise(3, false, m_window, sf::Vector2f(m_window->getSize().x + (enemyOffset * i), 175), 0.5, m_shipEnemySprite, 30, 5, 50);
 			enemyArray.push_back(enemy);
 			enemyCount++;
 		}
@@ -237,7 +294,7 @@ void Play::generateWave(int randEnemy)
 	if (randEnemy == 4)
 	{
 		Enemy *enemy = new Enemy();
-		enemy->Initialise(4, false, m_window, sf::Vector2f(100, -50), sf::Vector2f(1, 1), m_shipEnemySprite, 100, 5, 50);
+		enemy->Initialise(4, false, m_window, sf::Vector2f(100, -50), 0.5, m_shipEnemySprite, 100, 5, 50);
 		enemyArray.push_back(enemy);
 		enemyCount++;
 	}
@@ -247,7 +304,7 @@ void Play::generateWave(int randEnemy)
 		for (int i = 0; i < 5; i++)
 		{
 			Enemy* enemy = new Enemy();
-			enemy->Initialise(5, true, m_window, sf::Vector2f(100 + (100 * i), -100), sf::Vector2f(2, 2), m_ramEnemySprite, 50, 15, 50);
+			enemy->Initialise(5, true, m_window, sf::Vector2f(100 + (100 * i), -100), 0.5, m_ramEnemySprite, 50, 15, 50);
 			enemyArray.push_back(enemy);
 			enemyCount++;
 		}
@@ -258,7 +315,7 @@ void Play::generateWave(int randEnemy)
 		for (int i = 0; i < 5; i++)
 		{
 			Enemy* enemy = new Enemy();
-			enemy->Initialise(5, true, m_window, sf::Vector2f(100 + (100 * i), -100), sf::Vector2f(2, 2), m_ramEnemySprite, 50, 15, 50);
+			enemy->Initialise(5, true, m_window, sf::Vector2f(100 + (100 * i), -100), 0.5, m_ramEnemySprite, 50, 15, 50);
 			enemyArray.push_back(enemy);
 			enemyCount++;
 		}
@@ -269,7 +326,7 @@ void Play::generateWave(int randEnemy)
 		for (int i = 0; i < 1; i++)
 		{
 			Enemy* enemy = new Enemy();
-			enemy->Initialise(7, false, m_window, sf::Vector2f(350,-300), sf::Vector2f(1,1), m_ramEnemySprite, 500, 10, 50000);
+			enemy->Initialise(7, false, m_window, sf::Vector2f(350,-300), 0.5, m_ramEnemySprite, 500, 10, 50000);
 			enemyArray.push_back(enemy);
 			enemyCount++;
 		}

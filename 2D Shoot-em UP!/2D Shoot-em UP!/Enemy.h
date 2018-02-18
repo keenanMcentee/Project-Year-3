@@ -3,6 +3,7 @@
 #include <math.h>
 #include "uiHelper.h"
 #include "Projectile.h"
+#include <math.h>
 
 #ifndef ENEMY
 #define ENEMY
@@ -38,11 +39,12 @@ public:
 
 	sf::String m_direction;
 
-	void Initialise(int type, bool mineType, sf::RenderWindow *window, sf::Vector2f spawnPos, sf::Vector2f speed, sf::Sprite sprite, int health, int damage, int creditsValue);
+	void Initialise(int type, bool mineType, sf::RenderWindow *window, sf::Vector2f spawnPos, float accelaration, sf::Sprite sprite, int health, int damage, int creditsValue);
 	void Update(sf::Time dt, sf::Vector2f playerPos);
 	void Draw();
 	void Reset();
 	void HandleMovement(sf::Vector2f playerPos);
+	float turretLookAtPlayer(sf::Sprite turret, sf::Vector2f playerPos);
 
 	std::vector<Projectile*> bullets;
 
@@ -56,6 +58,9 @@ public:
 
 	int m_type;
 	int m_health;
+	int m_turretOneHealth;
+	int m_turretTwoHealth;
+	int m_turretThreeHealth;
 	int m_damage;
 	int m_creditsValue;
 
