@@ -9,7 +9,7 @@
 ScreenManager::ScreenManager(sf::RenderWindow *window) : m_splash(window), m_license(window), m_mainMenu(window), m_options(window),
 m_help(window), m_credits(window), m_play(window, &m_currentState), m_pause(window), m_postWaveMenu(window), m_upgrades(window)
 {
-	m_currentState = GameState::Play;
+	m_currentState = GameState::Credits;
 }
 
 /// <summary>
@@ -20,13 +20,19 @@ void ScreenManager::Initialise()
 	fromPause = false;
 	m_splash.Initialise(&m_currentState);
 	m_license.Initialise(&m_currentState);
-	m_mainMenu.Initialise(&m_currentState, &fromPause);
+	m_mainMenu.Initialise(&m_currentState, &fromPause, &m_play);
 	m_options.Initialise(&m_currentState);
 	m_credits.Initialise(&m_currentState);
 	m_pause.Initialise(&m_currentState, &fromPause);
 	m_help.Initialise(&m_currentState);
 	m_postWaveMenu.Initialise(&m_currentState);
 	m_upgrades.Initialise(&m_currentState, &m_play.player.playerStats);
+	//menuMusicBuffer.loadFromFile("ASSETS/Sounds/menuMusic.wav");
+	menuMusicSound.setBuffer(menuMusicBuffer);
+	//gameplayMusicBuffer.loadFromFile("ASSETS/Sounds/gameplayMusic.wav");
+	gameplayMusicSound.setBuffer(gameplayMusicBuffer);
+	menuMusicSound.setLoop(true);
+	gameplayMusicSound.setLoop(true);
 }
 
 /// <summary>
@@ -35,6 +41,22 @@ void ScreenManager::Initialise()
 /// <param name="clock"></param>
 void ScreenManager::Update(sf::Clock *clock)
 {
+	if (m_currentState == GameState::Play)
+	{
+		if (gameplayMusicSound.getStatus() != gameplayMusicSound.Playing)
+		{
+			menuMusicSound.stop();
+			gameplayMusicSound.play();
+		}
+	}
+	else
+	{
+		if (menuMusicSound.getStatus() != menuMusicSound.Playing)
+		{
+			gameplayMusicSound.pause();
+			menuMusicSound.play();
+		}
+	}
 	dt = clock->restart();
 	switch (m_currentState)
 	{

@@ -23,13 +23,32 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 	backgroundSprite.setTexture(blankTexture);
 	backgroundShader.loadFromFile("./ASSETS/shaders/fragmentShaders/ground_one.frag", sf::Shader::Fragment);
 
-	m_ramEnemyTexture.loadFromFile("ASSETS/enemyBallThingie.png");
-	m_ramEnemySprite.setTexture(m_ramEnemyTexture);
-	m_ramEnemySprite.setScale(0.05f, 0.05f);
+	enemyOneTexture.loadFromFile("ASSETS/enemyBallThingie.png");
+	enemyOneSprite.setTexture(enemyOneTexture);
 
-	m_shipEnemyTexture.loadFromFile("ASSETS/BulletShootingShip.png");
-	m_shipEnemySprite.setTexture(m_shipEnemyTexture);
-	m_shipEnemySprite.setScale(0.1f, 0.1f);
+	enemyTwoTexture.loadFromFile("ASSETS/Enemies/fidgetspinner.png");
+	enemyTwoSprite.setTexture(enemyTwoTexture);
+
+	enemyThreeTexture.loadFromFile("ASSETS/Enemies/fidgetspinner.png");
+	enemyThreeSprite.setTexture(enemyThreeTexture);
+	
+
+	enemyFourTexture.loadFromFile("ASSETS/Enemies/cargoship.png");
+	enemyFourSprite.setTexture(enemyFourTexture);
+
+	enemyFiveTexture.loadFromFile("ASSETS/Enemies/spacestation.png");
+	enemyFiveSprite.setTexture(enemyFiveTexture);
+
+	enemySixTexture.loadFromFile("ASSETS/BulletShootingShip.png");
+	enemySixSprite.setTexture(enemySixTexture);
+
+	enemySpeed = 0.5f;
+
+
+}
+void Play::reset()
+{
+	
 }
 
 /// 
@@ -47,8 +66,6 @@ void Play::Update(sf::Time dt)
 	updateEnemies(dt);
 	HandleCollision();
 
-	std::cout << deadEnemies << std::endl;
-	std::cout << bossWave << std::endl;
 
 	if (deadEnemies >= bossSpawnCount)
 	{
@@ -69,7 +86,7 @@ void Play::Update(sf::Time dt)
 
 	if (!bossWave)
 	{
-		if (enemyCount <= 15)
+		if (enemyCount <= 25)
 		{
 			int randEnemy1 = rand() % 6;
 			int randEnemy2 = rand() % 6;
@@ -84,15 +101,14 @@ void Play::Update(sf::Time dt)
 	
 	if (bossWave)
 	{
-		std::cout << "bossWave" << std::endl;
 		
-		for (int i = 0; i < enemyArray.size(); i++)
+		/*for (int i = 0; i < enemyArray.size(); i++)
 		{
 			if (enemyArray[i]->m_type != enemyArray[i]->BOSS_TYPE)
 			{
 				enemyArray[i]->m_health = 0;
 			}
-		}
+		}*/
 		if (enemyCount < 1)
 		{
 			generateWave(7);
@@ -121,7 +137,7 @@ void Play::Update(sf::Time dt)
 void Play::Draw(sf::RenderWindow *window)
 {
 	window->draw(backgroundSprite, &backgroundShader);
-	player.Draw();
+	
 
 	for (int i = 0; i < enemyArray.size(); i++)
 	{
@@ -132,6 +148,7 @@ void Play::Draw(sf::RenderWindow *window)
 
 	playerView.setCenter(player.m_position);
 
+	player.Draw();
 	//window->setView(playerView);
 	//demoMap.draw(window, sf::Vector2f(0, 0), true);
 
@@ -184,14 +201,12 @@ void Play::HandleCollision()
 					{
 						player.m_credits += enemyArray[i]->m_creditsValue;
 						deadEnemies++;
+						enemySpeed += 0.005f;
 					}
 				}
 
 				if (enemyArray[i]->m_type == enemyArray[i]->BOSS_TYPE && enemyArray[i]->m_position.y >= 150)
 				{
-					std::cout << "turret one " << enemyArray[i]->m_turretOneHealth << std::endl;
-					std::cout << "turret two " << enemyArray[i]->m_turretTwoHealth << std::endl;
-					std::cout << "turret three " << enemyArray[i]->m_turretThreeHealth << std::endl;
 
 					if (enemyArray[i]->m_turretOneHealth > 0)
 					{
@@ -229,7 +244,7 @@ void Play::updateEnemies(sf::Time dt)
 {
 	for (int i = 0; i < enemyArray.size(); i++)
 	{
-		enemyArray[i]->Update(dt, player.m_position);
+		enemyArray[i]->Update(dt, player.m_position, enemySpeed);
 
 		if (!enemyArray[i]->alive && enemyArray[i]->bullets.size() == 0)
 		{
@@ -251,7 +266,7 @@ void Play::generateWave(int randEnemy)
 		for (int i = 0; i < 5; i++)
 		{
 			Enemy *enemy = new Enemy();
-			enemy->Initialise(0, true, m_window, sf::Vector2f(m_window->getSize().x + (enemyOffset * i), 300 + (enemyOffset * i)), 0.5, m_ramEnemySprite, 50, 15, 50);
+			enemy->Initialise(0, true, m_window, sf::Vector2f(m_window->getSize().x + (enemyOffset * i), 300 + (enemyOffset * i)), enemyOneSprite, 50, 15, 50);
 			enemyArray.push_back(enemy);
 			enemyCount++;
 		}
@@ -262,7 +277,7 @@ void Play::generateWave(int randEnemy)
 		for (int i = 0; i < 5; i++)
 		{
 			Enemy *enemy = new Enemy();
-			enemy->Initialise(1, true, m_window, sf::Vector2f(-50 - (enemyOffset * i), 300 + (enemyOffset * i)), 0.5, m_ramEnemySprite, 50, 15, 50);
+			enemy->Initialise(1, true, m_window, sf::Vector2f(-50 - (enemyOffset * i), 300 + (enemyOffset * i)), enemyOneSprite, 50, 15, 50);
 			enemyArray.push_back(enemy);
 			enemyCount++;
 		}
@@ -274,7 +289,7 @@ void Play::generateWave(int randEnemy)
 		for (int i = 0; i < 10; i++)
 		{
 			Enemy* enemy = new Enemy();
-			enemy->Initialise(2, false, m_window, sf::Vector2f(-50 - (enemyOffset * i), 50), 0.5, m_shipEnemySprite, 30, 5, 50);
+			enemy->Initialise(2, false, m_window, sf::Vector2f(-50 - (enemyOffset * i), 50), enemyTwoSprite, 30, 5, 50);
 			enemyArray.push_back(enemy);
 			enemyCount++;
 		}
@@ -285,7 +300,7 @@ void Play::generateWave(int randEnemy)
 		for (int i = 0; i < 10; i++)
 		{
 			Enemy* enemy = new Enemy();
-			enemy->Initialise(3, false, m_window, sf::Vector2f(m_window->getSize().x + (enemyOffset * i), 175), 0.5, m_shipEnemySprite, 30, 5, 50);
+			enemy->Initialise(3, false, m_window, sf::Vector2f(m_window->getSize().x + (enemyOffset * i), 175), enemyThreeSprite, 30, 5, 50);
 			enemyArray.push_back(enemy);
 			enemyCount++;
 		}
@@ -294,7 +309,7 @@ void Play::generateWave(int randEnemy)
 	if (randEnemy == 4)
 	{
 		Enemy *enemy = new Enemy();
-		enemy->Initialise(4, false, m_window, sf::Vector2f(100, -50), 0.5, m_shipEnemySprite, 100, 5, 50);
+		enemy->Initialise(4, false, m_window, sf::Vector2f(100, -50), enemyFourSprite, 100, 5, 50);
 		enemyArray.push_back(enemy);
 		enemyCount++;
 	}
@@ -304,7 +319,7 @@ void Play::generateWave(int randEnemy)
 		for (int i = 0; i < 5; i++)
 		{
 			Enemy* enemy = new Enemy();
-			enemy->Initialise(5, true, m_window, sf::Vector2f(100 + (100 * i), -100), 0.5, m_ramEnemySprite, 50, 15, 50);
+			enemy->Initialise(5, true, m_window, sf::Vector2f(100 + (100 * i), -100), enemyFiveSprite, 50, 15, 50);
 			enemyArray.push_back(enemy);
 			enemyCount++;
 		}
@@ -315,7 +330,7 @@ void Play::generateWave(int randEnemy)
 		for (int i = 0; i < 5; i++)
 		{
 			Enemy* enemy = new Enemy();
-			enemy->Initialise(5, true, m_window, sf::Vector2f(100 + (100 * i), -100), 0.5, m_ramEnemySprite, 50, 15, 50);
+			enemy->Initialise(5, true, m_window, sf::Vector2f(100 + (100 * i), -100), enemySixSprite, 50, 15, 50);
 			enemyArray.push_back(enemy);
 			enemyCount++;
 		}
@@ -326,7 +341,7 @@ void Play::generateWave(int randEnemy)
 		for (int i = 0; i < 1; i++)
 		{
 			Enemy* enemy = new Enemy();
-			enemy->Initialise(7, false, m_window, sf::Vector2f(350,-300), 0.5, m_ramEnemySprite, 500, 10, 50000);
+			enemy->Initialise(7, false, m_window, sf::Vector2f(350,-300), enemySixSprite, 500, 10, 50000);
 			enemyArray.push_back(enemy);
 			enemyCount++;
 		}

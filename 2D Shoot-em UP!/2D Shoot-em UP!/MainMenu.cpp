@@ -15,10 +15,11 @@ MainMenu::MainMenu(sf::RenderWindow *window) : Screen(window)
 /// </summary>
 /// <param name="state"></param>
 /// <param name="fromPause"></param>
-void MainMenu::Initialise(GameState *state, bool* fromPause)
+void MainMenu::Initialise(GameState *state, bool* fromPause, Play* playScreen)
 {
-	menuBox.loadFromFile("./ASSETS/menu box.png");
 	
+	playScreenPtr = playScreen;
+	menuBox.loadFromFile("./ASSETS/menu box.png");
 	m_menuBox.setTexture(menuBox);
 	m_menuBox.setPosition(getScreenSize().x / 10, getScreenSize().y / 21);
 	m_menuBox.setScale(getScreenSize().x / 720, getScreenSize().y / 720);
@@ -32,8 +33,10 @@ void MainMenu::Initialise(GameState *state, bool* fromPause)
 	auto button = uiHelper::makeButton("Play", sf::Vector2f(getScreenSize().x /3 - uiSizeX/4, getScreenSize().y / 6), uiSizeX, uiSizeY);
 	button->connect("pressed", [&]() {
 		
+		
+		resetButton();
 		GoToScreen(GameState::Play);
-	
+
 	});
 	gui.add(button, "Menu_playBtn");
 
@@ -76,4 +79,13 @@ void MainMenu::Draw(sf::RenderWindow *window)
 	window->draw(backgroundSprite, &menuShader);
 	window->draw(m_menuBox);
 	gui.draw();
+}
+void MainMenu::resetButton()
+{
+	playScreenPtr->enemyArray.clear();
+	playScreenPtr->player.reset();
+	playScreenPtr->enemyCount = 0;
+	playScreenPtr->deadEnemies = 0;
+	playScreenPtr->bossSpawnCount = 100;
+	playScreenPtr->enemySpeed = 0;
 }

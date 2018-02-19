@@ -16,6 +16,10 @@ void Upgrades::Draw(sf::RenderWindow *window, sf::Time dt)
 {
 	float time = dt.asSeconds();
 	timeSinceStart += dt.asSeconds();
+	menuBox.loadFromFile("./ASSETS/menu box.png");
+	m_menuBox1.setTexture(menuBox);
+	m_menuBox2.setTexture(menuBox);
+	m_menuBox3.setTexture(menuBox);
 	menuShader.setUniform("time", timeSinceStart);
 	menuShader.setUniform("resolution", sf::Glsl::Vec2(windowPtr->getSize().x, windowPtr->getSize().y));
 	stats->m_sprite.setRotation(0);

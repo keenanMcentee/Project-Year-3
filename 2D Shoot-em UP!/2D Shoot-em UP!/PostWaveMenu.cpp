@@ -6,8 +6,11 @@ PostWaveMenu::PostWaveMenu(sf::RenderWindow *window) : Screen(window)
 
 void PostWaveMenu::Initialise(GameState *state)
 {
-	gui.add(uiHelper::makeLabel("Wave Complete", sf::Vector2f(150, 50), 50));
-
+	gui.add(uiHelper::makeLabel("Wave Complete", sf::Vector2f(150, 40), 25));
+	menuBox.loadFromFile("./ASSETS/menu box.png");
+	m_menuBox.setTexture(menuBox);
+	m_menuBox.setPosition(60, 30);
+	m_menuBox.setScale(1.4, 0.8);
 	currentState = state;
 	
 	auto btnContinue = uiHelper::makeButton("Continue", sf::Vector2f(250, 200), 200, 100);
@@ -31,5 +34,6 @@ void PostWaveMenu::Initialise(GameState *state)
 void PostWaveMenu::Draw(sf::RenderWindow *window)
 {
 	window->draw(backgroundSprite, &menuShader);
+	window->draw(m_menuBox);
 	gui.draw();
 }

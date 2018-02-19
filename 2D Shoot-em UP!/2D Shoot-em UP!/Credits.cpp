@@ -16,8 +16,11 @@ Credits::Credits(sf::RenderWindow *window) : Screen(window)
 /// <param name="state"></param>
 void Credits::Initialise(GameState *state)
 {
-	gui.add(uiHelper::makeLabel("CREDITS SCREEN", sf::Vector2f(100, 50), 50));
-
+	gui.add(uiHelper::makeLabel("CREDITS SCREEN", sf::Vector2f(150, 40), 25));
+	menuBox.loadFromFile("./ASSETS/menu box.png");
+	m_menuBox.setTexture(menuBox);
+	m_menuBox.setPosition(60, 30);
+	m_menuBox.setScale(1.4, 0.8);
 	currentState = state;
 
 	gui.add(uiHelper::makeLabel("Keith Wilson", sf::Vector2f(100, 200), 40), "Credits_keithLbl");
@@ -42,5 +45,6 @@ void Credits::Update(sf::Time dt)
 void Credits::Draw(sf::RenderWindow *window)
 {
 	window->draw(backgroundSprite, &menuShader);
+	window->draw(m_menuBox);
 	gui.draw();
 }

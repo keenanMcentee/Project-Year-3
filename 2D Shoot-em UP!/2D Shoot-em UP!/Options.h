@@ -13,6 +13,9 @@ public:
 	void backBtnHandler(bool fromPause);
 	bool fullScreen;
 	bool fromPause;
+
+	sf::Texture menuBox;
+	sf::Sprite m_menuBox;
 private:
 
 };

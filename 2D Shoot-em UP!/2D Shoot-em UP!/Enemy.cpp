@@ -9,7 +9,7 @@ Enemy::~Enemy()
 
 }
 
-void Enemy::Initialise(int type, bool mineType, sf::RenderWindow *window, sf::Vector2f spawnPos, float accelaration, sf::Sprite sprite, int health, int damage, int creditsValue)
+void Enemy::Initialise(int type, bool mineType, sf::RenderWindow *window, sf::Vector2f spawnPos, sf::Sprite sprite, int health, int damage, int creditsValue)
 {
 	m_mineType = mineType;
 	m_type = type;
@@ -52,7 +52,7 @@ void Enemy::Initialise(int type, bool mineType, sf::RenderWindow *window, sf::Ve
 	m_health = health;
 	m_damage = damage;
 	m_creditsValue = creditsValue;
-	m_fireRate = 1.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (2.0f - 1.0f)));
+	m_fireRate = 2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (3.0f - 2.0f)));
 
 	m_bulletTexture.loadFromFile("ASSETS/laserSprite.png");
 
@@ -65,12 +65,12 @@ void Enemy::Initialise(int type, bool mineType, sf::RenderWindow *window, sf::Ve
 
 	rotator = 0;
 	
-	m_speed = sf::Vector2f(1 * accelaration, 1 * accelaration);
+	m_speed = sf::Vector2f(1.0f,1.0f);
 
 	alive = true;
 }
 
-void Enemy::Update(sf::Time dt, sf::Vector2f playerPos)
+void Enemy::Update(sf::Time dt, sf::Vector2f playerPos, float accelerator)
 {
 	if (m_health <= 0)
 	{
@@ -99,6 +99,8 @@ void Enemy::Update(sf::Time dt, sf::Vector2f playerPos)
 	rotator += 1;
 
 	m_timeSinceLastShot += dt.asSeconds();
+
+	m_speed = sf::Vector2f(1 * accelerator, 1 * accelerator);
 }
 
 void Enemy::Draw()
@@ -187,43 +189,28 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 		{
 			m_position.x -= m_speed.x;
 		}
+		m_sprite.setRotation(turretLookAtPlayer(m_sprite, playerPos));
 		break;
 	case 5: //Diagonal_Moving_Type
 		m_position += m_speed;
-		if (m_position.x <= 0)
+		if (m_position.x <= 0 || m_position.x + m_sprite.getGlobalBounds().width >= m_window->getSize().x + 50)
 		{
-			m_speed.x = 2;
+			m_speed.x *= -1;
 		}
-		if (m_position.x + m_sprite.getGlobalBounds().width >= m_window->getSize().x + 50)
+		if (m_position.y <= 0 || m_position.y >= m_window->getSize().y)
 		{
-			m_speed.x = -2;
-		}
-		if (m_position.y <= 0)
-		{
-			m_speed.y = 2;
-		}
-		if (m_position.y >= m_window->getSize().y)
-		{
-			m_speed.y = -2;
+			m_speed.y *= -1;
 		}
 		break;
 	case 6: //Follower_Type
 		m_position += m_speed;
-		if (m_position.x <= playerPos.x)
+		if (m_position.x <= playerPos.x || m_position.x >= playerPos.x)
 		{
-			m_speed.x = 2;
+			m_speed.x *= -1;
 		}
-		if (m_position.x >= playerPos.x)
+		if (m_position.y <= playerPos.y || m_position.y >= playerPos.y)
 		{
-			m_speed.x = -2;
-		}
-		if (m_position.y <= playerPos.y)
-		{
-			m_speed.y = 2;
-		}
-		if (m_position.y >= playerPos.y)
-		{
-			m_speed.y = -2;
+			m_speed.y *= -1;
 		}
 		break;
 	case 7: //Go_To_Center
@@ -233,10 +220,10 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 
 		if (m_position.y < 150)
 		{
-			m_position.y += m_speed.y;
-			m_turretOnePosition.y += m_speed.y;
-			m_turretTwoPosition.y += m_speed.y;
-			m_turretThreePosition.y += m_speed.y;
+			m_position.y += 1;
+			m_turretOnePosition.y += 1;
+			m_turretTwoPosition.y += 1;
+			m_turretThreePosition.y += 1;
 		}
 
 		if (m_position.y >= 150)
@@ -253,22 +240,16 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 				{
 					Projectile *bulletT1 = new Projectile(m_turretOneSprite.getPosition(), m_turretOneSprite.getRotation() + 90, 4, 15, 1500, &m_bulletTexture, m_window);
 					bullets.push_back(bulletT1);
-					std::cout << "B1 x: " << bulletT1->m_position.x << std::endl;
-					std::cout << "B1 y: " << bulletT1->m_position.y << std::endl;
 				}
 				if (m_turretTwoHealth > 0)
 				{
 					Projectile *bulletT2 = new Projectile(m_turretTwoSprite.getPosition(), m_turretTwoSprite.getRotation() + 90, 4, 15, 1500, &m_bulletTexture, m_window);
 					bullets.push_back(bulletT2);
-					std::cout << "B2 x: " << bulletT2->m_position.x << std::endl;
-					std::cout << "B2 y: " << bulletT2->m_position.y << std::endl;
 				}
 				if (m_turretThreeHealth > 0)
 				{
 					Projectile *bulletT3 = new Projectile(m_turretThreeSprite.getPosition(), m_turretThreeSprite.getRotation() + 90, 4, 15, 1500, &m_bulletTexture, m_window);
 					bullets.push_back(bulletT3);
-					std::cout << "B3 x: " << bulletT3->m_position.x << std::endl;
-					std::cout << "B3 y: " << bulletT3->m_position.y << std::endl;
 				}
 			}
 		}
@@ -286,9 +267,9 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 	if (m_timeSinceLastShot > m_fireRate && alive == true)
 	{
 		m_timeSinceLastShot = 0;
-		Projectile *bulletT1 = new Projectile(m_turretOneSprite.getPosition(), m_turretOneSprite.getRotation() + 90, 2, 15, 1500, &m_bulletTexture, m_window);
-		Projectile *bulletT2 = new Projectile(m_turretTwoSprite.getPosition(), m_turretTwoSprite.getRotation() + 90, 2, 15, 1500, &m_bulletTexture, m_window);
-		Projectile *bulletT3 = new Projectile(m_turretThreeSprite.getPosition(), m_turretThreeSprite.getRotation() + 90, 2, 15, 1500, &m_bulletTexture, m_window);
+		Projectile *bulletT1 = new Projectile(m_turretOneSprite.getPosition(), m_turretOneSprite.getRotation() + 90, 5, 15, 1500, &m_bulletTexture, m_window);
+		Projectile *bulletT2 = new Projectile(m_turretTwoSprite.getPosition(), m_turretTwoSprite.getRotation() + 90, 5, 15, 1500, &m_bulletTexture, m_window);
+		Projectile *bulletT3 = new Projectile(m_turretThreeSprite.getPosition(), m_turretThreeSprite.getRotation() + 90, 5, 15, 1500, &m_bulletTexture, m_window);
 
 		bullets.push_back(bulletT1);
 		bullets.push_back(bulletT2);

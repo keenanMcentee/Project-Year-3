@@ -16,7 +16,11 @@ Help::Help(sf::RenderWindow *window) : Screen(window)
 /// <param name="state"></param>
 void Help::Initialise(GameState *state)
 {
-	gui.add(uiHelper::makeLabel("HELP SCREEN", sf::Vector2f(100, 100), 32));
+	menuBox.loadFromFile("./ASSETS/menu box.png");
+	m_menuBox.setTexture(menuBox);
+	m_menuBox.setPosition(60, 30);
+	m_menuBox.setScale(1.4, 0.8);
+	gui.add(uiHelper::makeLabel("HELP SCREEN", sf::Vector2f(150, 40), 25));
 
 	currentState = state;
 
@@ -39,5 +43,6 @@ void Help::Update(sf::Time dt)
 void Help::Draw(sf::RenderWindow *window)
 {
 	window->draw(backgroundSprite, &menuShader);
+	window->draw(m_menuBox);
 	gui.draw();
 }

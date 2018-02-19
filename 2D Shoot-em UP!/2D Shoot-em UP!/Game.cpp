@@ -6,7 +6,7 @@
 /// </summary>
 Game::Game() : m_window(sf::VideoMode(720,720), "2D Shoot-em Up!", sf::Style::Default), m_screenManager(&m_window)
 {
-	m_window.setFramerateLimit(120);
+	//m_window.setFramerateLimit(240);
 	//gui.setTarget(m_window);
 }
 

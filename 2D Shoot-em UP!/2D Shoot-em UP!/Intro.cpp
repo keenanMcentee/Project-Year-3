@@ -7,7 +7,5 @@
 int main()
 {
 	Game game;
-	srand(time(NULL));
-	srand(static_cast <unsigned> (time(NULL)));
 	game.Run();
 }

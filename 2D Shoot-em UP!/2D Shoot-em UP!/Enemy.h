@@ -17,8 +17,7 @@ public:
 	sf::Texture m_bulletTexture;
 	sf::Texture m_flashAnimation;
 	sf::Texture m_turretOneTexture;
-	//sf::Texture m_turretTwoTexture;
-	//sf::Texture m_turretThreeTexture;
+	
 
 	sf::Sprite m_turretOneSprite;
 	sf::Sprite m_turretTwoSprite;
@@ -39,8 +38,8 @@ public:
 
 	sf::String m_direction;
 
-	void Initialise(int type, bool mineType, sf::RenderWindow *window, sf::Vector2f spawnPos, float accelaration, sf::Sprite sprite, int health, int damage, int creditsValue);
-	void Update(sf::Time dt, sf::Vector2f playerPos);
+	void Initialise(int type, bool mineType, sf::RenderWindow *window, sf::Vector2f spawnPos, sf::Sprite sprite, int health, int damage, int creditsValue);
+	void Update(sf::Time dt, sf::Vector2f playerPos, float accelerator);
 	void Draw();
 	void Reset();
 	void HandleMovement(sf::Vector2f playerPos);
@@ -63,6 +62,7 @@ public:
 	int m_turretThreeHealth;
 	int m_damage;
 	int m_creditsValue;
+	
 
 	tgui::FloatRect getRect();
 

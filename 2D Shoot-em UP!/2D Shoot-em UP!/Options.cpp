@@ -18,9 +18,12 @@ Options::Options(sf::RenderWindow *window) : Screen(window)
 /// <param name="state"></param>
 void Options::Initialise(GameState *state)
 {
-	gui.add(uiHelper::makeLabel("OPTIONS", sf::Vector2f(300, 100), 50));
+	gui.add(uiHelper::makeLabel("OPTIONS", sf::Vector2f(150, 40), 25));
 	gui.add(uiHelper::makeLabel("Volume", sf::Vector2f(150, 285), 32), "Options_volumeLabel");
-	
+	menuBox.loadFromFile("./ASSETS/menu box.png");
+	m_menuBox.setTexture(menuBox);
+	m_menuBox.setPosition(60, 30);
+	m_menuBox.setScale(1.4, 0.8);
 	currentState = state;
 
 	auto button = uiHelper::makeButton("Back", sf::Vector2f(500, 600), 200, 100);
@@ -28,7 +31,7 @@ void Options::Initialise(GameState *state)
 	gui.add(button, "Options_backBtn");
 
 	gui.add(uiHelper::makeSlider(sf::Vector2f(300, 300), 100, 18, 100), "Options_volumeSlider");
-	gui.add(uiHelper::makeCheckBox("Mute", sf::Vector2f(300, 500), 50, 50, false), "Options_fullScreen");
+	gui.add(uiHelper::makeCheckBox("Mute", sf::Vector2f(300, 400), 50, 50, false), "Options_fullScreen");
 
 	gui.add(uiHelper::makeLabel("Mute", sf::Vector2f(550, 300), 32), "Options_volumeValue");
 }
@@ -55,6 +58,7 @@ void Options::Update(bool fromPause, sf::Time dt)
 void Options::Draw(sf::RenderWindow *window)
 {
 	window->draw(backgroundSprite, &menuShader);
+	window->draw(m_menuBox);
 	gui.draw();
 }
 

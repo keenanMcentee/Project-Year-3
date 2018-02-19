@@ -22,14 +22,19 @@ public:
 	sf::Texture m_texture;
 	sf::Texture m_bulletTexture;
 	sf::Texture m_flashAnimation;
-
+	sf::Texture blankTexture;
 	thor::Animator<sf::Sprite, std::string> animator;
 	thor::FrameAnimation gunFlashAnimation;
 
 	sf::Sprite m_sprite;
 	sf::Sprite m_gunFlash;
+	sf::Sprite healthBar;
+	sf::Shader healthBarShader;
+	sf::Sprite healthBarBackground;
 	sf::Vector2f m_position;
 	sf::Vector2f m_previousPos;
+	sf::Sprite healthBarOverlay;
+	sf::Texture healthBarOverlayTexture;
 
 	Player();
 
@@ -43,6 +48,7 @@ public:
 	void lookAtMouse(sf::RenderWindow &win);
 	void CheckCollision(tgui::FloatRect &tile);
 	void setTexture();
+	void reset();
 
 	float m_speed;
 	float rotation;
@@ -54,10 +60,13 @@ public:
 	int m_damage;
 	int m_credits = 0;
 
+
+
 	bool prevLeftClick;
 	std::vector<Projectile*> bullets;
 	
 	sf::SoundBuffer buffer;
 	tgui::FloatRect getRect();
+	float shaderTimer;
 };
 #endif // !PLAYER

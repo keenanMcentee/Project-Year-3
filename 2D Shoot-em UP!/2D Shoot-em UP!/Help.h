@@ -8,6 +8,7 @@ public:
 	void Update(sf::Time dt);
 	void Draw(sf::RenderWindow *window);
 private:
-
+	sf::Texture menuBox;
+	sf::Sprite m_menuBox;
 };
 

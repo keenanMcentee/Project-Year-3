@@ -36,6 +36,10 @@ private:
 
 	sf::Time lastFrame;
 	sf::Time dt;
+	sf::SoundBuffer gameplayMusicBuffer;
+	sf::SoundBuffer menuMusicBuffer;
+	sf::Sound gameplayMusicSound;
+	sf::Sound menuMusicSound;
 	bool fromPause;
 };
 #endif // !SCREENMANAGER

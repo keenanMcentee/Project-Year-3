@@ -1,10 +1,11 @@
 #include "Map.h"
 #include "Screen.h"
 #include "Player.h"
-#include "Merchant.h"
 #include "Enemy.h"
 #include <math.h>
 #include <SFML\Graphics.hpp>
+#ifndef PLAY
+#define PLAY
 class Play : public Screen
 {
 public:
@@ -16,6 +17,9 @@ public:
 	void HandleCollision();
 	void updateEnemies(sf::Time dt);
 	void generateWave(int randEnemy);
+
+	void reset();
+
 	//Map demoMap;
 	//sf::Texture mapTexture;
 	Player player;
@@ -41,7 +45,7 @@ public:
 	int deadEnemies;
 	int enemyOffset;
 	int bossSpawnCount;
-
+	float enemySpeed;
 	bool bossWave;
 
 	void handleEvent(sf::Event e);
@@ -52,4 +56,24 @@ public:
 	std::vector<Enemy*> leftToRightEnemies;
 	std::vector<Enemy*> rightToLeftEnemies;*/
 	Enemy trackerEnemyType;
+
+
+
+
+	//ENEMY TEXTURES
+	sf::Texture enemyOneTexture;
+	sf::Texture enemyTwoTexture;
+	sf::Texture enemyThreeTexture;
+	sf::Texture enemyFourTexture;
+	sf::Texture enemyFiveTexture;
+	sf::Texture enemySixTexture;
+	//Enemy Sprites!
+	sf::Sprite enemyOneSprite;
+	sf::Sprite enemyTwoSprite;
+	sf::Sprite enemyThreeSprite;
+	sf::Sprite enemyFourSprite;
+	sf::Sprite enemyFiveSprite;
+	sf::Sprite enemySixSprite;
 };
+#endif // !PLAY
+

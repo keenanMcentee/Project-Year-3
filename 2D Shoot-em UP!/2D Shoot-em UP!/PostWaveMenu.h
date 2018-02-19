@@ -6,4 +6,6 @@ public:
 	PostWaveMenu(sf::RenderWindow *window);
 	void Initialise(GameState *state);
 	void Draw(sf::RenderWindow *window);
+	sf::Texture menuBox;
+	sf::Sprite m_menuBox;
 };

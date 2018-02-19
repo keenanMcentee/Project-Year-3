@@ -17,24 +17,29 @@ Pause::Pause(sf::RenderWindow *window) : Screen(window)
 void Pause::Initialise(GameState *state, bool *fromPause)
 {
 	m_fromPause = fromPause;
-	gui.add(uiHelper::makeLabel("PAUSE SCREEN", sf::Vector2f(100, 100), 32));
-
+	gui.add(uiHelper::makeLabel("PAUSE SCREEN", sf::Vector2f(getScreenSize().x / 6, getScreenSize().y / 15), 32));
+	menuBox.loadFromFile("./ASSETS/menu box.png");
+	float uiSizeX = getScreenSize().x / 4;
+	float uiSizeY = getScreenSize().y / 10;
+	m_menuBox.setTexture(menuBox);
+	m_menuBox.setPosition(getScreenSize().x / 10, getScreenSize().y / 21);
+	m_menuBox.setScale(getScreenSize().x / 720, getScreenSize().y / 720);
 	currentState = state;
 
-	auto button = uiHelper::makeButton("Return", sf::Vector2f(300, 200), 200, 100);
+	auto button = uiHelper::makeButton("Resume", sf::Vector2f(getScreenSize().x / 3 - uiSizeX / 4, getScreenSize().y / 6), uiSizeX, uiSizeY);
 	button->connect("pressed", [&]() {
 		GoToScreen(GameState::Play); 
 	});
 	gui.add(button, "Pause_retunBtn");
 
-	button = uiHelper::makeButton("Options", sf::Vector2f(300, 400), 200, 100);
+	button = uiHelper::makeButton("Options", sf::Vector2f(getScreenSize().x / 3 - uiSizeX / 4, getScreenSize().y / 6 * 2.5), uiSizeX, uiSizeY);
 	button->connect("pressed", [&]() {
 		GoToScreen(GameState::Upgrades);
 		*m_fromPause = true;
 	});
 	gui.add(button, "Menu_optionsBtn");
 
-	button = uiHelper::makeButton("Main Menu", sf::Vector2f(300, 600), 200, 100);
+	button = uiHelper::makeButton("Main Menu", sf::Vector2f(getScreenSize().x / 3 - uiSizeX / 4, getScreenSize().y / 6 * 4), uiSizeX, uiSizeY);
 	button->connect("pressed", [&]() {GoToScreen(GameState::MainMenu); });
 	gui.add(button, "Pause_mainMenuBtn");
 
@@ -51,5 +56,7 @@ void Pause::Update()
 /// <param name="window"></param>
 void Pause::Draw(sf::RenderWindow *window)
 {
+	
+	window->draw(m_menuBox);
 	gui.draw();
 }

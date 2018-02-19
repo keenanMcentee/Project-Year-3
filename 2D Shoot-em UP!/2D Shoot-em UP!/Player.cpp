@@ -26,9 +26,19 @@ void Player::Initialise(sf::RenderWindow *window)
 			}
 		}
 	}
-
+	healthBarOverlayTexture.loadFromFile("ASSETS/powerCore.png");
+	healthBarOverlay.setTexture(healthBarOverlayTexture);
+	healthBarOverlay.setPosition(-40, 0);
+	healthBarOverlay.setScale(0.7, 0.5);
+	blankTexture.loadFromFile("ASSETS/blankTexture.png");
+	healthBar.setTexture(blankTexture);
+	healthBarBackground.setTexture(blankTexture);
+	healthBarShader.loadFromFile("ASSETS/shaders/fragmentShaders/healthBar.frag", sf::Shader::Fragment);
+	healthBarBackground.setScale(0.1, 0.1);
+	healthBar.setPosition(50, 15);
+	
 	setTexture();
-	m_bulletTexture.loadFromFile("ASSETS/laserSprite.png");
+	m_bulletTexture.loadFromFile("ASSETS/playerLaserSprite.png");
 
 	playerStats.m_sprite.setOrigin(playerStats.m_sprite.getLocalBounds().width / 2, playerStats.m_sprite.getLocalBounds().height / 2);
 	playerStats.m_sprite.setScale(0.5,0.5);
@@ -39,6 +49,7 @@ void Player::Initialise(sf::RenderWindow *window)
 	m_health = 100;
 	m_damage = 35;
 	m_window = window;
+	shaderTimer = 0;
 }
 /// <summary>
 /// 
@@ -60,6 +71,14 @@ void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
 
 	m_timeSinceLastShot += dt.asSeconds();
 
+	shaderTimer += dt.asSeconds();
+
+	healthBarShader.setUniform("hp", m_health / 100.0f);
+	healthBarShader.setUniform("time", shaderTimer);
+	healthBarShader.setUniform("resolution", sf::Glsl::Vec2(720,720));
+	healthBarShader.setUniform("r", (1.0f - (m_health / 100)));
+	healthBarShader.setUniform("g", m_health / 100.0f);
+	healthBar.setScale(0.1 * (m_health / 100.0f), 0.025);
 }
 /// <summary>
 /// 
@@ -75,6 +94,11 @@ void Player::Draw()
 		b->draw();
 	}
 	m_window->draw(playerStats.m_sprite);
+	healthBar.setPosition(50, 15);
+	m_window->draw(healthBar, &healthBarShader);
+	healthBar.setPosition(50, 40);
+	m_window->draw(healthBar, &healthBarShader);
+	m_window->draw(healthBarOverlay);
 }
 
 /// <summary>
@@ -182,4 +206,15 @@ void Player::setTexture()
 			playerStats.m_sprite.setTexture(*playerStats.ships[i]->second);
 		}
 	}
+}
+void Player::reset()
+{
+	playerStats.maxHealth = playerStats.healthLevel * 100;
+	m_position = sf::Vector2f(300, 300);
+	m_speed = 2;
+	m_fireRate = 0.2f;
+	m_health = 100;
+	m_damage = 35;
+	shaderTimer = 0;
+	
 }
