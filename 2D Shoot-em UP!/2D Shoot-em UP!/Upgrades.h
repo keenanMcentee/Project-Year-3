@@ -14,6 +14,8 @@ public:
 	void buy();
 	void reset();
 	void setTexture();
+	void setCost();
+	void setCurrentLevel();
 private:
 	int tempLWingLevel;
 	int tempRWingLevel;

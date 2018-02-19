@@ -33,7 +33,7 @@ void Pause::Initialise(GameState *state, bool *fromPause)
 	});
 	gui.add(button, "Pause_retunBtn");
 
-	button = uiHelper::makeButton("Options", sf::Vector2f(getScreenSize().x / 3 - uiSizeX / 4, getScreenSize().y / 6 * 2.5), uiSizeX, uiSizeY);
+	button = uiHelper::makeButton("Upgrades", sf::Vector2f(getScreenSize().x / 3 - uiSizeX / 4, getScreenSize().y / 6 * 2.5), uiSizeX, uiSizeY);
 	button->connect("pressed", [&]() {
 		GoToScreen(GameState::Upgrades);
 		*m_fromPause = true;

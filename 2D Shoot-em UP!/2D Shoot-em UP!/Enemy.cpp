@@ -17,6 +17,7 @@ void Enemy::Initialise(int type, bool mineType, sf::RenderWindow *window, sf::Ve
 	if (m_type != 7)
 	{
 		m_sprite = sprite;
+		m_fireRate = 2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (3.0f - 2.0f)));
 	}
 
 	else if(m_type == 7)
@@ -47,12 +48,13 @@ void Enemy::Initialise(int type, bool mineType, sf::RenderWindow *window, sf::Ve
 		m_turretThreeSprite.setPosition(m_turretThreePosition);
 		m_turretThreeSprite.setScale(sf::Vector2f(0.2f, 0.2f));
 		m_turretThreeSprite.setOrigin(m_turretThreeSprite.getLocalBounds().width / 2, m_turretThreeSprite.getLocalBounds().height / 2);
+
+		m_fireRate = 0.5f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (1.0f - 0.5f)));
 	}
 
 	m_health = health;
 	m_damage = damage;
 	m_creditsValue = creditsValue;
-	m_fireRate = 2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (3.0f - 2.0f)));
 
 	m_bulletTexture.loadFromFile("ASSETS/laserSprite.png");
 
@@ -196,19 +198,19 @@ void Enemy::HandleMovement(sf::Vector2f playerPos, sf::Sound *shootingSound)
 		m_position += m_speed;
 		if (m_position.x <= 0)
 		{
-			m_speed.x = 2;
+			m_speed.x *-1;
 		}
-		if (m_position.x + m_sprite.getGlobalBounds().width >= m_window->getSize().x + 100)
+		if (m_position.x + m_sprite.getGlobalBounds().width >= m_window->getSize().x)
 		{
-			m_speed.x = -2;
+			m_speed.x *-1;
 		}
 		if (m_position.y <= 0)
 		{
-			m_speed.y = 2;
+			m_speed.y * -1;
 		}
 		if (m_position.y >= m_window->getSize().y)
 		{
-			m_speed.y = -2;
+			m_speed.y * -1;
 		}
 		break;
 	case 6: //Follower_Type

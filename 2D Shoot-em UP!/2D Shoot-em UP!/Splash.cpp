@@ -16,7 +16,7 @@ Splash::Splash(sf::RenderWindow *window) : Screen(window)
 /// <param name="state"></param>
 void Splash::Initialise(GameState *state)
 {
-	gui.add(uiHelper::makeLabel("SPLASH SCREEN", sf::Vector2f(100, 100), 32));
+	gui.add(uiHelper::makeLabel("ASTROBLAST", sf::Vector2f(100, 100), 64));
 
 	currentState = state;
 

@@ -9,7 +9,7 @@
 ScreenManager::ScreenManager(sf::RenderWindow *window) : m_splash(window), m_license(window), m_mainMenu(window), m_options(window),
 m_help(window), m_credits(window), m_play(window, &m_currentState), m_pause(window), m_postWaveMenu(window), m_upgrades(window)
 {
-	m_currentState = GameState::Help;
+	m_currentState = GameState::Splash;
 }
 
 /// <summary>

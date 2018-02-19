@@ -72,6 +72,7 @@ void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view, sf::Sou
 	{
 		b->update();
 	}
+
 	playerStats.m_sprite.setPosition(m_position);
 
 	m_timeSinceLastShot += dt.asSeconds();
