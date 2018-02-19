@@ -18,6 +18,7 @@ void Pause::Initialise(GameState *state, bool *fromPause)
 {
 	m_fromPause = fromPause;
 	gui.add(uiHelper::makeLabel("PAUSE SCREEN", sf::Vector2f(getScreenSize().x / 6, getScreenSize().y / 15), 32));
+
 	menuBox.loadFromFile("./ASSETS/menu box.png");
 	float uiSizeX = getScreenSize().x / 4;
 	float uiSizeY = getScreenSize().y / 10;

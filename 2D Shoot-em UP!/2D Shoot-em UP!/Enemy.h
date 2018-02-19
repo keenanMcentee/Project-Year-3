@@ -1,4 +1,5 @@
 #include <SFML\Graphics.hpp>
+#include <SFML\Audio.hpp>
 #include <Thor\Animations.hpp>
 #include <math.h>
 #include "uiHelper.h"
@@ -39,10 +40,10 @@ public:
 	sf::String m_direction;
 
 	void Initialise(int type, bool mineType, sf::RenderWindow *window, sf::Vector2f spawnPos, sf::Sprite sprite, int health, int damage, int creditsValue);
-	void Update(sf::Time dt, sf::Vector2f playerPos, float accelerator);
+	void Update(sf::Time dt, sf::Vector2f playerPos, float accelerator, sf::Sound *shootingSound);
 	void Draw();
 	void Reset();
-	void HandleMovement(sf::Vector2f playerPos);
+	void HandleMovement(sf::Vector2f playerPos, sf::Sound *shootingSound);
 	float turretLookAtPlayer(sf::Sprite turret, sf::Vector2f playerPos);
 
 	std::vector<Projectile*> bullets;

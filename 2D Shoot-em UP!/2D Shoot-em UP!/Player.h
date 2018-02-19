@@ -5,6 +5,7 @@
 #include <SFML\Graphics.hpp>
 #include <SFML\Audio.hpp>
 #include <Thor\Animations.hpp>
+#include <Thor\Particles.hpp>
 #include <math.h>
 #include "uiHelper.h"
 
@@ -41,9 +42,9 @@ public:
 	sf::RenderWindow *m_window;
 
 	void Initialise(sf::RenderWindow *window);
-	void Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view);
+	void Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view, sf::Sound *shootingSound);
 	void Draw();
-	void HandleMovement(sf::Keyboard &keyboard, sf::View *view);
+	void HandleMovement(sf::Keyboard &keyboard, sf::View *view, sf::Sound *shootingSound);
 	void bulletEnemyCollision(Projectile b, Enemy *enemy);
 	void lookAtMouse(sf::RenderWindow &win);
 	void CheckCollision(tgui::FloatRect &tile);
@@ -57,7 +58,6 @@ public:
 	float ToRadians(float x);
 
 	int m_health;
-	int m_damage;
 	int m_credits = 0;
 
 
@@ -68,5 +68,10 @@ public:
 	sf::SoundBuffer buffer;
 	tgui::FloatRect getRect();
 	float shaderTimer;
+	float particleTime;
+	thor::ParticleSystem system;
+	thor::UniversalEmitter emitter;
+	sf::Texture flameTexture;
+	sf::Sprite flameSprite;
 };
 #endif // !PLAYER

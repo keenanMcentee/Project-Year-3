@@ -16,15 +16,18 @@ Help::Help(sf::RenderWindow *window) : Screen(window)
 /// <param name="state"></param>
 void Help::Initialise(GameState *state)
 {
+	float uiSizeX = getScreenSize().x / 20;
+	float uiSizeY = getScreenSize().y / 20;
 	menuBox.loadFromFile("./ASSETS/menu box.png");
 	m_menuBox.setTexture(menuBox);
 	m_menuBox.setPosition(60, 30);
 	m_menuBox.setScale(1.4, 0.8);
 	gui.add(uiHelper::makeLabel("HELP SCREEN", sf::Vector2f(150, 40), 25));
-
+	gui.add(uiHelper::makeLabel("W: Move up\nA: Move Left \nS: Move Down\nD: Move Right", sf::Vector2f(150, 170), 25));
+	gui.add(uiHelper::makeLabel("Left Click to shoot\nLeft Shift for speed Boost!", sf::Vector2f(300, 390), 25));
 	currentState = state;
 
-	auto button = uiHelper::makeButton("Back", sf::Vector2f(900, 600), 300, 100);
+	auto button = uiHelper::makeButton("Back", sf::Vector2f(getScreenSize().x / 12 * 10 - uiSizeX / 4, (getScreenSize().y / 6) * 5.5), uiSizeX * 2, uiSizeY);
 	button->connect("pressed", [&]() {GoToScreen(GameState::MainMenu); });
 	gui.add(button, "Menu_playBtn");
 }

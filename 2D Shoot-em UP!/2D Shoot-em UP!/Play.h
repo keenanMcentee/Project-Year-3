@@ -37,6 +37,12 @@ public:
 
 	sf::Keyboard keyboard;
 	sf::Keyboard pastKeyboard;
+
+	sf::SoundBuffer shootingNoise;
+	sf::Sound shootSound;
+
+	sf::SoundBuffer enemyShootingNoise;
+	sf::Sound enemyShootSound;
 	//Merchant merchant;
 
 	float distBetween(sf::Vector2f playerPos, sf::Vector2f OtherPos);

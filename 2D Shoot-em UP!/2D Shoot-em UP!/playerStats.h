@@ -9,7 +9,9 @@ struct PlayerStats
 	int l_cannon_level = 0;
 	int r_cannon_level = 0;
 	int healthLevel = 1;
+	int maxHealthLevel = 5;
 	int maxHealth;
+	int m_damage = 35;
 
 	const int l_wing_max_level = 8;
 	const int r_wing_max_level = 6;

@@ -47,22 +47,27 @@ void Player::Initialise(sf::RenderWindow *window)
 	m_speed = 2;
 	m_fireRate = 0.2f;
 	m_health = 100;
-	m_damage = 35;
 	m_window = window;
 	shaderTimer = 0;
+
+	flameTexture.loadFromFile("./ASSETS/particles.png");
+	system.setTexture(flameTexture);
+	emitter.setEmissionRate(500);
+	emitter.setParticleLifetime(sf::seconds(0.4));
+	system.addEmitter(thor::refEmitter(emitter));
 }
 /// <summary>
 /// 
 /// </summary>
 /// <param name="keyboard"></param>
-void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
+void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view, sf::Sound *shootingSound)
 {
 	m_previousPos = m_position;
 	
 	animator.update(dt);
 	animator.animate(m_gunFlash);
 	
-	HandleMovement(keyboard, view);
+	HandleMovement(keyboard, view, shootingSound);
 	for (auto &b : bullets)
 	{
 		b->update();
@@ -79,6 +84,8 @@ void Player::Update(sf::Time dt, sf::Keyboard &keyboard, sf::View *view)
 	healthBarShader.setUniform("r", (1.0f - (m_health / 100)));
 	healthBarShader.setUniform("g", m_health / 100.0f);
 	healthBar.setScale(0.1 * (m_health / 100.0f), 0.025);
+
+	system.update(dt);
 }
 /// <summary>
 /// 
@@ -105,7 +112,7 @@ void Player::Draw()
 /// 
 /// </summary>
 /// <param name="keyboard"></param>
-void Player::HandleMovement(sf::Keyboard &keyboard, sf::View *view)
+void Player::HandleMovement(sf::Keyboard &keyboard, sf::View *view, sf::Sound *shootingSound)
 {
 	if (keyboard.isKeyPressed(keyboard.A))
 	{
@@ -146,6 +153,7 @@ void Player::HandleMovement(sf::Keyboard &keyboard, sf::View *view)
 		m_timeSinceLastShot = 0;
 		Projectile *bullet = new Projectile(m_position, playerStats.m_sprite.getRotation(), 100, 50, 400, &m_bulletTexture, m_window);
 		bullets.push_back(bullet);
+		shootingSound->play();
 	}
 	prevLeftClick = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 }
@@ -181,6 +189,13 @@ void Player::bulletEnemyCollision(Projectile b, Enemy *enemy)
 	if (b.getRect().intersects(enemy->getRect()))
 	{
 		enemy->alive = false;
+		emitter.setParticlePosition(thor::Distribution<sf::Vector2f>(sf::Vector2f(m_position.x, m_position.y)));
+		emitter.setEmissionRate(500);
+		
+	}
+	else
+	{
+		emitter.setEmissionRate(0);
 	}
 }
 
@@ -213,8 +228,8 @@ void Player::reset()
 	m_position = sf::Vector2f(300, 300);
 	m_speed = 2;
 	m_fireRate = 0.2f;
-	m_health = 100;
-	m_damage = 35;
+	m_health = 100 * playerStats.healthLevel;
+	
 	shaderTimer = 0;
 	
 }

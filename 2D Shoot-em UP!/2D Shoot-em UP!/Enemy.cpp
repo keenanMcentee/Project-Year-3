@@ -63,14 +63,14 @@ void Enemy::Initialise(int type, bool mineType, sf::RenderWindow *window, sf::Ve
 	m_sprite.setOrigin(m_sprite.getLocalBounds().width / 2, m_sprite.getLocalBounds().height / 2);
 	m_sprite.setPosition(m_position);
 
-	rotator = 0;
+	rotator = 1;
 	
 	m_speed = sf::Vector2f(1.0f,1.0f);
 
 	alive = true;
 }
 
-void Enemy::Update(sf::Time dt, sf::Vector2f playerPos, float accelerator)
+void Enemy::Update(sf::Time dt, sf::Vector2f playerPos, float accelerator, sf::Sound *shootingSound)
 {
 	if (m_health <= 0)
 	{
@@ -79,7 +79,7 @@ void Enemy::Update(sf::Time dt, sf::Vector2f playerPos, float accelerator)
 	
 	if (alive)
 	{
-		HandleMovement(playerPos);
+		HandleMovement(playerPos,shootingSound);
 		m_sprite.setPosition(m_position);
 	}
 
@@ -101,6 +101,7 @@ void Enemy::Update(sf::Time dt, sf::Vector2f playerPos, float accelerator)
 	m_timeSinceLastShot += dt.asSeconds();
 
 	m_speed = sf::Vector2f(1 * accelerator, 1 * accelerator);
+	
 }
 
 void Enemy::Draw()
@@ -132,8 +133,9 @@ void Enemy::Draw()
 	}
 }
 
-void Enemy::HandleMovement(sf::Vector2f playerPos)
+void Enemy::HandleMovement(sf::Vector2f playerPos, sf::Sound *shootingSound)
 {
+	
 	//Height of curve		width of curve		position on screen.
 	switch (m_type)
 	{
@@ -149,7 +151,7 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 		m_position.x += m_speed.x;
 		m_position.y = 150 * sin(m_position.x / 20) + 300;
 
-		if (m_position.x + m_sprite.getGlobalBounds().width > m_window->getSize().x)
+		if (m_position.x + m_sprite.getGlobalBounds().width > m_window->getSize().x + 100)
 		{
 			alive = false;
 		}
@@ -159,7 +161,7 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 		{
 			m_position.x += m_speed.x;
 		}
-		if (m_position.x > m_window->getSize().x)
+		if (m_position.x > m_window->getSize().x + 100)
 		{
 			alive = false;
 		}
@@ -180,7 +182,7 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 		{
 			m_position.y += m_speed.y;
 		}
-		
+
 		if (m_position.x < playerPos.x)
 		{
 			m_position.x += m_speed.x;
@@ -189,28 +191,43 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 		{
 			m_position.x -= m_speed.x;
 		}
-		m_sprite.setRotation(turretLookAtPlayer(m_sprite, playerPos));
 		break;
 	case 5: //Diagonal_Moving_Type
 		m_position += m_speed;
-		if (m_position.x <= 0 || m_position.x + m_sprite.getGlobalBounds().width >= m_window->getSize().x + 50)
+		if (m_position.x <= 0)
 		{
-			m_speed.x *= -1;
+			m_speed.x = 2;
 		}
-		if (m_position.y <= 0 || m_position.y >= m_window->getSize().y)
+		if (m_position.x + m_sprite.getGlobalBounds().width >= m_window->getSize().x + 100)
 		{
-			m_speed.y *= -1;
+			m_speed.x = -2;
+		}
+		if (m_position.y <= 0)
+		{
+			m_speed.y = 2;
+		}
+		if (m_position.y >= m_window->getSize().y)
+		{
+			m_speed.y = -2;
 		}
 		break;
 	case 6: //Follower_Type
 		m_position += m_speed;
-		if (m_position.x <= playerPos.x || m_position.x >= playerPos.x)
+		if (m_position.x <= playerPos.x)
 		{
-			m_speed.x *= -1;
+			m_speed.x = 2;
 		}
-		if (m_position.y <= playerPos.y || m_position.y >= playerPos.y)
+		if (m_position.x >= playerPos.x)
 		{
-			m_speed.y *= -1;
+			m_speed.x = -2;
+		}
+		if (m_position.y <= playerPos.y)
+		{
+			m_speed.y = 2;
+		}
+		if (m_position.y >= playerPos.y)
+		{
+			m_speed.y = -2;
 		}
 		break;
 	case 7: //Go_To_Center
@@ -220,10 +237,10 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 
 		if (m_position.y < 150)
 		{
-			m_position.y += 1;
-			m_turretOnePosition.y += 1;
-			m_turretTwoPosition.y += 1;
-			m_turretThreePosition.y += 1;
+			m_position.y += m_speed.y;
+			m_turretOnePosition.y += m_speed.y;
+			m_turretTwoPosition.y += m_speed.y;
+			m_turretThreePosition.y += m_speed.y;
 		}
 
 		if (m_position.y >= 150)
@@ -240,21 +257,24 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 				{
 					Projectile *bulletT1 = new Projectile(m_turretOneSprite.getPosition(), m_turretOneSprite.getRotation() + 90, 4, 15, 1500, &m_bulletTexture, m_window);
 					bullets.push_back(bulletT1);
+					shootingSound->play();
 				}
 				if (m_turretTwoHealth > 0)
 				{
 					Projectile *bulletT2 = new Projectile(m_turretTwoSprite.getPosition(), m_turretTwoSprite.getRotation() + 90, 4, 15, 1500, &m_bulletTexture, m_window);
 					bullets.push_back(bulletT2);
+					shootingSound->play();
 				}
 				if (m_turretThreeHealth > 0)
 				{
 					Projectile *bulletT3 = new Projectile(m_turretThreeSprite.getPosition(), m_turretThreeSprite.getRotation() + 90, 4, 15, 1500, &m_bulletTexture, m_window);
 					bullets.push_back(bulletT3);
+					shootingSound->play();
 				}
 			}
 		}
-		default:
-			break;
+	default:
+		break;
 	}
 
 	if (!m_mineType && m_timeSinceLastShot > m_fireRate && alive == true && m_type != BOSS_TYPE)
@@ -262,15 +282,16 @@ void Enemy::HandleMovement(sf::Vector2f playerPos)
 		m_timeSinceLastShot = 0;
 		Projectile *bullet = new Projectile(m_position, m_sprite.getRotation() + 90, 2, 15, 1500, &m_bulletTexture, m_window);
 		bullets.push_back(bullet);
+		shootingSound->play();
 	}
 
 	if (m_timeSinceLastShot > m_fireRate && alive == true)
 	{
 		m_timeSinceLastShot = 0;
-		Projectile *bulletT1 = new Projectile(m_turretOneSprite.getPosition(), m_turretOneSprite.getRotation() + 90, 5, 15, 1500, &m_bulletTexture, m_window);
-		Projectile *bulletT2 = new Projectile(m_turretTwoSprite.getPosition(), m_turretTwoSprite.getRotation() + 90, 5, 15, 1500, &m_bulletTexture, m_window);
-		Projectile *bulletT3 = new Projectile(m_turretThreeSprite.getPosition(), m_turretThreeSprite.getRotation() + 90, 5, 15, 1500, &m_bulletTexture, m_window);
-
+		Projectile *bulletT1 = new Projectile(m_turretOneSprite.getPosition(), m_turretOneSprite.getRotation() + 90, 2, 15, 1500, &m_bulletTexture, m_window);
+		Projectile *bulletT2 = new Projectile(m_turretTwoSprite.getPosition(), m_turretTwoSprite.getRotation() + 90, 2, 15, 1500, &m_bulletTexture, m_window);
+		Projectile *bulletT3 = new Projectile(m_turretThreeSprite.getPosition(), m_turretThreeSprite.getRotation() + 90, 2, 15, 1500, &m_bulletTexture, m_window);
+		shootingSound->play();
 		bullets.push_back(bulletT1);
 		bullets.push_back(bulletT2);
 		bullets.push_back(bulletT3);

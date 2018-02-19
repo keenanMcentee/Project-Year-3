@@ -87,5 +87,5 @@ void MainMenu::resetButton()
 	playScreenPtr->enemyCount = 0;
 	playScreenPtr->deadEnemies = 0;
 	playScreenPtr->bossSpawnCount = 100;
-	playScreenPtr->enemySpeed = 0;
+	playScreenPtr->enemySpeed = 0.75f;
 }

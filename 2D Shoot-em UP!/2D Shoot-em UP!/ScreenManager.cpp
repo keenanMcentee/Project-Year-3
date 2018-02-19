@@ -9,7 +9,7 @@
 ScreenManager::ScreenManager(sf::RenderWindow *window) : m_splash(window), m_license(window), m_mainMenu(window), m_options(window),
 m_help(window), m_credits(window), m_play(window, &m_currentState), m_pause(window), m_postWaveMenu(window), m_upgrades(window)
 {
-	m_currentState = GameState::Credits;
+	m_currentState = GameState::Help;
 }
 
 /// <summary>
@@ -27,9 +27,9 @@ void ScreenManager::Initialise()
 	m_help.Initialise(&m_currentState);
 	m_postWaveMenu.Initialise(&m_currentState);
 	m_upgrades.Initialise(&m_currentState, &m_play.player.playerStats);
-	//menuMusicBuffer.loadFromFile("ASSETS/Sounds/menuMusic.wav");
+	menuMusicBuffer.loadFromFile("ASSETS/Sounds/menuMusic.wav");
 	menuMusicSound.setBuffer(menuMusicBuffer);
-	//gameplayMusicBuffer.loadFromFile("ASSETS/Sounds/gameplayMusic.wav");
+	gameplayMusicBuffer.loadFromFile("ASSETS/Sounds/gameplayMusic.wav");
 	gameplayMusicSound.setBuffer(gameplayMusicBuffer);
 	menuMusicSound.setLoop(true);
 	gameplayMusicSound.setLoop(true);

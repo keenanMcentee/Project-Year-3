@@ -32,9 +32,12 @@ void Upgrades::Draw(sf::RenderWindow *window, sf::Time dt)
 
 void Upgrades::buy()
 {
-	stats->body_level = tempBodyLevel;
+	stats->healthLevel = tempBodyLevel;
+	stats->maxHealth = tempBodyLevel * 100;
 	stats->l_wing_level = tempLWingLevel;
 	stats->r_wing_level = tempRWingLevel;
+
+	stats->m_damage = (stats->l_wing_level + stats->r_wing_level) * 10 +15;
 }
 
 void Upgrades::initbuttons()
@@ -98,7 +101,7 @@ void Upgrades::initbuttons()
 	*/
 	auto btnBodyPlus = uiHelper::makeButton("+", sf::Vector2f(getScreenSize().x / 12 * 11 - uiSizeX / 4, (getScreenSize().y / 6) * 4), uiSizeX, uiSizeY);
 	btnBodyPlus->connect("pressed", [&]() {
-		if (tempBodyLevel < stats->body_max_level)
+		if (tempBodyLevel < stats->maxHealthLevel)
 		{
 			tempBodyLevel++;
 		}

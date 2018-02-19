@@ -42,9 +42,16 @@ Play::Play(sf::RenderWindow *window, GameState *state) : Screen(window)
 	enemySixTexture.loadFromFile("ASSETS/BulletShootingShip.png");
 	enemySixSprite.setTexture(enemySixTexture);
 
-	enemySpeed = 0.5f;
+	
+	shootingNoise.loadFromFile("ASSETS/Sounds/gunshot.wav");
+	shootSound.setBuffer(shootingNoise);
+	shootSound.setVolume(50);
 
+	enemyShootingNoise.loadFromFile("ASSETS/Sounds/gun.wav");
+	enemyShootSound.setBuffer(enemyShootingNoise);
+	enemyShootSound.setVolume(30);
 
+	
 }
 void Play::reset()
 {
@@ -62,7 +69,7 @@ void Play::Update(sf::Time dt)
 	backgroundShader.setUniform("time", timeSinceStart);
 	backgroundShader.setUniform("resolution", sf::Glsl::Vec2(windowPtr->getSize().x, windowPtr->getSize().y));
 
-	player.Update(dt, keyboard, &playerView);
+	player.Update(dt, keyboard, &playerView, &shootSound);
 	updateEnemies(dt);
 	HandleCollision();
 
@@ -195,7 +202,7 @@ void Play::HandleCollision()
 			{
 				if (enemyArray[i]->m_type != enemyArray[i]->BOSS_TYPE)
 				{
-					enemyArray[i]->m_health -= player.m_damage;
+					enemyArray[i]->m_health -= player.playerStats.m_damage;
 
 					if (enemyArray[i]->m_health <= 0)
 					{
@@ -210,17 +217,17 @@ void Play::HandleCollision()
 
 					if (enemyArray[i]->m_turretOneHealth > 0)
 					{
-						enemyArray[i]->m_turretOneHealth -= player.m_damage;
+						enemyArray[i]->m_turretOneHealth -= player.playerStats.m_damage;
 					}
 
 					if (enemyArray[i]->m_turretTwoHealth > 0 && enemyArray[i]->m_turretOneHealth <= 0)
 					{
-						enemyArray[i]->m_turretTwoHealth -= player.m_damage;
+						enemyArray[i]->m_turretTwoHealth -= player.playerStats.m_damage;
 					}
 
 					if (enemyArray[i]->m_turretThreeHealth > 0 && enemyArray[i]->m_turretOneHealth <= 0 && enemyArray[i]->m_turretTwoHealth <= 0)
 					{
-						enemyArray[i]->m_turretThreeHealth -= player.m_damage;
+						enemyArray[i]->m_turretThreeHealth -= player.playerStats.m_damage;
 					}
 
 					if (enemyArray[i]->m_turretThreeHealth <= 0 && enemyArray[i]->m_turretOneHealth <= 0 && enemyArray[i]->m_turretTwoHealth <= 0)
@@ -244,8 +251,7 @@ void Play::updateEnemies(sf::Time dt)
 {
 	for (int i = 0; i < enemyArray.size(); i++)
 	{
-		enemyArray[i]->Update(dt, player.m_position, enemySpeed);
-
+		enemyArray[i]->Update(dt, player.m_position, enemySpeed, &enemyShootSound);
 		if (!enemyArray[i]->alive && enemyArray[i]->bullets.size() == 0)
 		{
 			enemyArray[i]->~Enemy();
